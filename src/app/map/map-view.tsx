@@ -84,14 +84,27 @@ export function MapView() {
     markersRef.current = [];
 
     spotsToShow.forEach((spot) => {
+      const color = CATEGORY_COLORS[spot.category];
       const el = document.createElement("button");
       el.type = "button";
       el.setAttribute("aria-label", spot.name);
       el.style.cssText =
-        "position:relative;width:36px;height:36px;border-radius:50%;border:3px solid #fff;background:" +
-        CATEGORY_COLORS[spot.category] +
-        ";box-shadow:0 3px 10px rgba(0,0,0,.25);display:grid;place-items:center;font-size:18px;cursor:pointer;line-height:1;padding:0;";
-      el.textContent = spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category];
+        "position:relative;width:38px;height:38px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0;line-height:1;";
+
+      const ring = document.createElement("span");
+      ring.style.cssText =
+        "position:absolute;inset:0;border-radius:50%;background:" +
+        color +
+        "33;animation:pulse-ring 2.4s cubic-bezier(0.2,0.7,0.2,1) infinite;pointer-events:none;";
+      const dot = document.createElement("span");
+      dot.style.cssText =
+        "position:relative;width:32px;height:32px;border-radius:50%;background:" +
+        color +
+        ";border:2.5px solid #fff;box-shadow:0 6px 18px -4px rgba(15,29,51,0.35);display:grid;place-items:center;font-size:17px;color:#fff;";
+      dot.textContent = spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category];
+      el.appendChild(ring);
+      el.appendChild(dot);
+
       el.addEventListener("click", (e) => {
         e.stopPropagation();
         setSelectedSpot(spot);
@@ -119,25 +132,29 @@ export function MapView() {
 
       {/* Top filter bar */}
       <div className="absolute top-3 left-3 right-16 z-10 flex gap-2">
-        <Button
-          size="sm"
-          variant={filterOpen ? "primary" : "outline"}
-          className="shadow-md"
+        <button
+          type="button"
           onClick={() => setFilterOpen((v) => !v)}
+          className={cn(
+            "inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full text-sm font-semibold shadow-pop transition",
+            filterOpen
+              ? "bg-charcoal text-white"
+              : "glass-strong text-charcoal hover:bg-white",
+          )}
         >
           <Filter className="w-4 h-4" />
           カテゴリ
-          <span className="ml-0.5 inline-flex items-center justify-center min-w-5 h-5 px-1 rounded-full bg-white/30 text-white text-[10px] font-bold">
+          <span className="inline-flex items-center justify-center min-w-5 h-5 px-1 rounded-full bg-white/30 text-current text-[10px] font-black">
             {enabledCats.size}
           </span>
-        </Button>
-        <div className="rounded-full bg-white/95 shadow-md px-3 h-9 flex items-center text-xs text-charcoal/70 border border-border">
+        </button>
+        <div className="rounded-full glass-strong shadow-pop px-3 h-9 flex items-center text-[11px] font-semibold text-charcoal">
           {spotsToShow.length}件表示中
         </div>
       </div>
 
       {filterOpen && (
-        <div className="absolute top-14 left-3 z-10 max-w-[calc(100%-1.5rem)] bg-white rounded-2xl shadow-lg border border-border p-3">
+        <div className="absolute top-14 left-3 z-10 max-w-[calc(100%-1.5rem)] glass-strong rounded-2xl shadow-pop p-3 animate-slide-up">
           <div className="flex flex-wrap gap-1.5">
             {CATEGORIES.map((cat) => {
               const active = enabledCats.has(cat);
@@ -169,7 +186,7 @@ export function MapView() {
 
       {/* Spot detail bottom sheet */}
       {selectedSpot && (
-        <div className="absolute bottom-3 left-3 right-3 z-10 rounded-2xl bg-white shadow-xl border border-border overflow-hidden animate-slide-up">
+        <div className="absolute bottom-3 left-3 right-3 z-10 rounded-2xl glass-strong shadow-float overflow-hidden animate-slide-up">
           <button
             type="button"
             onClick={() => setSelectedSpot(null)}

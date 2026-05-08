@@ -60,20 +60,32 @@ export default async function SpotDetailPage({
 
   const features = spot.features;
 
+  const categoryColor = CATEGORY_COLORS[spot.category];
+
   return (
     <article>
       {/* Hero */}
       <div
-        className="relative h-56 md:h-72 flex items-center justify-center text-9xl"
+        className="relative h-64 md:h-80 overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, ${CATEGORY_COLORS[spot.category]}55 0%, ${CATEGORY_COLORS[spot.category]}22 100%)`,
+          background: `radial-gradient(at 18% 18%, ${categoryColor}cc 0, transparent 55%), radial-gradient(at 82% 82%, ${categoryColor}55 0, transparent 50%), linear-gradient(160deg, ${categoryColor}22 0%, ${categoryColor}11 100%)`,
         }}
       >
-        <span aria-hidden>{spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category]}</span>
+        <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" aria-hidden />
         <span
-          className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-sm font-bold text-white shadow-md"
-          style={{ background: CATEGORY_COLORS[spot.category] }}
+          className="absolute inset-0 grid place-items-center text-[8rem] md:text-[10rem] animate-float"
+          aria-hidden
         >
+          {spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category]}
+        </span>
+        <span
+          className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold glass-strong text-charcoal"
+        >
+          <span
+            aria-hidden
+            className="w-2 h-2 rounded-full"
+            style={{ background: categoryColor }}
+          />
           {CATEGORY_LABELS[spot.category]}
         </span>
         <FavoriteButton id={spot.id} />
@@ -228,7 +240,7 @@ export default async function SpotDetailPage({
           />
           <InfoRow
             icon={<Clock className="w-4 h-4" />}
-            label="滞在目安"
+            label="滗在目安"
             value={formatDuration(spot.durationMin)}
           />
           {spot.websiteUrl && (

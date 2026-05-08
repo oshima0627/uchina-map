@@ -77,7 +77,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 pb-20 md:pb-0">{children}</main>
+        <main className="flex-1 pb-28 md:pb-0">{children}</main>
         <BottomNav />
         <footer className="hidden md:block border-t border-border py-6 mt-12">
           <div className="mx-auto max-w-5xl px-4 text-xs text-charcoal/75">

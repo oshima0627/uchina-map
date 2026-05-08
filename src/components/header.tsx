@@ -19,10 +19,15 @@ export function Header() {
   const hydrated = useFavorites((s) => s.hydrated);
 
   return (
-    <header className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-30 glass-strong border-b border-border/60">
       <div className="mx-auto max-w-5xl px-4 h-14 flex items-center justify-between gap-2">
-        <Link href="/" className="flex items-center gap-2 font-bold shrink-0">
-          <span className="text-2xl" aria-hidden>🏝️</span>
+        <Link href="/" className="flex items-center gap-2 font-black shrink-0 tracking-tight">
+          <span
+            aria-hidden
+            className="grid place-items-center w-8 h-8 rounded-xl gradient-ocean-deep text-white text-base shadow-soft"
+          >
+            🏝️
+          </span>
           <span className="text-charcoal hidden sm:inline">うちなー子連れマップ</span>
           <span className="text-charcoal sm:hidden text-sm">うちな子マップ</span>
         </Link>
@@ -35,10 +40,10 @@ export function Header() {
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium transition-colors",
+                  "flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold transition-colors",
                   active
-                    ? "bg-primary-100 text-primary-800"
-                    : "text-charcoal/75 hover:bg-sand-light hover:text-charcoal",
+                    ? "bg-charcoal text-white shadow-soft"
+                    : "text-charcoal/75 hover:bg-charcoal/5 hover:text-charcoal",
                 )}
               >
                 <Icon className="w-4 h-4" />
@@ -52,20 +57,23 @@ export function Header() {
           href="/favorites"
           aria-label={`お気に入り${hydrated && favCount > 0 ? `（${favCount}件）` : ""}`}
           className={cn(
-            "relative grid place-items-center w-10 h-10 rounded-full border border-border shrink-0 transition-colors",
+            "relative grid place-items-center w-10 h-10 rounded-full border border-border shrink-0 transition-all shadow-soft",
             pathname.startsWith("/favorites")
-              ? "bg-hibiscus/10 border-hibiscus/40 text-hibiscus"
-              : "bg-white text-charcoal hover:bg-sand-light",
+              ? "bg-hibiscus text-white border-hibiscus"
+              : "bg-card text-charcoal hover:bg-sand-light",
           )}
         >
           <Heart
             className={cn(
               "w-4 h-4",
-              hydrated && favCount > 0 && "fill-hibiscus text-hibiscus",
+              hydrated &&
+                favCount > 0 &&
+                !pathname.startsWith("/favorites") &&
+                "fill-hibiscus text-hibiscus",
             )}
           />
           {hydrated && favCount > 0 && (
-            <span className="absolute -top-1 -right-1 grid place-items-center min-w-5 h-5 px-1 rounded-full bg-hibiscus text-white text-[10px] font-bold border-2 border-background">
+            <span className="absolute -top-1 -right-1 grid place-items-center min-w-[18px] h-[18px] px-1 rounded-full bg-hibiscus text-white text-[10px] font-black border-2 border-background">
               {favCount}
             </span>
           )}
@@ -78,8 +86,11 @@ export function Header() {
 export function BottomNav() {
   const pathname = usePathname();
   return (
-    <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-background/95 backdrop-blur-md border-t border-border safe-bottom">
-      <ul className="grid grid-cols-4">
+    <nav
+      aria-label="メインナビゲーション"
+      className="md:hidden fixed bottom-3 inset-x-3 z-30 safe-bottom"
+    >
+      <ul className="grid grid-cols-4 gap-1 p-1.5 rounded-full glass-strong shadow-float border border-white/60">
         {PRIMARY_NAV.map(({ href, label, Icon }) => {
           const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
           return (
@@ -87,16 +98,13 @@ export function BottomNav() {
               <Link
                 href={href}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-1 py-2.5 text-xs font-medium",
-                  active ? "text-primary-700" : "text-charcoal/75",
+                  "flex flex-col items-center justify-center gap-0.5 py-2 rounded-full text-[11px] font-bold transition-all",
+                  active
+                    ? "bg-charcoal text-white shadow-soft"
+                    : "text-charcoal/75 hover:bg-charcoal/5",
                 )}
               >
-                <Icon
-                  className={cn(
-                    "w-5 h-5",
-                    active && "fill-primary-100 stroke-primary-700",
-                  )}
-                />
+                <Icon className="w-5 h-5" />
                 {label}
               </Link>
             </li>
