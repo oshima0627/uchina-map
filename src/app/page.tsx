@@ -65,7 +65,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white text-charcoal text-sm font-bold shadow-soft hover:shadow-pop transition"
               >
                 <Sparkles className="w-4 h-4 text-hibiscus" />
-                今日どこ行く？
+                今日どこ？
               </Link>
               <Link
                 href="/map"
@@ -132,7 +132,7 @@ export default function HomePage() {
             href="/spots?age=0"
             tone="coral"
             icon={<Sun className="w-5 h-5" />}
-            label="0歳おでかけ"
+            label="0歳と行ける"
             desc="赤ちゃんと一緒に"
             count={SPOTS.filter((s) => s.ageTags.includes("0")).length}
           />
