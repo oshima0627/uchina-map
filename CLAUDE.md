@@ -21,9 +21,19 @@
 ```bash
 pnpm install     # 依存関係のインストール
 pnpm dev         # 開発サーバ (http://localhost:3000)
-pnpm build       # 本番ビルド
+pnpm build       # 静的エクスポート（out/ に書き出し）
+pnpm preview     # out/ をローカルプレビュー (http://localhost:4173)
 pnpm typecheck   # 型チェック (tsc --noEmit)
 ```
+
+## デプロイ
+
+- 公開URL: **https://uchina-map.nexeed-lab.com**
+- ホスティング: **Cloudflare Pages（静的エクスポート）**
+- `next.config.ts` で `output: "export"`, `trailingSlash: true`, `images.unoptimized: true` を設定済み。Server Actions・ISR・middleware は使えないことを前提にコードを書く。
+- 天気APIは `src/lib/weather.ts` の `getCachedTodayWeather()` 経由でクライアント側fetch + localStorage 30分キャッシュ。
+- Cloudflare Pages 設定: Build command `pnpm build` / Output `out` / Node 22。
+- `public/_headers` にセキュリティヘッダとキャッシュ規則あり（編集時は意味を理解してから）。
 
 ## 技術スタック
 

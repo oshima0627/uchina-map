@@ -43,9 +43,9 @@ http://localhost:3000
 ### 主要コマンド
 
 ```bash
-pnpm dev        # 開発サーバ
-pnpm build      # 本番ビルド
-pnpm start      # 本番サーバ
+pnpm dev        # 開発サーバ (http://localhost:3000)
+pnpm build      # 静的エクスポート（out/ に書き出し）
+pnpm preview    # out/ をローカルプレビュー (http://localhost:4173)
 pnpm typecheck  # 型チェック
 ```
 
@@ -68,6 +68,37 @@ public/                # 静的ファイル
 ## データ
 
 現状は `src/data/spots.ts` のモックデータで動作します。Phase 2 で Supabase + PostGIS に移行予定。
+
+## デプロイ（Cloudflare Pages）
+
+公開URL: **https://uchina-map.nexeed-lab.com**
+
+このリポジトリは `next.config.ts` で `output: "export"` を有効化し、`pnpm build` で `out/` ディレクトリに完全な静的サイトを書き出します。Cloudflare Pages は静的サイトを無料枠で配信できるため、追加コストなしで運用できます。
+
+### Pages 設定
+
+| 項目 | 値 |
+|---|---|
+| Framework preset | Next.js (Static HTML Export) |
+| Build command | `pnpm build` |
+| Build output directory | `out` |
+| Root directory | `/` |
+| Node version | `22` |
+| Environment variables | （現状不要） |
+
+`public/_headers` でセキュリティヘッダ（X-Frame-Options, Referrer-Policy, Permissions-Policy）と、`/_next/static/*` の immutable キャッシュを定義しています。
+
+### カスタムドメイン
+
+Cloudflare Pages の Custom domains に `uchina-map.nexeed-lab.com` を追加し、Cloudflare DNS の `nexeed-lab.com` ゾーンに CNAME を作成すれば公開できます。
+
+### 制約
+
+- 静的エクスポートなのでサーバ機能は利用不可（Server Actions、ミドルウェア、画像最適化、ISR ❌）。
+- `/recommend` の天気は **クライアントサイド fetch + localStorage 30分キャッシュ** で実装。
+- スポット詳細は `generateStaticParams` で全件 SSG（`dynamicParams: false`）。
+
+Phase 2 で Supabase + Server Component を入れる際は、`@opennextjs/cloudflare` 等で Workers ランタイムへ移行予定。
 
 ## ロードマップ
 

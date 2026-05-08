@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://uchina-map.nexeed-lab.com/sitemap.xml

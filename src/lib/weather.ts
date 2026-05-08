@@ -10,8 +10,8 @@ export type WeatherSummary = {
   emoji: string;
 };
 
-const NAHA_LAT = 26.2124;
-const NAHA_LNG = 127.6809;
+export const NAHA_LAT = 26.2124;
+export const NAHA_LNG = 127.6809;
 
 const WEATHER_CODE_MAP: Record<number, { label: string; emoji: string }> = {
   0: { label: "快晴", emoji: "☀️" },
@@ -50,9 +50,7 @@ export async function fetchTodayWeather(
   url.searchParams.set("forecast_days", "1");
   url.searchParams.set("wind_speed_unit", "ms");
 
-  const res = await fetch(url.toString(), {
-    next: { revalidate: 1800 },
-  });
+  const res = await fetch(url.toString());
   if (!res.ok) throw new Error(`weather api: ${res.status}`);
   const data = await res.json();
   const tempMax = data.daily.temperature_2m_max[0] as number;
@@ -72,4 +70,37 @@ export async function fetchTodayWeather(
     description: meta.label,
     emoji: meta.emoji,
   };
+}
+
+const CACHE_KEY = "uchina-map.weather.v1";
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+
+type CacheEntry = { ts: number; data: WeatherSummary };
+
+export async function getCachedTodayWeather(): Promise<WeatherSummary> {
+  if (typeof window !== "undefined") {
+    try {
+      const raw = window.localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as CacheEntry;
+        if (Date.now() - parsed.ts < CACHE_TTL_MS) {
+          return parsed.data;
+        }
+      }
+    } catch {
+      // ignore parse / quota errors
+    }
+  }
+  const fresh = await fetchTodayWeather();
+  if (typeof window !== "undefined") {
+    try {
+      window.localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({ ts: Date.now(), data: fresh } satisfies CacheEntry),
+      );
+    } catch {
+      // quota / disabled storage — non-fatal
+    }
+  }
+  return fresh;
 }

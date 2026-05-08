@@ -29,7 +29,7 @@ import {
 } from "@/lib/types";
 import { formatDuration, formatPrice } from "@/lib/utils";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return SPOTS.map((s) => ({ id: s.id }));
