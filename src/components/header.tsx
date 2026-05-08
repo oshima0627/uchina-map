@@ -28,8 +28,7 @@ export function Header() {
           >
             🏝️
           </span>
-          <span className="text-charcoal hidden sm:inline">うちなー子連れマップ</span>
-          <span className="text-charcoal sm:hidden text-sm">うちな子マップ</span>
+          <span className="text-charcoal text-sm sm:text-base">うちなー子連れマップ</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
