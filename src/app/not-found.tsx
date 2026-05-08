@@ -9,7 +9,7 @@ export default function NotFound() {
       <h1 className="text-2xl font-black text-charcoal">
         ページが見つかりません
       </h1>
-      <p className="text-charcoal/60 mt-2 mb-6">
+      <p className="text-charcoal/75 mt-2 mb-6">
         このスポットは存在しないか、削除された可能性があります。
       </p>
       <Link

@@ -160,7 +160,7 @@ export function SpotsBrowser() {
         </div>
       )}
 
-      <p className="text-sm text-charcoal/60 mb-3">
+      <p className="text-sm text-charcoal/75 mb-3">
         {filtered.length}件のスポット
       </p>
 
@@ -169,7 +169,7 @@ export function SpotsBrowser() {
           <p className="text-charcoal/70 font-medium">
             条件に合うスポットが見つかりませんでした。
           </p>
-          <p className="text-sm text-charcoal/50 mt-1">
+          <p className="text-sm text-charcoal/70 mt-1">
             フィルターを変更してお試しください。
           </p>
         </div>

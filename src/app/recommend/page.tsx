@@ -26,7 +26,7 @@ export default async function RecommendPage() {
         <h1 className="text-2xl md:text-3xl font-black text-charcoal mt-2">
           今日どこ行く？
         </h1>
-        <p className="text-sm text-charcoal/60 mt-1">
+        <p className="text-sm text-charcoal/75 mt-1">
           条件を選ぶと、今日の天気を加味したおすすめスポットが見つかります。
         </p>
       </header>
@@ -37,11 +37,11 @@ export default async function RecommendPage() {
             {weather.emoji}
           </span>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-charcoal/60">那覇の今日の天気</p>
+            <p className="text-xs text-charcoal/75">那覇の今日の天気</p>
             <p className="font-bold text-charcoal">
               {weather.description} / 最高 {Math.round(weather.tempMaxC)}℃
             </p>
-            <p className="text-xs text-charcoal/60">
+            <p className="text-xs text-charcoal/75">
               降水量 {weather.precipitationMm.toFixed(1)}mm / 最大風速{" "}
               {weather.windMaxMs.toFixed(1)}m/s
             </p>

@@ -150,7 +150,7 @@ export function MapView() {
                     "inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-all",
                     active
                       ? "text-white border-transparent"
-                      : "bg-white text-charcoal/50 border-border hover:border-charcoal/30",
+                      : "bg-white text-charcoal/70 border-border hover:border-charcoal/30",
                   )}
                   style={
                     active
@@ -169,7 +169,7 @@ export function MapView() {
 
       {/* Spot detail bottom sheet */}
       {selectedSpot && (
-        <div className="absolute bottom-3 left-3 right-3 z-10 rounded-2xl bg-white shadow-xl border border-border overflow-hidden animate-in fade-in">
+        <div className="absolute bottom-3 left-3 right-3 z-10 rounded-2xl bg-white shadow-xl border border-border overflow-hidden animate-slide-up">
           <button
             type="button"
             onClick={() => setSelectedSpot(null)}
@@ -197,7 +197,7 @@ export function MapView() {
               <h3 className="mt-1.5 font-bold text-charcoal text-balance leading-tight line-clamp-2">
                 {selectedSpot.name}
               </h3>
-              <p className="text-xs text-charcoal/60 mt-1 line-clamp-2">
+              <p className="text-xs text-charcoal/75 mt-1 line-clamp-2">
                 {selectedSpot.shortDescription ?? selectedSpot.description}
               </p>
               <div className="mt-2 flex flex-wrap gap-1">

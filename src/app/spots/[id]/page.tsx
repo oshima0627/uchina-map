@@ -85,7 +85,7 @@ export default async function SpotDetailPage({
             {spot.name}
           </h1>
           {spot.nameKana && (
-            <p className="text-sm text-charcoal/50 mt-1">{spot.nameKana}</p>
+            <p className="text-sm text-charcoal/70 mt-1">{spot.nameKana}</p>
           )}
           <div className="flex flex-wrap gap-1.5 mt-3">
             {spot.highlights.map((h) => (
@@ -177,7 +177,7 @@ export default async function SpotDetailPage({
             value={
               <span>
                 {spot.address}
-                <span className="text-charcoal/50 ml-2">（{CITY_LABELS[spot.city]}）</span>
+                <span className="text-charcoal/70 ml-2">（{CITY_LABELS[spot.city]}）</span>
               </span>
             }
           />
@@ -358,7 +358,7 @@ function InfoRow({
         {icon}
       </span>
       <div className="flex-1 min-w-0">
-        <div className="text-[11px] font-bold text-charcoal/50 uppercase tracking-wide">
+        <div className="text-[11px] font-bold text-charcoal/70 uppercase tracking-wide">
           {label}
         </div>
         <div className="text-sm text-charcoal break-words">{value}</div>

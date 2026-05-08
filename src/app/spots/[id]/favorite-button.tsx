@@ -19,7 +19,7 @@ export function FavoriteButton({ id }: { id: string }) {
       <Heart
         className={cn(
           "w-5 h-5",
-          hydrated && has ? "fill-hibiscus text-hibiscus" : "text-charcoal/60",
+          hydrated && has ? "fill-hibiscus text-hibiscus" : "text-charcoal/75",
         )}
       />
     </button>

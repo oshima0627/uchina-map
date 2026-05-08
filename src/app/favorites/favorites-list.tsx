@@ -15,7 +15,7 @@ export function FavoritesList() {
   const spots = SPOTS.filter((s) => ids.includes(s.id));
 
   if (!hydrated) {
-    return <div className="text-charcoal/60 text-sm">読み込み中...</div>;
+    return <div className="text-charcoal/75 text-sm">読み込み中...</div>;
   }
 
   if (spots.length === 0) {
@@ -25,7 +25,7 @@ export function FavoritesList() {
         <p className="text-charcoal/70 font-medium">
           まだお気に入りに登録されたスポットがありません。
         </p>
-        <p className="text-sm text-charcoal/50 mt-1 mb-4">
+        <p className="text-sm text-charcoal/70 mt-1 mb-4">
           気になるスポットの ♡ ボタンを押して保存しましょう。
         </p>
         <Link href="/spots">
@@ -38,7 +38,7 @@ export function FavoritesList() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-sm text-charcoal/60">{spots.length}件のお気に入り</p>
+        <p className="text-sm text-charcoal/75">{spots.length}件のお気に入り</p>
         <Button
           size="sm"
           variant="ghost"

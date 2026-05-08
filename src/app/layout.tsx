@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header, BottomNav } from "@/components/header";
 
+const SITE_URL = "https://uchina-map.nexeed-lab.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "うちなー子連れマップ｜沖縄の子連れOKスポット",
     template: "%s｜うちなー子連れマップ",
@@ -11,6 +14,9 @@ export const metadata: Metadata = {
     "沖縄県内の「子連れで安心して行ける場所」が、親目線の本当に欲しい情報付きで見つかるWebアプリ。授乳室・ベビーカー可・雨OKなど、必要な設備で絞り込めます。",
   keywords: ["沖縄", "子連れ", "お出かけ", "授乳室", "ベビーカー", "公園", "雨の日"],
   manifest: "/manifest.webmanifest",
+  alternates: {
+    canonical: "/",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -20,8 +26,25 @@ export const metadata: Metadata = {
     title: "うちなー子連れマップ",
     description:
       "沖縄の子連れOKスポットが、設備フィルタと地図で見つかる。",
+    url: SITE_URL,
+    siteName: "うちなー子連れマップ",
     type: "website",
     locale: "ja_JP",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "うちなー子連れマップ",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "うちなー子連れマップ",
+    description:
+      "沖縄の子連れOKスポットが、設備フィルタと地図で見つかる。",
+    images: ["/og-image.svg"],
   },
 };
 
@@ -57,7 +80,7 @@ export default function RootLayout({
         <main className="flex-1 pb-20 md:pb-0">{children}</main>
         <BottomNav />
         <footer className="hidden md:block border-t border-border py-6 mt-12">
-          <div className="mx-auto max-w-5xl px-4 text-xs text-charcoal/60">
+          <div className="mx-auto max-w-5xl px-4 text-xs text-charcoal/75">
             © 2026 うちなー子連れマップ・Nexeed Lab — 沖縄の親子が、もっと自由にお出かけできるように。
           </div>
         </footer>

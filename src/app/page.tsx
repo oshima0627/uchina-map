@@ -5,10 +5,10 @@ import {
   Map as MapIcon,
   Sparkles,
   ArrowRight,
-  Search,
   Heart,
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
+import { HomeSearch } from "@/components/home-search";
 import { SPOTS } from "@/data/spots";
 import {
   CATEGORIES,
@@ -43,21 +43,23 @@ export default function HomePage() {
               沖縄県内の子連れで安心して行ける場所が、
               親目線の本当に欲しい情報付きで見つかります。
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                href="/spots"
-                className="inline-flex items-center gap-2 px-5 h-12 rounded-full bg-white text-primary-700 font-bold shadow-md hover:shadow-lg transition-shadow"
-              >
-                <Search className="w-5 h-5" />
-                スポットをさがす
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            <div className="mt-6 max-w-xl">
+              <HomeSearch />
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
               <Link
                 href="/recommend"
-                className="inline-flex items-center gap-2 px-5 h-12 rounded-full bg-hibiscus text-white font-bold shadow-md hover:shadow-lg transition-shadow"
+                className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white/95 text-primary-700 text-sm font-bold shadow-sm hover:bg-white transition"
               >
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-4 h-4" />
                 今日どこ行く？
+              </Link>
+              <Link
+                href="/map"
+                className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white/30 text-white text-sm font-bold border border-white/40 backdrop-blur-sm hover:bg-white/40 transition"
+              >
+                <MapIcon className="w-4 h-4" />
+                地図で見る
               </Link>
             </div>
           </div>

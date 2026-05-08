@@ -57,7 +57,7 @@ export function SpotCard({ spot }: { spot: Spot }) {
           <Heart
             className={cn(
               "w-4 h-4 transition-colors",
-              hydrated && has ? "fill-hibiscus text-hibiscus" : "text-charcoal/60",
+              hydrated && has ? "fill-hibiscus text-hibiscus" : "text-charcoal/75",
             )}
           />
         </button>
@@ -74,7 +74,7 @@ export function SpotCard({ spot }: { spot: Spot }) {
           <h3 className="font-bold text-charcoal leading-tight text-balance">
             {spot.name}
           </h3>
-          <p className="text-xs text-charcoal/60 mt-1 line-clamp-1">
+          <p className="text-xs text-charcoal/75 mt-1 line-clamp-1">
             {spot.shortDescription ?? spot.description}
           </p>
         </div>
@@ -102,7 +102,7 @@ export function SpotCard({ spot }: { spot: Spot }) {
           )}
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-charcoal/60 pt-1">
+        <div className="flex items-center gap-3 text-xs text-charcoal/75 pt-1">
           <span className="flex items-center gap-1">
             <MapPin className="w-3 h-3" />
             {CITY_LABELS[spot.city]}
