@@ -92,7 +92,7 @@ export function RecommendForm({ weather }: { weather: WeatherSummary | null }) {
     else if (weather?.isRainy) list.push("雨予報 → 屋内・雨OKスポットを優先");
     else if (weather?.isHot) list.push("暑い日 → 屋内 / 水遊びスポットを優先");
     if (age === "0") list.push("0歳 → 授乳室・オムツ替え台ありを優先");
-    list.push(`滑在時間「${DURATION_LABELS[duration]}」に収まる施設を選択`);
+    list.push(`滞在時間「${DURATION_LABELS[duration]}」に収まる施設を選択`);
     return list;
   }, [weather, age, duration]);
 
@@ -106,7 +106,7 @@ export function RecommendForm({ weather }: { weather: WeatherSummary | null }) {
             onSelect={setAge}
           />
         </FieldGroup>
-        <FieldGroup label="滑在可能時間">
+        <FieldGroup label="滞在可能時間">
           <ChipGroup
             options={(["1h", "halfday", "fullday"] as Duration[]).map((d) => ({
               value: d,

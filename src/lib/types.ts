@@ -104,6 +104,13 @@ export const PriceSchema = z.object({
 });
 export type Price = z.infer<typeof PriceSchema>;
 
+export const ImageCreditSchema = z.object({
+  author: z.string(),
+  license: z.string(),
+  source: z.string().url(),
+});
+export type ImageCredit = z.infer<typeof ImageCreditSchema>;
+
 export const SpotSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -125,6 +132,7 @@ export const SpotSchema = z.object({
   ageTags: z.array(z.enum(AGE_TAGS)).default([]),
   features: FeaturesSchema,
   imageUrl: z.string().optional(),
+  imageCredit: ImageCreditSchema.optional(),
   imageEmoji: z.string().optional(),
 });
 export type Spot = z.infer<typeof SpotSchema>;

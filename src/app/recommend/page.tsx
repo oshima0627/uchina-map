@@ -3,7 +3,7 @@ import { RecommendClient } from "./recommend-client";
 export const metadata = {
   title: "今日どこ？",
   description:
-    "天気・年齢・滑在時間に応じて、今日ぴったりのお出かけ先をレコメンド。",
+    "天気・年齢・滞在時間に応じて、今日ぴったりのお出かけ先をレコメンド。",
 };
 
 export default function RecommendPage() {

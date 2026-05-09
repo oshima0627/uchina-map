@@ -61,26 +61,46 @@ export default async function SpotDetailPage({
   const features = spot.features;
 
   const categoryColor = CATEGORY_COLORS[spot.category];
+  const hasImage = !!spot.imageUrl;
 
   return (
     <article>
       {/* Hero */}
       <div
-        className="relative h-64 md:h-80 overflow-hidden"
-        style={{
-          background: `radial-gradient(at 18% 18%, ${categoryColor}cc 0, transparent 55%), radial-gradient(at 82% 82%, ${categoryColor}55 0, transparent 50%), linear-gradient(160deg, ${categoryColor}22 0%, ${categoryColor}11 100%)`,
-        }}
+        className="relative h-64 md:h-80 overflow-hidden bg-sand-light"
+        style={
+          hasImage
+            ? undefined
+            : {
+                background: `radial-gradient(at 18% 18%, ${categoryColor}cc 0, transparent 55%), radial-gradient(at 82% 82%, ${categoryColor}55 0, transparent 50%), linear-gradient(160deg, ${categoryColor}22 0%, ${categoryColor}11 100%)`,
+              }
+        }
       >
-        <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" aria-hidden />
-        <span
-          className="absolute inset-0 grid place-items-center text-[8rem] md:text-[10rem] animate-float"
-          aria-hidden
-        >
-          {spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category]}
-        </span>
-        <span
-          className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold glass-strong text-charcoal"
-        >
+        {hasImage ? (
+          <>
+            <img
+              src={spot.imageUrl}
+              alt={spot.name}
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"
+              aria-hidden
+            />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" aria-hidden />
+            <span
+              className="absolute inset-0 grid place-items-center text-[8rem] md:text-[10rem] animate-float"
+              aria-hidden
+            >
+              {spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category]}
+            </span>
+          </>
+        )}
+        <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold glass-strong text-charcoal">
           <span
             aria-hidden
             className="w-2 h-2 rounded-full"
@@ -89,6 +109,16 @@ export default async function SpotDetailPage({
           {CATEGORY_LABELS[spot.category]}
         </span>
         <FavoriteButton id={spot.id} />
+        {spot.imageCredit && (
+          <a
+            href={spot.imageCredit.source}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full glass-dark text-white text-[10px] font-medium hover:bg-white/15 transition"
+          >
+            📷 {spot.imageCredit.author}（{spot.imageCredit.license}）
+          </a>
+        )}
       </div>
 
       <div className="mx-auto max-w-3xl px-4 py-6">
@@ -240,7 +270,7 @@ export default async function SpotDetailPage({
           />
           <InfoRow
             icon={<Clock className="w-4 h-4" />}
-            label="滗在目安"
+            label="滞在目安"
             value={formatDuration(spot.durationMin)}
           />
           {spot.websiteUrl && (

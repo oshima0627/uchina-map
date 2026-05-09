@@ -45,20 +45,32 @@ export function SpotCard({ spot }: { spot: Spot }) {
         aria-hidden
       />
 
-      <div className="relative h-32 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(at 30% 20%, ${categoryColor}33 0%, transparent 60%), radial-gradient(at 80% 80%, ${categoryColor}22 0%, transparent 50%), linear-gradient(135deg, ${categoryColor}10 0%, ${categoryColor}05 100%)`,
-          }}
-          aria-hidden
-        />
-        <div
-          className="absolute inset-0 grid place-items-center text-6xl transition-transform duration-300 group-hover:scale-110"
-          aria-hidden
-        >
-          {spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category]}
-        </div>
+      <div className="relative h-32 overflow-hidden bg-sand-light">
+        {spot.imageUrl ? (
+          <img
+            src={spot.imageUrl}
+            alt={spot.name}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <>
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `radial-gradient(at 30% 20%, ${categoryColor}33 0%, transparent 60%), radial-gradient(at 80% 80%, ${categoryColor}22 0%, transparent 50%), linear-gradient(135deg, ${categoryColor}10 0%, ${categoryColor}05 100%)`,
+              }}
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0 grid place-items-center text-6xl transition-transform duration-300 group-hover:scale-110"
+              aria-hidden
+            >
+              {spot.imageEmoji ?? CATEGORY_EMOJIS[spot.category]}
+            </div>
+          </>
+        )}
 
         <button
           type="button"
