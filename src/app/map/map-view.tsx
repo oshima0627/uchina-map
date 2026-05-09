@@ -89,6 +89,15 @@ export function MapView() {
   );
   const [filterOpen, setFilterOpen] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
+  const [debugLog, setDebugLog] = useState<string[]>([]);
+  const debugRef = useRef<string[]>([]);
+  const log = (msg: string) => {
+    const line = `${new Date().toISOString().slice(11, 23)} ${msg}`;
+    debugRef.current = [...debugRef.current.slice(-40), line];
+    setDebugLog(debugRef.current);
+    // eslint-disable-next-line no-console
+    console.log("[MapView]", msg);
+  };
 
   const spotsToShow = useMemo(
     () => SPOTS.filter((s) => enabledCats.has(s.category)),
@@ -100,6 +109,8 @@ export function MapView() {
     const container = containerRef.current;
     if (!container || mapRef.current) return;
 
+    log(`init container size=${container.clientWidth}x${container.clientHeight}`);
+
     let map: maplibregl.Map;
     try {
       map = new maplibregl.Map({
@@ -108,20 +119,41 @@ export function MapView() {
         center: SOUTH_OKINAWA_CENTER,
         zoom: 11,
         attributionControl: { compact: true },
-        // Some iOS Safari versions reject WebGL2; fall back to WebGL1.
-        // (no-op when WebGL2 is available)
         antialias: false,
       });
+      log("Map() constructor ok");
     } catch (err) {
-      console.error("[MapView] failed to init MapLibre:", err);
-      setMapError(
-        err instanceof Error ? err.message : "地図の初期化に失敗しました。",
-      );
+      const msg = err instanceof Error ? err.message : String(err);
+      log(`init FAILED: ${msg}`);
+      setMapError(msg || "地図の初期化に失敗しました。");
       return;
     }
 
     map.on("error", (e) => {
-      console.error("[MapView] runtime error:", e?.error ?? e);
+      const inner = (e && (e as { error?: unknown }).error) as unknown;
+      let msg = "(no message)";
+      if (inner instanceof Error) msg = `${inner.name}: ${inner.message}`;
+      else if (typeof inner === "string") msg = inner;
+      else if (inner && typeof inner === "object") {
+        try {
+          msg = JSON.stringify(inner);
+        } catch {
+          msg = Object.prototype.toString.call(inner);
+        }
+      } else if (e && typeof e === "object") {
+        msg = `event=${(e as { type?: string }).type ?? "?"} sourceId=${
+          (e as { sourceId?: string }).sourceId ?? "?"
+        }`;
+      }
+      log(`runtime error: ${msg}`);
+    });
+    map.on("load", () => log("map load"));
+    map.on("styledata", () => log("styledata"));
+    map.on("data", (e) => {
+      const ev = e as { dataType?: string; tile?: { state?: string } };
+      if (ev?.dataType === "source" && ev?.tile?.state) {
+        log(`tile ${ev.tile.state}`);
+      }
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");
@@ -224,6 +256,23 @@ export function MapView() {
           </div>
         </div>
       )}
+
+      {/* Debug log overlay (temporary, for diagnosing iOS Safari issue) */}
+      <div className="absolute bottom-3 left-3 right-3 z-20 max-h-[40%] overflow-auto rounded-xl bg-charcoal/90 text-white text-[10px] font-mono p-2 leading-snug pointer-events-auto">
+        <div className="flex items-center justify-between mb-1 sticky top-0 bg-charcoal/90">
+          <span className="font-bold">map debug</span>
+          <span className="opacity-60">{debugLog.length} lines</span>
+        </div>
+        {debugLog.length === 0 ? (
+          <div className="opacity-60">waiting for events…</div>
+        ) : (
+          debugLog.map((l, i) => (
+            <div key={i} className="whitespace-pre-wrap break-all">
+              {l}
+            </div>
+          ))
+        )}
+      </div>
 
       {/* Top filter bar */}
       <div className="absolute top-3 left-3 right-16 z-10 flex gap-2">
