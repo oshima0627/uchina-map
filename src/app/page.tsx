@@ -74,9 +74,9 @@ const AGE_CARDS: Array<{
   accent: string;
 }> = [
   { tag: "0", display: "0", suffix: "歳", desc: "授乳室・オムツ替え重視", accent: "#e84855" },
-  { tag: "1-3", display: "1-3", suffix: "歳", desc: "ベビーカーOK・近場", accent: "#e89a2d" },
-  { tag: "4-6", display: "4-6", suffix: "歳", desc: "遊具・体験型施設", accent: "#3db8c9" },
-  { tag: "school", display: "6+", suffix: "歳〜", desc: "1日遊べる施設", accent: "#226574" },
+  { tag: "1-3", display: "1〜3", suffix: "歳", desc: "ベビーカーOK・近場", accent: "#e89a2d" },
+  { tag: "4-6", display: "4〜6", suffix: "歳", desc: "遊具・体験型施設", accent: "#3db8c9" },
+  { tag: "school", display: "6", suffix: "歳〜", desc: "1日遊べる施設", accent: "#226574" },
 ];
 
 export default function HomePage() {
