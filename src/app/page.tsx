@@ -98,28 +98,66 @@ export default function HomePage() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 gradient-ocean-deep" aria-hidden />
+        {/* Background photo — Okinawa beach */}
+        <img
+          src="/spots/豊崎海浜公園 美らSUNビーチ.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+        />
+        {/* Color tint to keep brand palette */}
         <div
-          className="absolute inset-0 bg-noise opacity-25 mix-blend-overlay"
+          className="absolute inset-0 bg-gradient-to-br from-[#226574]/60 via-[#3db8c9]/25 to-[#f4e5c2]/15"
           aria-hidden
         />
+        {/* Dark overlays for text contrast (top + bottom) */}
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 bg-noise opacity-15 mix-blend-overlay"
+          aria-hidden
+        />
+
+        {/* Okinawan decorative motifs */}
+        <span
+          aria-hidden
+          className="absolute top-6 right-6 md:top-10 md:right-12 text-[5rem] md:text-[8rem] opacity-30 animate-float drop-shadow-2xl pointer-events-none select-none"
+        >
+          🌺
+        </span>
+        <span
+          aria-hidden
+          className="absolute bottom-24 left-4 md:bottom-28 md:left-12 text-3xl md:text-5xl opacity-25 pointer-events-none select-none animate-float"
+          style={{ animationDelay: "1.2s" }}
+        >
+          🐠
+        </span>
+        <span
+          aria-hidden
+          className="hidden md:inline absolute top-[55%] right-[20%] text-3xl opacity-20 pointer-events-none select-none animate-float"
+          style={{ animationDelay: "2s" }}
+        >
+          🐢
+        </span>
 
         <div className="relative mx-auto max-w-5xl px-4 pt-12 pb-16 md:pt-20 md:pb-24">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-dark text-white text-[11px] font-medium tracking-wide">
               <Sparkles className="w-3.5 h-3.5" />
-              沖縄本島南部・在住者向け
+              めんそーれ｜沖縄本島南部・親子のお出かけ
             </span>
-            <h1 className="mt-5 text-[2.25rem] md:text-6xl font-black text-white text-balance leading-[1.05] tracking-[-0.03em]">
+            <h1 className="mt-5 text-[2.25rem] md:text-6xl font-black text-white text-balance leading-[1.05] tracking-[-0.03em] drop-shadow-md">
               <span className="block">「授乳室ある？」</span>
               <span className="block">「ベビーカーで入れる？」</span>
               <span className="block text-gradient-ocean">
                 が一目でわかる。
               </span>
             </h1>
-            <p className="mt-5 text-white/95 text-balance md:text-lg leading-relaxed max-w-xl">
-              沖縄の子連れOKスポットを、地図と設備フィルタで。
-              親が本当に欲しい情報だけを集めました。
+            <p className="mt-5 text-white/95 text-balance md:text-lg leading-relaxed max-w-xl drop-shadow-md">
+              うちなーの子連れOKスポットを、地図と設備フィルタで。
+              親が本当に欲しい情報を、地元目線で集めました。
             </p>
 
             <div className="mt-7 max-w-xl">
