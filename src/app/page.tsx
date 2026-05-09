@@ -5,18 +5,20 @@ import {
   Map as MapIcon,
   Sparkles,
   ArrowRight,
-  Search,
   Sun,
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
 import { HomeSearch } from "@/components/home-search";
 import { SPOTS } from "@/data/spots";
 import {
+  AGE_LABELS,
   CATEGORIES,
   CATEGORY_EMOJIS,
   CATEGORY_LABELS,
   CITIES,
   CITY_LABELS,
+  type AgeTag,
+  type Spot,
 } from "@/lib/types";
 
 const HERO_STATS = [
@@ -28,16 +30,79 @@ const HERO_STATS = [
   },
 ];
 
+// Quick scenarios — mixed-axis shortcuts in horizontal scroll
+const SCENE_CHIPS: Array<{ href: string; emoji: string; label: string }> = [
+  { href: "/spots?feature=rainOk", emoji: "🌧️", label: "雨でもOK" },
+  { href: "/spots?age=0", emoji: "🫃", label: "0歳と一緒" },
+  { href: "/spots?feature=strollerFriendly", emoji: "🚼", label: "ベビーカー" },
+  { href: "/spots?feature=hasParking", emoji: "🚗", label: "駐車場あり" },
+  { href: "/spots?category=beach", emoji: "🏖️", label: "ビーチ" },
+  { href: "/spots?category=aquarium", emoji: "🐠", label: "水族館" },
+  { href: "/spots?category=restaurant", emoji: "🍽️", label: "ランチ" },
+  { href: "/spots?category=park", emoji: "🛝", label: "大型遊具" },
+];
+
+const AGE_CARDS: Array<{
+  tag: AgeTag;
+  emoji: string;
+  desc: string;
+  gradient: string;
+}> = [
+  {
+    tag: "0",
+    emoji: "🫃",
+    desc: "授乳室・オムツ替え重視",
+    gradient: "from-[#ffe1e4] to-[#ffd1bd]",
+  },
+  {
+    tag: "1-3",
+    emoji: "🚼",
+    desc: "ベビーカーOK・近場",
+    gradient: "from-[#fff4cc] to-[#fde0a0]",
+  },
+  {
+    tag: "4-6",
+    emoji: "🛝",
+    desc: "遊具・体験型施設",
+    gradient: "from-[#d6f3f7] to-[#a8dadc]",
+  },
+  {
+    tag: "school",
+    emoji: "🎒",
+    desc: "1日遊べる施設",
+    gradient: "from-[#cce8ec] to-[#7dd3e0]",
+  },
+];
+
 export default function HomePage() {
   const featuredSpots = SPOTS.slice(0, 6);
-  const rainOkSpots = SPOTS.filter((s) => s.features.rainOk).slice(0, 4);
+
+  // Curated collections (build-time)
+  const collectionRain = SPOTS.filter(
+    (s) => s.features.rainOk && s.features.isIndoor,
+  )
+    .sort((a, b) => b.durationMin - a.durationMin)
+    .slice(0, 4);
+
+  const collectionBaby = SPOTS.filter(
+    (s) => s.ageTags.includes("0") && s.features.hasNursingRoom,
+  ).slice(0, 4);
+
+  const collectionAllDay = SPOTS.filter(
+    (s) => s.durationMin >= 180 && s.features.hasParking,
+  )
+    .sort((a, b) => b.durationMin - a.durationMin)
+    .slice(0, 4);
 
   return (
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 gradient-ocean-deep" aria-hidden />
-        <div className="absolute inset-0 bg-noise opacity-25 mix-blend-overlay" aria-hidden />
+        <div
+          className="absolute inset-0 bg-noise opacity-25 mix-blend-overlay"
+          aria-hidden
+        />
 
         <div className="relative mx-auto max-w-5xl px-4 pt-12 pb-16 md:pt-20 md:pb-24">
           <div className="max-w-2xl">
@@ -48,7 +113,9 @@ export default function HomePage() {
             <h1 className="mt-5 text-[2.25rem] md:text-6xl font-black text-white text-balance leading-[1.05] tracking-[-0.03em]">
               <span className="block">「授乳室ある？」</span>
               <span className="block">「ベビーカーで入れる？」</span>
-              <span className="block text-gradient-ocean">が一目でわかる。</span>
+              <span className="block text-gradient-ocean">
+                が一目でわかる。
+              </span>
             </h1>
             <p className="mt-5 text-white/95 text-balance md:text-lg leading-relaxed max-w-xl">
               沖縄の子連れOKスポットを、地図と設備フィルタで。
@@ -76,7 +143,6 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* stats strip */}
             <dl className="mt-8 grid grid-cols-3 gap-2 max-w-md">
               {HERO_STATS.map(({ value, label }) => (
                 <div
@@ -86,9 +152,7 @@ export default function HomePage() {
                   <dt className="text-[10px] font-medium tracking-wider uppercase text-charcoal/60">
                     {label}
                   </dt>
-                  <dd className="text-xl font-black tracking-tight">
-                    {value}
-                  </dd>
+                  <dd className="text-xl font-black tracking-tight">{value}</dd>
                 </div>
               ))}
             </dl>
@@ -146,12 +210,71 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Scene chips — お出かけ中のショートカット */}
+      <section
+        className="mx-auto max-w-5xl mt-6 md:mt-8"
+        aria-label="シーン別ショートカット"
+      >
+        <div className="overflow-x-auto px-4 pb-2 scroll-smooth-momentum">
+          <ul className="flex gap-2 min-w-max">
+            {SCENE_CHIPS.map(({ href, emoji, label }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full bg-card border border-border text-charcoal text-sm font-bold shadow-soft hover:shadow-card hover:border-primary-300 transition"
+                >
+                  <span aria-hidden className="text-base">
+                    {emoji}
+                  </span>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Age section — 年齢別おでかけ */}
       <section className="mx-auto max-w-5xl px-4 py-10">
-        <SectionHeader
-          eyebrow="Browse"
-          title="カテゴリで探す"
-        />
+        <SectionHeader eyebrow="By Age" title="年齢で選ぶ" />
+        <ul className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+          {AGE_CARDS.map(({ tag, emoji, desc, gradient }) => {
+            const count = SPOTS.filter((s) => s.ageTags.includes(tag)).length;
+            return (
+              <li key={tag}>
+                <Link
+                  href={`/spots?age=${tag}`}
+                  className={`group relative block rounded-2xl bg-gradient-to-br ${gradient} p-4 shadow-card hover:shadow-pop transition overflow-hidden`}
+                >
+                  <div
+                    className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-white/40 blur-2xl group-hover:scale-110 transition-transform"
+                    aria-hidden
+                  />
+                  <span
+                    className="relative text-3xl block transition-transform group-hover:scale-110"
+                    aria-hidden
+                  >
+                    {emoji}
+                  </span>
+                  <h3 className="relative mt-2 text-base font-black text-charcoal tracking-tight">
+                    {AGE_LABELS[tag]}
+                  </h3>
+                  <p className="relative text-[11px] text-charcoal/75 mt-0.5 leading-snug">
+                    {desc}
+                  </p>
+                  <p className="relative mt-2 text-[10px] font-bold tabular-nums text-charcoal/70">
+                    {count}件のスポット
+                  </p>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* Categories */}
+      <section className="mx-auto max-w-5xl px-4 pb-2">
+        <SectionHeader eyebrow="Browse" title="カテゴリで探す" />
         <ul className="mt-5 grid grid-cols-4 md:grid-cols-8 gap-2">
           {CATEGORIES.map((cat) => (
             <li key={cat}>
@@ -175,7 +298,7 @@ export default function HomePage() {
       </section>
 
       {/* Areas */}
-      <section className="mx-auto max-w-5xl px-4 pb-2">
+      <section className="mx-auto max-w-5xl px-4 py-10">
         <SectionHeader eyebrow="Areas" title="エリアで探す" />
         <ul className="mt-5 flex flex-wrap gap-2">
           {CITIES.map((city) => (
@@ -192,7 +315,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured spots */}
-      <section className="mx-auto max-w-5xl px-4 py-10">
+      <section className="mx-auto max-w-5xl px-4 py-6">
         <div className="flex items-end justify-between gap-3">
           <SectionHeader eyebrow="Featured" title="おすすめスポット" />
           <Link
@@ -210,33 +333,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Rain OK */}
-      <section className="mx-auto max-w-5xl px-4 pb-12">
-        <div className="rounded-3xl gradient-sand p-5 md:p-8 relative overflow-hidden">
-          <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl" aria-hidden />
-          <div className="relative">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="grid place-items-center w-9 h-9 rounded-xl bg-white/80 text-primary-700 shadow-soft">
-                <CloudRain className="w-5 h-5" />
-              </span>
-              <span className="text-[11px] font-bold tracking-wider uppercase text-charcoal/60">
-                Rainy Day
-              </span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-black text-charcoal tracking-tight">
-              雨の日でも遊べるスポット
-            </h2>
-            <p className="text-sm text-charcoal/75 mt-1.5 mb-5">
-              台風や雨の日も、子供が思い切り遊べる屋内施設。
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {rainOkSpots.map((spot) => (
-                <SpotCard key={spot.id} spot={spot} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Curated collections */}
+      <CollectionSection
+        eyebrow="Rainy Day"
+        title="雨でも飽きない屋内施設"
+        description="梅雨や台風の日も、子供が思い切り遊べる屋内スポット。"
+        icon={<CloudRain className="w-5 h-5" />}
+        allHref="/spots?feature=rainOk"
+        spots={collectionRain}
+        accent="sand"
+      />
+      <CollectionSection
+        eyebrow="Baby"
+        title="赤ちゃんと行ける安心スポット"
+        description="授乳室・オムツ替え台完備で、ベビーカーで入れる施設だけ。"
+        icon={<Baby className="w-5 h-5" />}
+        allHref="/spots?age=0"
+        spots={collectionBaby}
+        accent="coral"
+      />
+      <CollectionSection
+        eyebrow="All Day"
+        title="1日たっぷり遊べる"
+        description="滞在時間3時間以上＋駐車場あり。家族でゆったり過ごせる施設。"
+        icon={<Sun className="w-5 h-5" />}
+        allHref="/spots?feature=hasParking"
+        spots={collectionAllDay}
+        accent="primary"
+      />
     </div>
   );
 }
@@ -257,6 +381,67 @@ function SectionHeader({
         {title}
       </h2>
     </div>
+  );
+}
+
+function CollectionSection({
+  eyebrow,
+  title,
+  description,
+  icon,
+  allHref,
+  spots,
+  accent,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  allHref: string;
+  spots: Spot[];
+  accent: "sand" | "coral" | "primary";
+}) {
+  if (spots.length === 0) return null;
+  const accentClasses = {
+    sand: "bg-sand-light text-primary-700",
+    coral: "bg-hibiscus/10 text-hibiscus",
+    primary: "bg-primary-50 text-primary-700",
+  };
+  return (
+    <section className="mx-auto max-w-5xl px-4 py-6">
+      <div className="flex items-end justify-between gap-3 mb-5">
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5 mb-1">
+            <span
+              className={`grid place-items-center w-7 h-7 rounded-lg ${accentClasses[accent]}`}
+            >
+              {icon}
+            </span>
+            <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-primary-700">
+              {eyebrow}
+            </span>
+          </div>
+          <h2 className="text-xl md:text-2xl font-black text-charcoal tracking-tight">
+            {title}
+          </h2>
+          <p className="text-sm text-charcoal/75 mt-1 text-balance">
+            {description}
+          </p>
+        </div>
+        <Link
+          href={allHref}
+          className="text-sm text-primary-700 hover:text-primary-800 font-medium inline-flex items-center gap-1 whitespace-nowrap shrink-0"
+        >
+          すべて見る
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        {spots.map((spot) => (
+          <SpotCard key={spot.id} spot={spot} />
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -290,7 +475,10 @@ function BentoCard({
         big ? "col-span-2 md:col-span-2 row-span-1" : ""
       } ${tones[tone]}`}
     >
-      <div className="absolute -top-12 -right-10 w-32 h-32 rounded-full bg-white/15 blur-2xl group-hover:scale-110 transition-transform" aria-hidden />
+      <div
+        className="absolute -top-12 -right-10 w-32 h-32 rounded-full bg-white/15 blur-2xl group-hover:scale-110 transition-transform"
+        aria-hidden
+      />
       <div className="relative flex items-start justify-between gap-2">
         <span className="grid place-items-center w-10 h-10 rounded-xl bg-white/30 backdrop-blur-sm border border-white/40">
           {icon}
@@ -302,7 +490,9 @@ function BentoCard({
         )}
       </div>
       <div className="relative mt-4">
-        <p className={`font-black text-balance leading-tight ${big ? "text-xl" : "text-base"}`}>
+        <p
+          className={`font-black text-balance leading-tight ${big ? "text-xl" : "text-base"}`}
+        >
           {label}
         </p>
         <p className="text-[11px] opacity-80 mt-0.5">{desc}</p>
