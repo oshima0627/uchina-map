@@ -13,6 +13,10 @@ import {
   Utensils,
   TreePine,
   Wind,
+  Gamepad2,
+  ShoppingBag,
+  BookOpen,
+  Droplets,
   type LucideIcon,
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
@@ -21,13 +25,25 @@ import { SPOTS } from "@/data/spots";
 import {
   AGE_LABELS,
   CATEGORIES,
-  CATEGORY_EMOJIS,
+  CATEGORY_COLORS,
   CATEGORY_LABELS,
   CITIES,
   CITY_LABELS,
   type AgeTag,
+  type Category,
   type Spot,
 } from "@/lib/types";
+
+const CATEGORY_ICONS: Record<Category, LucideIcon> = {
+  park: TreePine,
+  indoor: Gamepad2,
+  aquarium: Fish,
+  beach: Waves,
+  restaurant: Utensils,
+  shopping: ShoppingBag,
+  learning: BookOpen,
+  onsen: Droplets,
+};
 
 const HERO_STATS = [
   { value: SPOTS.length, label: "スポット" },
@@ -343,45 +359,66 @@ export default function HomePage() {
         </ul>
       </section>
 
-      {/* Categories */}
+      {/* Categories — editorial list with line icons + per-category counts */}
       <section className="mx-auto max-w-5xl px-4 pb-2">
         <SectionHeader eyebrow="Browse" title="カテゴリで探す" />
-        <ul className="mt-5 grid grid-cols-4 md:grid-cols-8 gap-2">
-          {CATEGORIES.map((cat) => (
-            <li key={cat}>
-              <Link
-                href={`/spots?category=${cat}`}
-                className="group flex flex-col items-center gap-1.5 px-2 py-3 rounded-xl bg-card border border-border hover:border-primary-300 hover:bg-primary-50/50 transition shadow-soft hover:shadow-card"
-              >
-                <span
-                  className="text-2xl transition-transform group-hover:scale-110"
-                  aria-hidden
+        <ul className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-2">
+          {CATEGORIES.map((cat) => {
+            const Icon = CATEGORY_ICONS[cat];
+            const color = CATEGORY_COLORS[cat];
+            const count = SPOTS.filter((s) => s.category === cat).length;
+            return (
+              <li key={cat}>
+                <Link
+                  href={`/spots?category=${cat}`}
+                  className="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-border hover:border-charcoal/30 hover:shadow-soft transition"
                 >
-                  {CATEGORY_EMOJIS[cat]}
-                </span>
-                <span className="text-[11px] font-bold text-charcoal text-center leading-tight">
-                  {CATEGORY_LABELS[cat]}
-                </span>
-              </Link>
-            </li>
-          ))}
+                  <span
+                    aria-hidden
+                    className="grid place-items-center w-9 h-9 rounded-xl shrink-0"
+                    style={{
+                      background: `${color}15`,
+                      color,
+                    }}
+                  >
+                    <Icon className="w-[18px] h-[18px]" strokeWidth={1.75} />
+                  </span>
+                  <span className="flex-1 min-w-0 text-sm font-bold text-charcoal leading-tight">
+                    {CATEGORY_LABELS[cat]}
+                  </span>
+                  <span className="text-[11px] tabular-nums font-bold text-charcoal/55">
+                    {count}
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-charcoal/40 transition-all group-hover:translate-x-0.5 group-hover:text-charcoal shrink-0" />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </section>
 
-      {/* Areas */}
+      {/* Areas — pills with per-city counts and a thin separator */}
       <section className="mx-auto max-w-5xl px-4 py-10">
         <SectionHeader eyebrow="Areas" title="エリアで探す" />
         <ul className="mt-5 flex flex-wrap gap-2">
-          {CITIES.map((city) => (
-            <li key={city}>
-              <Link
-                href={`/spots?city=${city}`}
-                className="inline-flex items-center px-4 h-10 rounded-full bg-card hover:bg-primary-50 text-charcoal text-sm font-medium border border-border hover:border-primary-300 transition shadow-soft"
-              >
-                {CITY_LABELS[city]}
-              </Link>
-            </li>
-          ))}
+          {CITIES.map((city) => {
+            const count = SPOTS.filter((s) => s.city === city).length;
+            return (
+              <li key={city}>
+                <Link
+                  href={`/spots?city=${city}`}
+                  className="group inline-flex items-center gap-2.5 pl-4 pr-3 h-10 rounded-full bg-card text-charcoal border border-border hover:border-charcoal/30 hover:shadow-soft transition"
+                >
+                  <span className="text-sm font-medium">
+                    {CITY_LABELS[city]}
+                  </span>
+                  <span className="pl-2.5 border-l border-border/70 text-[11px] tabular-nums font-bold text-charcoal/55">
+                    {count}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </section>
 
