@@ -88,9 +88,10 @@ export function MapView() {
 
   // initialize map
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
+    const container = containerRef.current;
+    if (!container || mapRef.current) return;
     const map = new maplibregl.Map({
-      container: containerRef.current,
+      container,
       style: MAP_STYLE,
       center: SOUTH_OKINAWA_CENTER,
       zoom: 11,
@@ -105,8 +106,15 @@ export function MapView() {
       "top-right",
     );
 
+    // iOS Safari can mount the container before its final size is computed,
+    // leaving the map canvas at 0×0. Re-resize whenever the container size
+    // changes so the canvas always fills its parent.
+    const ro = new ResizeObserver(() => map.resize());
+    ro.observe(container);
+
     mapRef.current = map;
     return () => {
+      ro.disconnect();
       map.remove();
       mapRef.current = null;
     };

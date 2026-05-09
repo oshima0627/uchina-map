@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function MapPage() {
   return (
-    <div className="h-[calc(100vh-7.5rem)] md:h-[calc(100vh-3.5rem)] relative">
+    <div className="h-[calc(100dvh-9rem)] md:h-[calc(100dvh-3.5rem)] min-h-[60vh] relative bg-sand-light">
       <MapView />
     </div>
   );
