@@ -9,16 +9,23 @@
 
   <rect width="512" height="512" rx="110" fill="url(#bg)"/>
 
+  <circle cx="256" cy="262" r="160" fill="#E89A2D"/>
   <g fill="#FFC847">
-    <circle cx="158" cy="200" r="62"/>
-    <circle cx="256" cy="170" r="74"/>
-    <circle cx="354" cy="200" r="62"/>
+    <circle cx="256" cy="262" r="155"/>
+    <circle cx="256" cy="106" r="60"/>
+    <circle cx="142" cy="148" r="55"/>
+    <circle cx="370" cy="148" r="55"/>
+    <circle cx="96" cy="262" r="60"/>
+    <circle cx="416" cy="262" r="60"/>
+    <circle cx="142" cy="376" r="55"/>
+    <circle cx="370" cy="376" r="55"/>
+    <circle cx="256" cy="418" r="60"/>
   </g>
 
-  <circle cx="256" cy="300" r="140" fill="#FFE8B8"/>
+  <circle cx="256" cy="272" r="118" fill="#FFE8B8"/>
 
-  <circle cx="212" cy="285" r="22" fill="#1D3557"/>
-  <circle cx="300" cy="285" r="22" fill="#1D3557"/>
+  <circle cx="214" cy="262" r="22" fill="#1D3557"/>
+  <circle cx="298" cy="262" r="22" fill="#1D3557"/>
 
-  <ellipse cx="256" cy="365" rx="32" ry="20" fill="#C4322F"/>
+  <ellipse cx="256" cy="335" rx="34" ry="22" fill="#C4322F"/>
 </svg>
