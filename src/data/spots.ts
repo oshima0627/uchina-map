@@ -117,31 +117,6 @@ export const SPOTS: Spot[] = [
     imageEmoji: "🚂",
   },
   {
-    id: "naha-shimin-no-mori",
-    name: "那覇市民の森",
-    nameKana: "なはしみんのもり",
-    category: "park",
-    description:
-      "末吉宮を中心とした緑豊かな森。散策路があり、自然観察に最適。蝶や鳥、亜熱帯植物が観察できる。",
-    shortDescription: "亜熱帯の自然を感じる森",
-    highlights: ["自然観察", "散策路", "無料"],
-    address: "沖縄県那覇市首里末吉町1-1",
-    city: "naha",
-    lat: 26.2333,
-    lng: 127.7106,
-    businessHours: "終日",
-    closedDays: [],
-    price: { adult: 0, free: true },
-    durationMin: 90,
-    ageTags: ["4-6", "school"],
-    features: f({
-      strollerFriendly: false,
-      hasParking: true,
-      parkingFree: true,
-    }),
-    imageEmoji: "🌳",
-  },
-  {
     id: "naha-mori-no-ie-minmin",
     name: "那覇市立森の家みんみん",
     nameKana: "なはしりつもりのいえみんみん",
@@ -266,6 +241,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingSpacious: true,
     }),
+    imageUrl: "/spots/新都心公園.jpg",
     imageEmoji: "🛝",
   },
   {
@@ -294,37 +270,8 @@ export const SPOTS: Spot[] = [
       parkingFree: true,
       strollerFriendly: false,
     }),
+    imageUrl: "/spots/tomariiyumachi-2.jpg",
     imageEmoji: "🐟",
-  },
-  {
-    id: "naha-omoromachi-tsutaya",
-    name: "TSUTAYA BOOKSTORE 那覇銘苅",
-    nameKana: "つたや",
-    category: "indoor",
-    description:
-      "絵本コーナーが充実したブックストア。スターバックスも併設しており、雨の日の長時間滞在に最適。",
-    shortDescription: "絵本充実のスタバ併設書店",
-    highlights: ["絵本コーナー", "カフェ併設", "雨OK"],
-    address: "沖縄県那覇市銘苅2-4-37",
-    city: "naha",
-    lat: 26.2272,
-    lng: 127.6924,
-    businessHours: "10:00-22:00",
-    closedDays: [],
-    price: { adult: 0, free: true },
-    durationMin: 60,
-    ageTags: ["0", "1-3", "4-6", "school"],
-    features: f({
-      hasDiaperTable: true,
-      isIndoor: true,
-      isOutdoor: false,
-      rainOk: true,
-      typhoonOk: true,
-      hasKidsSpace: true,
-      hasMultipurposeToilet: true,
-      noiseTolerant: false,
-    }),
-    imageEmoji: "📚",
   },
 
   // ===== 浦添市 =====
@@ -390,64 +337,8 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/サンエー浦添西海岸PARCO CITY.jpg",
     imageEmoji: "🛍️",
-  },
-  {
-    id: "urasoe-sangokueki",
-    name: "三国志公園",
-    nameKana: "さんごくしこうえん",
-    category: "park",
-    description:
-      "三国志をテーマにしたユニークな遊具がある公園。アスレチックや迷路があり、夢中で遊べる。",
-    shortDescription: "三国志テーマのユニーク公園",
-    highlights: ["アスレチック", "ユニーク遊具", "無料"],
-    address: "沖縄県浦添市仲間2-53",
-    city: "urasoe",
-    lat: 26.2456,
-    lng: 127.7372,
-    businessHours: "終日",
-    closedDays: [],
-    price: { adult: 0, free: true },
-    durationMin: 90,
-    ageTags: ["4-6", "school"],
-    features: f({
-      hasPlayground: true,
-      parkingFree: true,
-    }),
-    imageEmoji: "🏰",
-  },
-  {
-    id: "urasoe-yoji-no-castle",
-    name: "ようじの城（イオン浦添内）",
-    nameKana: "ようじのしろ",
-    category: "indoor",
-    description:
-      "イオン浦添内の屋内有料キッズパーク。ボールプールやトランポリンなど、雨の日でも思い切り遊べる。",
-    shortDescription: "雨の日に大活躍の屋内遊び場",
-    highlights: ["ボールプール", "トランポリン", "雨OK"],
-    address: "沖縄県浦添市勢理客4-12-1 イオン浦添3F",
-    city: "urasoe",
-    lat: 26.2632,
-    lng: 127.7064,
-    businessHours: "10:00-21:00",
-    closedDays: [],
-    price: { adult: 800, child: 800, freeUnder: 0 },
-    durationMin: 120,
-    ageTags: ["0", "1-3", "4-6"],
-    features: f({
-      hasNursingRoom: true,
-      hasDiaperTable: true,
-      isIndoor: true,
-      isOutdoor: false,
-      rainOk: true,
-      typhoonOk: true,
-      hasKidsSpace: true,
-      hasMultipurposeToilet: true,
-      strollerFriendly: true,
-      parkingFree: true,
-      parkingSpacious: true,
-    }),
-    imageEmoji: "🎈",
   },
   {
     id: "urasoe-art-museum",
@@ -478,6 +369,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/浦添市美術館.webp",
     imageEmoji: "🎨",
   },
 
@@ -508,6 +400,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/宜野湾トロピカルビーチ.jpg",
     imageEmoji: "🏖️",
   },
   {
@@ -535,6 +428,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/沖縄コンベンションセンター 海浜公園.jpg",
     imageEmoji: "🌅",
   },
   {
@@ -566,32 +460,8 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/宜野湾市立博物館.jpg",
     imageEmoji: "📜",
-  },
-  {
-    id: "ginowan-oyama-tianmo",
-    name: "大山田芋ぬ田 田んぼ体験",
-    nameKana: "おおやまたーんむぬたー",
-    category: "learning",
-    description:
-      "宜野湾の特産・田芋（ターンム）の田んぼで生き物観察ができる。シーズンには田植え・収穫体験も。",
-    shortDescription: "田芋の田んぼで生き物観察",
-    highlights: ["生き物観察", "田植え体験", "食育"],
-    address: "沖縄県宜野湾市大山",
-    city: "ginowan",
-    lat: 26.2874,
-    lng: 127.7575,
-    businessHours: "終日（体験は要予約）",
-    closedDays: [],
-    price: { adult: 0, free: true },
-    durationMin: 60,
-    ageTags: ["4-6", "school"],
-    features: f({
-      strollerFriendly: false,
-      hasParking: false,
-      parkingFree: false,
-    }),
-    imageEmoji: "🌾",
   },
 
   // ===== 豊見城市 =====
@@ -628,6 +498,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/DMMかりゆし水族館.jpg",
     imageEmoji: "🐠",
   },
   {
@@ -658,6 +529,7 @@ export const SPOTS: Spot[] = [
       strollerFriendly: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/瀬長島ウミカジテラス.webp",
     imageEmoji: "✈️",
   },
   {
@@ -687,6 +559,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/豊崎海浜公園 美らSUNビーチ.jpg",
     imageEmoji: "🏖️",
   },
   {
@@ -714,6 +587,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/豊見城総合公園.jpg",
     imageEmoji: "⚾",
   },
   {
@@ -744,6 +618,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/道の駅 豊崎.jpg",
     imageEmoji: "🥬",
   },
   {
@@ -774,6 +649,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/沖縄アウトレットモール あしびなー.jpg",
     imageEmoji: "🛍️",
   },
 
@@ -808,6 +684,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/おきなわワールド（玉泉洞）.jpg",
     imageEmoji: "🕳️",
   },
   {
@@ -835,6 +712,7 @@ export const SPOTS: Spot[] = [
       strollerFriendly: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/ガンガラーの谷.jpg",
     imageEmoji: "🌿",
   },
   {
@@ -860,6 +738,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/知念岬公園.jpg",
     imageEmoji: "🏝️",
   },
   {
@@ -887,6 +766,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/あざまサンサンビーチ.jpg",
     imageEmoji: "🌊",
   },
   {
@@ -914,6 +794,7 @@ export const SPOTS: Spot[] = [
       rainOk: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/道の駅 豊崎南城（がんじゅう駅）.jpg",
     imageEmoji: "🚗",
   },
   {
@@ -941,6 +822,7 @@ export const SPOTS: Spot[] = [
       rainOk: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/美らイチゴ南城農場.jpg",
     imageEmoji: "🍓",
   },
 
@@ -968,31 +850,8 @@ export const SPOTS: Spot[] = [
       strollerFriendly: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/八重瀬公園.jpg",
     imageEmoji: "🌸",
-  },
-  {
-    id: "yaese-minatogawa",
-    name: "港川中央公園",
-    nameKana: "みなとがわちゅうおうこうえん",
-    category: "park",
-    description:
-      "ローラー滑り台と複合遊具が人気の地域公園。地元の家族連れで賑わう穴場スポット。",
-    shortDescription: "地域に愛される穴場公園",
-    highlights: ["ローラー滑り台", "穴場", "無料"],
-    address: "沖縄県八重瀬町字港川",
-    city: "yaese",
-    lat: 26.1058,
-    lng: 127.7376,
-    businessHours: "終日",
-    closedDays: [],
-    price: { adult: 0, free: true },
-    durationMin: 60,
-    ageTags: ["1-3", "4-6", "school"],
-    features: f({
-      hasPlayground: true,
-      parkingFree: true,
-    }),
-    imageEmoji: "🛝",
   },
   {
     id: "yaese-sugar-hall",
@@ -1023,6 +882,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/シュガーホール（八重瀬町文化センター）.jpg",
     imageEmoji: "🎵",
   },
   {
@@ -1048,6 +908,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/富盛の石彫大獅子.jpg",
     imageEmoji: "🦁",
   },
 
@@ -1078,6 +939,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/平和祈念公園.jpg",
     imageEmoji: "🕊️",
   },
   {
@@ -1109,6 +971,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/ひめゆり平和祈念資料館.jpg",
     imageEmoji: "📖",
   },
   {
@@ -1168,6 +1031,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/道の駅 いとまん.jpg",
     imageEmoji: "🛒",
   },
   {
@@ -1193,6 +1057,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/うみんちゅワーフ.jpg",
     imageEmoji: "⚓",
   },
   {
@@ -1222,6 +1087,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/糸満漁民食堂.jpg",
     imageEmoji: "🍣",
   },
   {
@@ -1249,6 +1115,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/西崎運動公園.webp",
     imageEmoji: "🏃",
   },
 
@@ -1278,6 +1145,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/国際通り.webp",
     imageEmoji: "🏮",
   },
   {
@@ -1305,6 +1173,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/ゆいレール展示館（てつどうクラブ）.png",
     imageEmoji: "🚝",
   },
   {
@@ -1335,6 +1204,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/瀬長島ホテル 龍神の湯.webp",
     imageEmoji: "♨️",
   },
   {
@@ -1360,6 +1230,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/若狭海浜公園.jpeg",
     imageEmoji: "🚢",
   },
   {
@@ -1385,31 +1256,8 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/波の上ビーチ.webp",
     imageEmoji: "🌊",
-  },
-  {
-    id: "tomi-toyo-park",
-    name: "豊見城高安児童公園",
-    nameKana: "とみぐすくたかやすじどうこうえん",
-    category: "park",
-    description:
-      "ロケット型の遊具と長い滑り台で人気。ベンチや日陰スペースもあり、ママ友同士の利用も多い。",
-    shortDescription: "ロケット遊具が目印の児童公園",
-    highlights: ["ロケット遊具", "日陰あり", "穴場"],
-    address: "沖縄県豊見城市高安",
-    city: "tomigusuku",
-    lat: 26.1734,
-    lng: 127.6841,
-    businessHours: "終日",
-    closedDays: [],
-    price: { adult: 0, free: true },
-    durationMin: 60,
-    ageTags: ["1-3", "4-6"],
-    features: f({
-      hasPlayground: true,
-      parkingFree: true,
-    }),
-    imageEmoji: "🚀",
   },
   {
     id: "ginowan-tropical-pool",
@@ -1439,6 +1287,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/宜野湾市民プール.webp",
     imageEmoji: "🏊",
   },
 ];
