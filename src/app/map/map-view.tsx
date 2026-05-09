@@ -55,19 +55,27 @@ const CATEGORY_MARKER_SVG: Record<Category, string> = {
 
 const SOUTH_OKINAWA_CENTER: [number, number] = [127.7, 26.18];
 
+// Multi-CDN raster source. CARTO's free voyager raster tiles are reliable,
+// but we list multiple subdomains so MapLibre rotates them — important when
+// a single host is blocked by mobile carriers / captive portals.
 const MAP_STYLE: maplibregl.StyleSpecification = {
   version: 8,
   sources: {
-    osm: {
+    base: {
       type: "raster",
-      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      tiles: [
+        "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+        "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+        "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+        "https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+      ],
       tileSize: 256,
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
       maxzoom: 19,
     },
   },
-  layers: [{ id: "osm", type: "raster", source: "osm" }],
+  layers: [{ id: "base", type: "raster", source: "base" }],
 };
 
 export function MapView() {
@@ -80,6 +88,7 @@ export function MapView() {
     new Set(CATEGORIES),
   );
   const [filterOpen, setFilterOpen] = useState(false);
+  const [mapError, setMapError] = useState<string | null>(null);
 
   const spotsToShow = useMemo(
     () => SPOTS.filter((s) => enabledCats.has(s.category)),
@@ -90,13 +99,31 @@ export function MapView() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container || mapRef.current) return;
-    const map = new maplibregl.Map({
-      container,
-      style: MAP_STYLE,
-      center: SOUTH_OKINAWA_CENTER,
-      zoom: 11,
-      attributionControl: { compact: true },
+
+    let map: maplibregl.Map;
+    try {
+      map = new maplibregl.Map({
+        container,
+        style: MAP_STYLE,
+        center: SOUTH_OKINAWA_CENTER,
+        zoom: 11,
+        attributionControl: { compact: true },
+        // Some iOS Safari versions reject WebGL2; fall back to WebGL1.
+        // (no-op when WebGL2 is available)
+        antialias: false,
+      });
+    } catch (err) {
+      console.error("[MapView] failed to init MapLibre:", err);
+      setMapError(
+        err instanceof Error ? err.message : "地図の初期化に失敗しました。",
+      );
+      return;
+    }
+
+    map.on("error", (e) => {
+      console.error("[MapView] runtime error:", e?.error ?? e);
     });
+
     map.addControl(new maplibregl.NavigationControl(), "top-right");
     map.addControl(
       new maplibregl.GeolocateControl({
@@ -111,6 +138,9 @@ export function MapView() {
     // changes so the canvas always fills its parent.
     const ro = new ResizeObserver(() => map.resize());
     ro.observe(container);
+    // Also force a resize on the next frame in case ResizeObserver fires
+    // before the first paint.
+    requestAnimationFrame(() => map.resize());
 
     mapRef.current = map;
     return () => {
@@ -179,7 +209,21 @@ export function MapView() {
 
   return (
     <div className="relative w-full h-full">
-      <div ref={containerRef} className="absolute inset-0" />
+      <div ref={containerRef} className="absolute inset-0 bg-sand-light" />
+
+      {mapError && (
+        <div className="absolute inset-0 grid place-items-center p-6 z-10 text-center">
+          <div className="rounded-2xl bg-white border border-border shadow-soft p-5 max-w-sm">
+            <p className="font-bold text-charcoal text-sm">
+              地図を読み込めませんでした
+            </p>
+            <p className="text-xs text-charcoal/70 mt-1">{mapError}</p>
+            <p className="text-[11px] text-charcoal/55 mt-3">
+              ネットワーク状況をご確認のうえ、再読み込みしてください。
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Top filter bar */}
       <div className="absolute top-3 left-3 right-16 z-10 flex gap-2">
