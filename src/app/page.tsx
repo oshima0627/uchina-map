@@ -337,7 +337,16 @@ export default function HomePage() {
                   </span>
                   <div className="mt-1.5 flex items-baseline gap-1 text-charcoal">
                     <span className="text-[2.75rem] md:text-5xl font-black tracking-[-0.05em] tabular-nums leading-[0.9]">
-                      {display}
+                      {display.split("〜").map((part, i) => (
+                        <span key={i}>
+                          {i > 0 && (
+                            <span className="text-[0.45em] font-bold text-charcoal/55 align-middle mx-0.5">
+                              〜
+                            </span>
+                          )}
+                          {part}
+                        </span>
+                      ))}
                     </span>
                     <span className="text-sm font-bold pb-1 text-charcoal/65">
                       {suffix}
