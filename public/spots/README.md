@@ -4,19 +4,21 @@
 
 ## 命名規則
 
-`{spot-id}.{jpg|webp}` という形式で配置してください。
+**スポット名（日本語そのまま）または `id` のどちらでもOK** です。
 
-`spot-id` は `src/data/spots.ts` の各スポットの `id` フィールドそのままです。例：
-
+例：
 ```
 public/spots/
-  naha-okimu.jpg
-  naha-shuri-castle-park.webp
-  itoman-peace-park.jpg
-  tomi-dmm-aquarium.webp
+  首里城.webp
+  沖縄県立博物館.jpg
+  那覇空港 キッズスペース.jpg     # 半角スペース可（URLエンコード自動）
+  浦添大公園.jpg
+  美々ビーチいとまん.jpg
 ```
 
-ビルド後は `https://uchina-map.nexeed-lab.com/spots/{spot-id}.jpg` で配信されます。
+ファイル名は `src/data/spots.ts` の各スポットの `imageUrl` フィールドから参照されます。実際にどのファイルを使うかはコード側で指定するため、**ファイル名は人間が分かりやすい名前で構いません**。
+
+ビルド後は `https://uchina-map.nexeed-lab.com/spots/{ファイル名}` で配信されます（日本語・スペースは自動でURLエンコードされます）。
 
 ## 推奨フォーマット
 
@@ -38,7 +40,7 @@ public/spots/
 {
   id: "naha-okimu",
   // ...既存フィールド
-  imageUrl: "/spots/naha-okimu.jpg",
+  imageUrl: "/spots/沖縄県立博物館.jpg",
   // 著作権情報（外部出典の場合は必須・自前撮影は省略可）
   imageCredit: {
     author: "撮影者名",

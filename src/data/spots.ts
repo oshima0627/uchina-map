@@ -51,6 +51,7 @@ export const SPOTS: Spot[] = [
       parkingFree: false,
       parkingSpacious: true,
     }),
+    imageUrl: "/spots/首里城.webp",
     imageEmoji: "🏯",
   },
   {
@@ -84,6 +85,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingSpacious: true,
     }),
+    imageUrl: "/spots/沖縄県立博物館.jpg",
     imageEmoji: "🏛️",
   },
   {
@@ -111,6 +113,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       hasMultipurposeToilet: true,
     }),
+    imageUrl: "/spots/与儀公園.webp",
     imageEmoji: "🚂",
   },
   {
@@ -137,6 +140,36 @@ export const SPOTS: Spot[] = [
       parkingFree: true,
     }),
     imageEmoji: "🌳",
+  },
+  {
+    id: "naha-mori-no-ie-minmin",
+    name: "那覇市立森の家みんみん",
+    nameKana: "なはしりつもりのいえみんみん",
+    category: "learning",
+    description:
+      "末吉公園内にある那覇市立の自然体験施設。森に親しむ自然観察、ネイチャーゲーム、工作教室、キャンプ場・宿泊施設も併設。子供を中心に親子で自然を学べる。",
+    shortDescription: "自然体験ができる那覇市立の体験施設",
+    highlights: ["自然体験", "工作教室", "キャンプ場"],
+    address: "沖縄県那覇市首里末吉町2-1",
+    city: "naha",
+    lat: 26.2342,
+    lng: 127.7128,
+    durationMin: 120,
+    ageTags: ["1-3", "4-6", "school"],
+    closedDays: [],
+    price: { adult: 0, free: true },
+    features: f({
+      hasDiaperTable: true,
+      isIndoor: true,
+      isOutdoor: true,
+      rainOk: true,
+      hasKidsSpace: true,
+      hasMultipurposeToilet: true,
+      hasParking: true,
+      parkingFree: true,
+    }),
+    imageUrl: "/spots/那覇市立森の家みんみん.jpg",
+    imageEmoji: "🌲",
   },
   {
     id: "naha-airport-kids",
@@ -170,6 +203,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/那覇空港 キッズスペース.jpg",
     imageEmoji: "✈️",
   },
   {
@@ -205,6 +239,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/サンエー那覇メインプレイス.jpg",
     imageEmoji: "🛒",
   },
   {
@@ -319,6 +354,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingSpacious: true,
     }),
+    imageUrl: "/spots/浦添大公園.jpg",
     imageEmoji: "🛝",
   },
   {
@@ -744,7 +780,7 @@ export const SPOTS: Spot[] = [
   // ===== 南城市 =====
   {
     id: "nanjo-okinawa-world",
-    name: "おきなわワールド（玉泉洞）",
+    name: "おきなわワールド(玉泉洞)",
     nameKana: "おきなわわーるどぎょくせんどう",
     category: "learning",
     description:
@@ -1101,6 +1137,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/美々ビーチいとまん.jpg",
     imageEmoji: "🏖️",
   },
   {
