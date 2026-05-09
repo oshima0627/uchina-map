@@ -33,6 +33,8 @@ export function SpotsBrowser() {
   const selCategory = (params.get("category") as Category | null) ?? null;
   const selAge = (params.get("age") as AgeTag | null) ?? null;
   const selFeature = (params.get("feature") as FilterFeature | null) ?? null;
+  const minDurationRaw = params.get("minDuration");
+  const minDuration = minDurationRaw ? Number(minDurationRaw) : null;
   const q = params.get("q") ?? "";
 
   const setParam = (key: string, value: string | null) => {
@@ -48,6 +50,7 @@ export function SpotsBrowser() {
       if (selCategory && s.category !== selCategory) return false;
       if (selAge && !s.ageTags.includes(selAge)) return false;
       if (selFeature && !s.features[selFeature]) return false;
+      if (minDuration !== null && Number.isFinite(minDuration) && s.durationMin < minDuration) return false;
       if (q) {
         const query = q.toLowerCase();
         const haystack = [
@@ -63,9 +66,11 @@ export function SpotsBrowser() {
       }
       return true;
     });
-  }, [selCity, selCategory, selAge, selFeature, q]);
+  }, [selCity, selCategory, selAge, selFeature, minDuration, q]);
 
-  const activeCount = [selCity, selCategory, selAge, selFeature].filter(Boolean).length;
+  const activeCount = [selCity, selCategory, selAge, selFeature, minDuration].filter(
+    (v) => v !== null && v !== undefined,
+  ).length;
 
   return (
     <div>
@@ -75,7 +80,7 @@ export function SpotsBrowser() {
         <input
           type="search"
           placeholder="施設名・キーワードで検索"
-          defaultValue={q}
+          value={q}
           onChange={(e) => setParam("q", e.target.value || null)}
           className="w-full h-12 pl-11 pr-4 rounded-full bg-white border border-border focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 text-sm"
         />
@@ -155,6 +160,12 @@ export function SpotsBrowser() {
             <FilterPill
               label={FILTER_FEATURE_LABELS[selFeature]}
               onRemove={() => setParam("feature", null)}
+            />
+          )}
+          {minDuration !== null && Number.isFinite(minDuration) && (
+            <FilterPill
+              label={`滞在${Math.round(minDuration / 60)}h以上`}
+              onRemove={() => setParam("minDuration", null)}
             />
           )}
         </div>

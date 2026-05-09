@@ -41,7 +41,7 @@ export function RecommendForm({ weather }: { weather: WeatherSummary | null }) {
     if (!showResults) return [];
     const maxDuration = DURATION_MAX[duration];
 
-    const scored = SPOTS.map((s) => {
+    const scored = SPOTS.map((s, idx) => {
       let score = 0;
 
       if (s.ageTags.includes(age)) score += 5;
@@ -78,11 +78,13 @@ export function RecommendForm({ weather }: { weather: WeatherSummary | null }) {
         if (s.features.strollerFriendly) score += 2;
       }
 
-      score += Math.random() * 0.5;
-      return { spot: s, score };
-    }).filter((x): x is { spot: Spot; score: number } => x !== null);
+      return { spot: s, score, idx };
+    }).filter(
+      (x): x is { spot: Spot; score: number; idx: number } => x !== null,
+    );
 
-    scored.sort((a, b) => b.score - a.score);
+    // Stable, deterministic ordering: score desc, then index asc as tiebreaker.
+    scored.sort((a, b) => b.score - a.score || a.idx - b.idx);
     return scored.slice(0, 6).map((x) => x.spot);
   }, [showResults, age, duration, city, weather]);
 

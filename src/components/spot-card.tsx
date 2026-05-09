@@ -42,9 +42,11 @@ export function SpotCard({ spot }: { spot: Spot }) {
         {spot.imageUrl ? (
           <img
             src={spot.imageUrl}
-            alt={spot.name}
+            alt={`${spot.name}の写真`}
             loading="lazy"
             decoding="async"
+            width={480}
+            height={256}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (

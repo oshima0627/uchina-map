@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import { RecommendClient } from "./recommend-client";
 
 export const metadata = {
@@ -10,10 +11,11 @@ export default function RecommendPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6">
       <header className="mb-6">
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-hibiscus/10 text-hibiscus text-xs font-bold">
-          ✨ 今日のおすすめ
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-50 text-primary-700 text-[11px] font-bold tracking-[0.18em] uppercase">
+          <Sparkles className="w-3 h-3" strokeWidth={2.25} />
+          Today
         </span>
-        <h1 className="text-2xl md:text-3xl font-black text-charcoal mt-2">
+        <h1 className="text-2xl md:text-3xl font-black text-charcoal mt-2 tracking-tight">
           今日どこ？
         </h1>
         <p className="text-sm text-charcoal/75 mt-1">

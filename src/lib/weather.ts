@@ -35,6 +35,16 @@ const WEATHER_CODE_MAP: Record<number, { label: string; emoji: string }> = {
   99: { label: "激しい雷雨", emoji: "⛈️" },
 };
 
+async function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    return await fetch(url, { signal: ctrl.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function fetchTodayWeather(
   lat: number = NAHA_LAT,
   lng: number = NAHA_LNG,
@@ -50,57 +60,92 @@ export async function fetchTodayWeather(
   url.searchParams.set("forecast_days", "1");
   url.searchParams.set("wind_speed_unit", "ms");
 
-  const res = await fetch(url.toString());
-  if (!res.ok) throw new Error(`weather api: ${res.status}`);
-  const data = await res.json();
-  const tempMax = data.daily.temperature_2m_max[0] as number;
-  const precip = data.daily.precipitation_sum[0] as number;
-  const windMax = data.daily.wind_speed_10m_max[0] as number;
-  const code = data.daily.weather_code[0] as number;
-  const meta = WEATHER_CODE_MAP[code] ?? { label: "不明", emoji: "🌡️" };
+  // Up to 3 attempts with exponential backoff (0ms, 400ms, 1200ms).
+  const maxAttempts = 3;
+  let lastError: unknown = null;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    if (attempt > 0) {
+      await new Promise((r) => setTimeout(r, 400 * 3 ** (attempt - 1)));
+    }
+    try {
+      const res = await fetchWithTimeout(url.toString(), 8000);
+      if (!res.ok) {
+        if (res.status >= 400 && res.status < 500) {
+          throw new Error(`weather api: ${res.status}`);
+        }
+        lastError = new Error(`weather api: ${res.status}`);
+        continue;
+      }
+      const data = await res.json();
+      const tempMax = data.daily.temperature_2m_max[0] as number;
+      const precip = data.daily.precipitation_sum[0] as number;
+      const windMax = data.daily.wind_speed_10m_max[0] as number;
+      const code = data.daily.weather_code[0] as number;
+      const meta = WEATHER_CODE_MAP[code] ?? { label: "不明", emoji: "🌡️" };
 
-  return {
-    tempMaxC: tempMax,
-    precipitationMm: precip,
-    windMaxMs: windMax,
-    weatherCode: code,
-    isRainy: precip >= 1 || [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(code),
-    isHot: tempMax >= 30,
-    isTyphoonRisk: windMax >= 17,
-    description: meta.label,
-    emoji: meta.emoji,
-  };
+      return {
+        tempMaxC: tempMax,
+        precipitationMm: precip,
+        windMaxMs: windMax,
+        weatherCode: code,
+        isRainy:
+          precip >= 1 ||
+          [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(code),
+        isHot: tempMax >= 30,
+        isTyphoonRisk: windMax >= 17,
+        description: meta.label,
+        emoji: meta.emoji,
+      };
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("weather api failed");
 }
 
 const CACHE_KEY = "uchina-map.weather.v1";
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+const STALE_TTL_MS = 24 * 60 * 60 * 1000; // last-resort fallback (24h)
 
 type CacheEntry = { ts: number; data: WeatherSummary };
 
+function readCache(): CacheEntry | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as CacheEntry;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(data: WeatherSummary) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({ ts: Date.now(), data } satisfies CacheEntry),
+    );
+  } catch {
+    // quota / disabled storage — non-fatal
+  }
+}
+
 export async function getCachedTodayWeather(): Promise<WeatherSummary> {
-  if (typeof window !== "undefined") {
-    try {
-      const raw = window.localStorage.getItem(CACHE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as CacheEntry;
-        if (Date.now() - parsed.ts < CACHE_TTL_MS) {
-          return parsed.data;
-        }
-      }
-    } catch {
-      // ignore parse / quota errors
-    }
+  const cached = readCache();
+  if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
+    return cached.data;
   }
-  const fresh = await fetchTodayWeather();
-  if (typeof window !== "undefined") {
-    try {
-      window.localStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({ ts: Date.now(), data: fresh } satisfies CacheEntry),
-      );
-    } catch {
-      // quota / disabled storage — non-fatal
+  try {
+    const fresh = await fetchTodayWeather();
+    writeCache(fresh);
+    return fresh;
+  } catch (err) {
+    // Stale-while-error: serve a recent-ish cached value if available.
+    if (cached && Date.now() - cached.ts < STALE_TTL_MS) {
+      return cached.data;
     }
+    throw err;
   }
-  return fresh;
 }

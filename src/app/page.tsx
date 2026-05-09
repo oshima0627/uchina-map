@@ -23,7 +23,6 @@ import { SpotCard } from "@/components/spot-card";
 import { HomeSearch } from "@/components/home-search";
 import { SPOTS } from "@/data/spots";
 import {
-  AGE_LABELS,
   CATEGORIES,
   CATEGORY_COLORS,
   CATEGORY_LABELS,
@@ -76,7 +75,7 @@ const AGE_CARDS: Array<{
   { tag: "0", display: "0", suffix: "歳", desc: "授乳室・オムツ替え重視", accent: "#e84855" },
   { tag: "1-3", display: "1〜3", suffix: "歳", desc: "ベビーカーOK・近場", accent: "#e89a2d" },
   { tag: "4-6", display: "4〜6", suffix: "歳", desc: "遊具・体験型施設", accent: "#3db8c9" },
-  { tag: "school", display: "6", suffix: "歳〜", desc: "1日遊べる施設", accent: "#226574" },
+  { tag: "school", display: "小学生", suffix: "", desc: "1日遊べる施設", accent: "#226574" },
 ];
 
 export default function HomePage() {
@@ -108,6 +107,10 @@ export default function HomePage() {
           src="/spots/豊崎海浜公園 美らSUNビーチ.jpg"
           alt=""
           aria-hidden
+          width={1600}
+          height={900}
+          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover scale-105"
         />
         {/* Color tint to keep brand palette */}
@@ -124,22 +127,6 @@ export default function HomePage() {
           className="absolute inset-0 bg-noise opacity-15 mix-blend-overlay"
           aria-hidden
         />
-
-        {/* Okinawan decorative motifs (subtle) */}
-        <span
-          aria-hidden
-          className="absolute bottom-24 left-4 md:bottom-28 md:left-12 text-3xl md:text-5xl opacity-25 pointer-events-none select-none animate-float"
-          style={{ animationDelay: "1.2s" }}
-        >
-          🐠
-        </span>
-        <span
-          aria-hidden
-          className="hidden md:inline absolute top-[35%] right-[12%] text-3xl opacity-20 pointer-events-none select-none animate-float"
-          style={{ animationDelay: "2s" }}
-        >
-          🐢
-        </span>
 
         <div className="relative flex-1 grid place-items-center w-full">
           <div className="mx-auto max-w-5xl px-4 py-8 md:py-10 w-full">
@@ -221,6 +208,10 @@ export default function HomePage() {
               src="/spots/DMMかりゆし水族館.jpg"
               alt=""
               aria-hidden
+              width={800}
+              height={520}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0f1d33]/90 via-[#0f1d33]/45 to-[#0f1d33]/10" />
@@ -336,21 +327,29 @@ export default function HomePage() {
                     Age
                   </span>
                   <div className="mt-1.5 flex items-baseline gap-1 text-charcoal">
-                    <span className="text-[2.75rem] md:text-5xl font-black tracking-[-0.05em] tabular-nums leading-[0.9]">
-                      {display.split("〜").map((part, i) => (
-                        <span key={i}>
-                          {i > 0 && (
-                            <span className="text-[0.45em] font-bold text-charcoal/55 align-middle mx-0.5">
-                              〜
+                    {tag === "school" ? (
+                      <span className="text-[2rem] md:text-[2.5rem] font-black tracking-[-0.04em] leading-[0.95]">
+                        {display}
+                      </span>
+                    ) : (
+                      <>
+                        <span className="text-[2.75rem] md:text-5xl font-black tracking-[-0.05em] tabular-nums leading-[0.9]">
+                          {display.split("〜").map((part, i) => (
+                            <span key={i}>
+                              {i > 0 && (
+                                <span className="text-[0.45em] font-bold text-charcoal/55 align-middle mx-0.5">
+                                  〜
+                                </span>
+                              )}
+                              {part}
                             </span>
-                          )}
-                          {part}
+                          ))}
                         </span>
-                      ))}
-                    </span>
-                    <span className="text-sm font-bold pb-1 text-charcoal/65">
-                      {suffix}
-                    </span>
+                        <span className="text-sm font-bold pb-1 text-charcoal/65">
+                          {suffix}
+                        </span>
+                      </>
+                    )}
                   </div>
                   <p className="text-[11px] text-charcoal/70 mt-3 leading-snug">
                     {desc}
@@ -474,7 +473,7 @@ export default function HomePage() {
         title="1日たっぷり遊べる"
         description="滞在時間3時間以上＋駐車場あり。家族でゆったり過ごせる施設。"
         icon={<Sun className="w-5 h-5" />}
-        allHref="/spots?feature=hasParking"
+        allHref="/spots?feature=hasParking&minDuration=180"
         spots={collectionAllDay}
         accent="primary"
       />
