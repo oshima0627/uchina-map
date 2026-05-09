@@ -794,7 +794,6 @@ export const SPOTS: Spot[] = [
       rainOk: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/道の駅 豊崎南城（がんじゅう駅）.jpg",
     imageEmoji: "🚗",
   },
   {
@@ -854,7 +853,6 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
-    imageUrl: "/spots/シュガーホール（八重瀬町文化センター）.jpg",
     imageEmoji: "🎵",
   },
 
@@ -1288,7 +1286,6 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/宜野湾市民プール.webp",
     imageEmoji: "🏊",
   },
 ];
