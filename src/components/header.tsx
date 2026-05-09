@@ -74,7 +74,7 @@ export function Header() {
             )}
           />
           {hydrated && favCount > 0 && (
-            <span className="absolute -top-1 -right-1 grid place-items-center min-w-[18px] h-[18px] px-1 rounded-full bg-hibiscus text-white text-[10px] font-black border-2 border-background">
+            <span className="absolute -top-1 -right-1 grid place-items-center min-w-[18px] h-[18px] px-1 rounded-full bg-hibiscus text-white text-[10px] font-bold leading-none ring-2 ring-white">
               {favCount}
             </span>
           )}
