@@ -22,12 +22,14 @@ export function Header() {
     <header className="sticky top-0 z-30 glass-strong border-b border-border/60">
       <div className="mx-auto max-w-5xl px-4 h-14 flex items-center justify-between gap-2">
         <Link href="/" className="flex items-center gap-2 font-black shrink-0 tracking-tight">
-          <span
+          <img
+            src="/icon-192.svg"
+            alt=""
             aria-hidden
-            className="grid place-items-center w-8 h-8 rounded-xl gradient-ocean-deep text-white text-base shadow-soft"
-          >
-            🏝️
-          </span>
+            width={32}
+            height={32}
+            className="w-8 h-8 shadow-soft rounded-xl"
+          />
           <span className="text-charcoal text-sm sm:text-base">うちなー子連れマップ</span>
         </Link>
 

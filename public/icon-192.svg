@@ -1,13 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="192" height="192">
+  <title>うちなー子連れマップ</title>
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#3DB8C9"/>
-      <stop offset="100%" stop-color="#A8DADC"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#62CAD6"/>
+      <stop offset="100%" stop-color="#3DB8C9"/>
+    </linearGradient>
+    <linearGradient id="mane" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD96B"/>
+      <stop offset="100%" stop-color="#E89A2D"/>
     </linearGradient>
   </defs>
-  <rect width="192" height="192" fill="url(#g)" rx="40"/>
-  <circle cx="96" cy="86" r="44" fill="#FDFCFA"/>
-  <path d="M96 60 C 78 60 66 76 66 92 C 66 110 84 122 96 138 C 108 122 126 110 126 92 C 126 76 114 60 96 60 Z" fill="#E84855"/>
-  <circle cx="96" cy="92" r="10" fill="#FDFCFA"/>
-  <text x="50%" y="174" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="20" fill="#FDFCFA">うちな子</text>
+
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+
+  <path d="M0,470 C120,500 240,440 360,470 C440,490 470,460 512,475 L512,512 L0,512 Z"
+        fill="#FFFFFF" opacity="0.18"/>
+
+  <g fill="url(#mane)">
+    <circle cx="148" cy="180" r="56"/>
+    <circle cx="120" cy="270" r="60"/>
+    <circle cx="148" cy="358" r="56"/>
+    <circle cx="210" cy="118" r="52"/>
+    <circle cx="302" cy="118" r="52"/>
+    <circle cx="364" cy="180" r="56"/>
+    <circle cx="392" cy="270" r="60"/>
+    <circle cx="364" cy="358" r="56"/>
+    <circle cx="210" cy="420" r="48"/>
+    <circle cx="302" cy="420" r="48"/>
+  </g>
+
+  <circle cx="256" cy="266" r="135" fill="#D88824" opacity="0.35"/>
+  <circle cx="256" cy="262" r="125" fill="#FFE8B8"/>
+
+  <path d="M 178 178 Q 168 142 198 152 Q 210 165 200 188 Z" fill="#E84855"/>
+  <path d="M 334 178 Q 344 142 314 152 Q 302 165 312 188 Z" fill="#E84855"/>
+
+  <path d="M 192 222 Q 218 208 238 226"
+        stroke="#1D3557" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <path d="M 274 226 Q 294 208 320 222"
+        stroke="#1D3557" stroke-width="11" fill="none" stroke-linecap="round"/>
+
+  <circle cx="216" cy="252" r="18" fill="#1D3557"/>
+  <circle cx="296" cy="252" r="18" fill="#1D3557"/>
+  <circle cx="222" cy="247" r="6" fill="#FFFFFF"/>
+  <circle cx="302" cy="247" r="6" fill="#FFFFFF"/>
+
+  <ellipse cx="256" cy="290" rx="11" ry="8" fill="#1D3557"/>
+
+  <path d="M 218 320 Q 256 365 294 320 Q 280 348 256 350 Q 232 348 218 320 Z"
+        fill="#C4322F"/>
+  <path d="M 240 333 Q 256 348 272 333 Q 268 345 256 346 Q 244 345 240 333 Z"
+        fill="#FF7A8A"/>
+  <path d="M 232 320 L 236 332 L 240 320 Z" fill="#FFFFFF"/>
+  <path d="M 272 320 L 276 332 L 280 320 Z" fill="#FFFFFF"/>
+
+  <circle cx="190" cy="305" r="11" fill="#FFB3B8" opacity="0.75"/>
+  <circle cx="322" cy="305" r="11" fill="#FFB3B8" opacity="0.75"/>
 </svg>
