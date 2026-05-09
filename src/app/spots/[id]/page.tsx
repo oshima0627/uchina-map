@@ -15,6 +15,8 @@ import {
   Utensils,
   Accessibility,
   ToyBrick,
+  Sparkles,
+  Camera,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { FavoriteButton } from "./favorite-button";
@@ -80,8 +82,11 @@ export default async function SpotDetailPage({
           <>
             <img
               src={spot.imageUrl}
-              alt={spot.name}
+              alt={`${spot.name}の写真`}
               decoding="async"
+              width={1200}
+              height={640}
+              fetchPriority="high"
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div
@@ -114,9 +119,10 @@ export default async function SpotDetailPage({
             href={spot.imageCredit.source}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute bottom-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full glass-dark text-white text-[10px] font-medium hover:bg-white/15 transition"
+            className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark text-white text-[10px] font-medium hover:bg-white/15 transition"
           >
-            📷 {spot.imageCredit.author}（{spot.imageCredit.license}）
+            <Camera className="w-3 h-3" strokeWidth={2} />
+            {spot.imageCredit.author}（{spot.imageCredit.license}）
           </a>
         )}
       </div>
@@ -132,12 +138,14 @@ export default async function SpotDetailPage({
           <div className="flex flex-wrap gap-1.5 mt-3">
             {spot.highlights.map((h) => (
               <Badge key={h} variant="sand">
-                ✨ {h}
+                <Sparkles className="w-3 h-3" strokeWidth={2.25} />
+                {h}
               </Badge>
             ))}
             {spot.ageTags.map((a) => (
               <Badge key={a} variant="primary">
-                👶 {AGE_LABELS[a]}
+                <Baby className="w-3 h-3" strokeWidth={2.25} />
+                {AGE_LABELS[a]}
               </Badge>
             ))}
           </div>
