@@ -6,6 +6,14 @@ import {
   Sparkles,
   ArrowRight,
   Sun,
+  Heart,
+  Car,
+  Waves,
+  Fish,
+  Utensils,
+  TreePine,
+  Wind,
+  type LucideIcon,
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
 import { HomeSearch } from "@/components/home-search";
@@ -31,44 +39,49 @@ const HERO_STATS = [
 ];
 
 // Quick scenarios — mixed-axis shortcuts in horizontal scroll
-const SCENE_CHIPS: Array<{ href: string; emoji: string; label: string }> = [
-  { href: "/spots?feature=rainOk", emoji: "🌧️", label: "雨でもOK" },
-  { href: "/spots?age=0", emoji: "🫃", label: "0歳と一緒" },
-  { href: "/spots?feature=strollerFriendly", emoji: "🚼", label: "ベビーカー" },
-  { href: "/spots?feature=hasParking", emoji: "🚗", label: "駐車場あり" },
-  { href: "/spots?category=beach", emoji: "🏖️", label: "ビーチ" },
-  { href: "/spots?category=aquarium", emoji: "🐠", label: "水族館" },
-  { href: "/spots?category=restaurant", emoji: "🍽️", label: "ランチ" },
-  { href: "/spots?category=park", emoji: "🛝", label: "大型遊具" },
+const SCENE_CHIPS: Array<{ href: string; Icon: LucideIcon; label: string }> = [
+  { href: "/spots?feature=rainOk", Icon: CloudRain, label: "雨でもOK" },
+  { href: "/spots?age=0", Icon: Heart, label: "0歳と一緒" },
+  { href: "/spots?feature=strollerFriendly", Icon: Wind, label: "ベビーカー" },
+  { href: "/spots?feature=hasParking", Icon: Car, label: "駐車場あり" },
+  { href: "/spots?category=beach", Icon: Waves, label: "ビーチ" },
+  { href: "/spots?category=aquarium", Icon: Fish, label: "水族館" },
+  { href: "/spots?category=restaurant", Icon: Utensils, label: "ランチ" },
+  { href: "/spots?category=park", Icon: TreePine, label: "大型遊具" },
 ];
 
 const AGE_CARDS: Array<{
   tag: AgeTag;
-  emoji: string;
+  display: string;
+  suffix: string;
   desc: string;
   gradient: string;
 }> = [
   {
     tag: "0",
-    emoji: "🫃",
+    display: "0",
+    suffix: "歳",
     desc: "授乳室・オムツ替え重視",
     gradient: "from-[#ffe1e4] to-[#ffd1bd]",
   },
   {
     tag: "1-3",
-    emoji: "🚼",
+    display: "1-3",
+    suffix: "歳",
     desc: "ベビーカーOK・近場",
     gradient: "from-[#fff4cc] to-[#fde0a0]",
   },
   {
     tag: "4-6",
-    emoji: "🛝",
+    display: "4-6",
+    suffix: "歳",
     desc: "遊具・体験型施設",
     gradient: "from-[#d6f3f7] to-[#a8dadc]",
   },
   {
     tag: "school",
-    emoji: "🎒",
+    display: "6+",
+    suffix: "歳〜",
     desc: "1日遊べる施設",
     gradient: "from-[#cce8ec] to-[#7dd3e0]",
   },
@@ -227,7 +240,7 @@ export default function HomePage() {
           <BentoCard
             href="/spots?age=0"
             tone="coral"
-            icon={<Sun className="w-5 h-5" />}
+            icon={<Heart className="w-5 h-5" />}
             label="0歳と行ける"
             desc="赤ちゃんと一緒に"
             count={SPOTS.filter((s) => s.ageTags.includes("0")).length}
@@ -249,14 +262,17 @@ export default function HomePage() {
       >
         <div className="overflow-x-auto px-4 pb-2 scroll-smooth-momentum">
           <ul className="flex gap-2 min-w-max">
-            {SCENE_CHIPS.map(({ href, emoji, label }) => (
+            {SCENE_CHIPS.map(({ href, Icon, label }) => (
               <li key={href}>
                 <Link
                   href={href}
-                  className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full bg-card border border-border text-charcoal text-sm font-bold shadow-soft hover:shadow-card hover:border-primary-300 transition"
+                  className="group inline-flex items-center gap-2 h-10 pl-3 pr-4 rounded-full bg-card border border-border text-charcoal text-sm font-semibold shadow-soft hover:shadow-card hover:border-primary-300 transition"
                 >
-                  <span aria-hidden className="text-base">
-                    {emoji}
+                  <span
+                    aria-hidden
+                    className="grid place-items-center w-6 h-6 rounded-full bg-primary-50 text-primary-700 group-hover:bg-primary-100 transition-colors"
+                  >
+                    <Icon className="w-3.5 h-3.5" strokeWidth={2.5} />
                   </span>
                   {label}
                 </Link>
@@ -270,33 +286,38 @@ export default function HomePage() {
       <section className="mx-auto max-w-5xl px-4 py-10">
         <SectionHeader eyebrow="By Age" title="年齢で選ぶ" />
         <ul className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
-          {AGE_CARDS.map(({ tag, emoji, desc, gradient }) => {
+          {AGE_CARDS.map(({ tag, display, suffix, desc, gradient }) => {
             const count = SPOTS.filter((s) => s.ageTags.includes(tag)).length;
             return (
               <li key={tag}>
                 <Link
                   href={`/spots?age=${tag}`}
-                  className={`group relative block rounded-2xl bg-gradient-to-br ${gradient} p-4 shadow-card hover:shadow-pop transition overflow-hidden`}
+                  className={`group relative block rounded-2xl bg-gradient-to-br ${gradient} p-5 min-h-[160px] shadow-card hover:shadow-pop hover:-translate-y-0.5 transition-all overflow-hidden`}
                 >
                   <div
-                    className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-white/40 blur-2xl group-hover:scale-110 transition-transform"
+                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/40 blur-2xl group-hover:scale-110 transition-transform"
                     aria-hidden
                   />
-                  <span
-                    className="relative text-3xl block transition-transform group-hover:scale-110"
-                    aria-hidden
-                  >
-                    {emoji}
-                  </span>
-                  <h3 className="relative mt-2 text-base font-black text-charcoal tracking-tight">
-                    {AGE_LABELS[tag]}
-                  </h3>
-                  <p className="relative text-[11px] text-charcoal/75 mt-0.5 leading-snug">
+                  <div className="relative">
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-charcoal/55">
+                      Age
+                    </span>
+                    <div className="mt-1 flex items-baseline gap-1 text-charcoal">
+                      <span className="text-[2.75rem] md:text-5xl font-black tracking-[-0.04em] tabular-nums leading-none">
+                        {display}
+                      </span>
+                      <span className="text-sm font-bold pb-1">{suffix}</span>
+                    </div>
+                  </div>
+                  <p className="relative text-[11px] text-charcoal/75 mt-3 leading-snug">
                     {desc}
                   </p>
-                  <p className="relative mt-2 text-[10px] font-bold tabular-nums text-charcoal/70">
-                    {count}件のスポット
-                  </p>
+                  <div className="relative mt-3 flex items-center justify-between">
+                    <span className="text-[11px] font-bold tabular-nums text-charcoal/65">
+                      {count}件
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-charcoal/55 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </Link>
               </li>
             );
