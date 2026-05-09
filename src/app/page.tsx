@@ -97,7 +97,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden flex flex-col min-h-[calc(100svh-3.5rem)]">
         {/* Background photo — Okinawa beach */}
         <img
           src="/spots/豊崎海浜公園 美らSUNビーチ.jpg"
@@ -120,13 +120,7 @@ export default function HomePage() {
           aria-hidden
         />
 
-        {/* Okinawan decorative motifs */}
-        <span
-          aria-hidden
-          className="absolute top-6 right-6 md:top-10 md:right-12 text-[5rem] md:text-[8rem] opacity-30 animate-float drop-shadow-2xl pointer-events-none select-none"
-        >
-          🌺
-        </span>
+        {/* Okinawan decorative motifs (subtle) */}
         <span
           aria-hidden
           className="absolute bottom-24 left-4 md:bottom-28 md:left-12 text-3xl md:text-5xl opacity-25 pointer-events-none select-none animate-float"
@@ -136,69 +130,69 @@ export default function HomePage() {
         </span>
         <span
           aria-hidden
-          className="hidden md:inline absolute top-[55%] right-[20%] text-3xl opacity-20 pointer-events-none select-none animate-float"
+          className="hidden md:inline absolute top-[35%] right-[12%] text-3xl opacity-20 pointer-events-none select-none animate-float"
           style={{ animationDelay: "2s" }}
         >
           🐢
         </span>
 
-        <div className="relative mx-auto max-w-5xl px-4 pt-12 pb-16 md:pt-20 md:pb-24">
-          <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-dark text-white text-[11px] font-medium tracking-wide">
-              <Sparkles className="w-3.5 h-3.5" />
-              めんそーれ｜沖縄本島南部・親子のお出かけ
-            </span>
-            <h1 className="mt-5 text-[2.25rem] md:text-6xl font-black text-white text-balance leading-[1.05] tracking-[-0.03em] drop-shadow-md">
-              <span className="block">「授乳室ある？」</span>
-              <span className="block">「ベビーカーで入れる？」</span>
-              <span className="block text-gradient-ocean">
-                が一目でわかる。
+        <div className="relative flex-1 grid place-items-center w-full">
+          <div className="mx-auto max-w-5xl px-4 py-8 md:py-10 w-full">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-dark text-white text-[11px] font-medium tracking-wide">
+                <Sparkles className="w-3.5 h-3.5" />
+                めんそーれ｜沖縄本島南部・親子のお出かけ
               </span>
-            </h1>
-            <p className="mt-5 text-white/95 text-balance md:text-lg leading-relaxed max-w-xl drop-shadow-md">
-              うちなーの子連れOKスポットを、地図と設備フィルタで。
-              親が本当に欲しい情報を、地元目線で集めました。
-            </p>
+              <h1 className="mt-4 text-[2.5rem] md:text-6xl font-black text-white text-balance leading-[1.05] tracking-[-0.03em] drop-shadow-md">
+                <span className="block">子連れOKが、</span>
+                <span className="block text-gradient-ocean">一目でわかる。</span>
+              </h1>
+              <p className="mt-4 text-white/95 text-balance md:text-lg leading-relaxed max-w-xl drop-shadow-md">
+                うちなーの子連れOKスポットを、地図と設備フィルタで。
+              </p>
 
-            <div className="mt-7 max-w-xl">
-              <HomeSearch />
-            </div>
+              <div className="mt-5 max-w-xl">
+                <HomeSearch />
+              </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <Link
-                href="/recommend"
-                className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white text-charcoal text-sm font-bold shadow-soft hover:shadow-pop transition"
-              >
-                <Sparkles className="w-4 h-4 text-hibiscus" />
-                今日どこ？
-              </Link>
-              <Link
-                href="/map"
-                className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full glass-dark text-white text-sm font-bold hover:bg-white/15 transition"
-              >
-                <MapIcon className="w-4 h-4" />
-                地図で見る
-              </Link>
-            </div>
-
-            <dl className="mt-8 grid grid-cols-3 gap-2 max-w-md">
-              {HERO_STATS.map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="rounded-2xl glass px-3 py-2.5 text-charcoal"
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <Link
+                  href="/recommend"
+                  className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full bg-white text-charcoal text-sm font-bold shadow-soft hover:shadow-pop transition"
                 >
-                  <dt className="text-[10px] font-medium tracking-wider uppercase text-charcoal/60">
-                    {label}
-                  </dt>
-                  <dd className="text-xl font-black tracking-tight">{value}</dd>
-                </div>
-              ))}
-            </dl>
+                  <Sparkles className="w-4 h-4 text-hibiscus" />
+                  今日どこ？
+                </Link>
+                <Link
+                  href="/map"
+                  className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full glass-dark text-white text-sm font-bold hover:bg-white/15 transition"
+                >
+                  <MapIcon className="w-4 h-4" />
+                  地図で見る
+                </Link>
+              </div>
+
+              <dl className="mt-6 grid grid-cols-3 gap-2 max-w-md">
+                {HERO_STATS.map(({ value, label }) => (
+                  <div
+                    key={label}
+                    className="rounded-2xl glass px-3 py-2 text-charcoal"
+                  >
+                    <dt className="text-[10px] font-medium tracking-wider uppercase text-charcoal/60">
+                      {label}
+                    </dt>
+                    <dd className="text-lg md:text-xl font-black tracking-tight">
+                      {value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
         </div>
 
         <svg
-          className="block w-full h-10 md:h-14 -mb-px relative"
+          className="block w-full h-8 md:h-12 -mb-px relative shrink-0"
           viewBox="0 0 1200 80"
           preserveAspectRatio="none"
           aria-hidden
