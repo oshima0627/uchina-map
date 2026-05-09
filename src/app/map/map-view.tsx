@@ -89,13 +89,13 @@ export function MapView() {
       el.type = "button";
       el.setAttribute("aria-label", spot.name);
       el.style.cssText =
-        "position:relative;width:38px;height:38px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0;line-height:1;";
+        "width:38px;height:38px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0;line-height:1;box-sizing:border-box;";
 
       const ring = document.createElement("span");
       ring.style.cssText =
         "position:absolute;inset:0;border-radius:50%;background:" +
         color +
-        "33;animation:pulse-ring 2.4s cubic-bezier(0.2,0.7,0.2,1) infinite;pointer-events:none;";
+        "33;animation:pulse-ring 2.4s cubic-bezier(0.2,0.7,0.2,1) infinite;pointer-events:none;will-change:transform;";
       const dot = document.createElement("span");
       dot.style.cssText =
         "position:relative;width:32px;height:32px;border-radius:50%;background:" +
@@ -110,7 +110,11 @@ export function MapView() {
         setSelectedSpot(spot);
         map.flyTo({ center: [spot.lng, spot.lat], zoom: 14, speed: 0.8 });
       });
-      const marker = new maplibregl.Marker({ element: el })
+      const marker = new maplibregl.Marker({
+        element: el,
+        anchor: "center",
+        subpixelPositioning: true,
+      })
         .setLngLat([spot.lng, spot.lat])
         .addTo(map);
       markersRef.current.push(marker);
