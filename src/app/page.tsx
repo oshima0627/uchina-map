@@ -177,18 +177,18 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              <dl className="mt-6 grid grid-cols-3 gap-2 max-w-md">
+              <dl className="mt-6 inline-flex items-stretch rounded-2xl glass-dark text-white divide-x divide-white/15 shadow-soft overflow-hidden">
                 {HERO_STATS.map(({ value, label }) => (
                   <div
                     key={label}
-                    className="rounded-2xl glass px-3 py-2 text-charcoal"
+                    className="px-4 md:px-5 py-2.5 flex flex-col gap-1"
                   >
-                    <dt className="text-[10px] font-medium tracking-wider uppercase text-charcoal/60">
-                      {label}
-                    </dt>
-                    <dd className="text-lg md:text-xl font-black tracking-tight">
+                    <dd className="text-2xl md:text-[1.75rem] font-black tabular-nums tracking-[-0.04em] leading-none">
                       {value}
                     </dd>
+                    <dt className="text-[10px] font-medium tracking-[0.12em] text-white/65 whitespace-nowrap">
+                      {label}
+                    </dt>
                   </div>
                 ))}
               </dl>
