@@ -55,36 +55,12 @@ const AGE_CARDS: Array<{
   display: string;
   suffix: string;
   desc: string;
-  gradient: string;
+  accent: string;
 }> = [
-  {
-    tag: "0",
-    display: "0",
-    suffix: "歳",
-    desc: "授乳室・オムツ替え重視",
-    gradient: "from-[#ffe1e4] to-[#ffd1bd]",
-  },
-  {
-    tag: "1-3",
-    display: "1-3",
-    suffix: "歳",
-    desc: "ベビーカーOK・近場",
-    gradient: "from-[#fff4cc] to-[#fde0a0]",
-  },
-  {
-    tag: "4-6",
-    display: "4-6",
-    suffix: "歳",
-    desc: "遊具・体験型施設",
-    gradient: "from-[#d6f3f7] to-[#a8dadc]",
-  },
-  {
-    tag: "school",
-    display: "6+",
-    suffix: "歳〜",
-    desc: "1日遊べる施設",
-    gradient: "from-[#cce8ec] to-[#7dd3e0]",
-  },
+  { tag: "0", display: "0", suffix: "歳", desc: "授乳室・オムツ替え重視", accent: "#e84855" },
+  { tag: "1-3", display: "1-3", suffix: "歳", desc: "ベビーカーOK・近場", accent: "#e89a2d" },
+  { tag: "4-6", display: "4-6", suffix: "歳", desc: "遊具・体験型施設", accent: "#3db8c9" },
+  { tag: "school", display: "6+", suffix: "歳〜", desc: "1日遊べる施設", accent: "#226574" },
 ];
 
 export default function HomePage() {
@@ -217,42 +193,83 @@ export default function HomePage() {
         </svg>
       </section>
 
-      {/* Bento — こんなニーズに */}
+      {/* Editorial needs — photo lead + 2 white text cards + thin map row */}
       <section className="mx-auto max-w-5xl px-4 mt-2 md:mt-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          <BentoCard
+          {/* Lead: real photo + overlay */}
+          <Link
             href="/spots?feature=rainOk"
-            tone="primary"
-            icon={<CloudRain className="w-5 h-5" />}
-            label="雨の日OK"
-            desc="屋内・屋根付きスポット"
-            count={SPOTS.filter((s) => s.features.rainOk).length}
-            big
-          />
-          <BentoCard
+            className="group relative col-span-2 overflow-hidden rounded-3xl min-h-[200px] md:min-h-[260px]"
+          >
+            <img
+              src="/spots/DMMかりゆし水族館.jpg"
+              alt=""
+              aria-hidden
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0f1d33]/90 via-[#0f1d33]/45 to-[#0f1d33]/10" />
+            <div className="relative h-full p-5 md:p-6 flex flex-col justify-end text-white">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-white/75">
+                  Rainy Day
+                </span>
+                <span className="h-px flex-1 bg-white/25" />
+                <span className="text-[10px] tabular-nums font-medium text-white/75">
+                  {SPOTS.filter((s) => s.features.rainOk).length} spots
+                </span>
+              </div>
+              <h3 className="mt-2 text-2xl md:text-[2rem] font-black tracking-[-0.02em] leading-[1.15] text-balance">
+                雨の日も、思い切り遊べる。
+              </h3>
+              <p className="mt-1.5 text-xs md:text-sm text-white/80 max-w-md">
+                屋内・屋根付きで、天気を気にせずおでかけ。
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-xs md:text-sm font-bold">
+                屋内スポットを見る
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
+
+          <EditorialBento
             href="/spots?feature=hasNursingRoom"
-            tone="sand"
-            icon={<Baby className="w-5 h-5" />}
-            label="授乳室あり"
-            desc="0歳から安心"
+            eyebrow="Nursing"
             count={SPOTS.filter((s) => s.features.hasNursingRoom).length}
+            title="授乳室あり"
+            desc="0歳から安心"
+            accent="#e89a2d"
           />
-          <BentoCard
+          <EditorialBento
             href="/spots?age=0"
-            tone="coral"
-            icon={<Heart className="w-5 h-5" />}
-            label="0歳と行ける"
-            desc="赤ちゃんと一緒に"
+            eyebrow="With Baby"
             count={SPOTS.filter((s) => s.ageTags.includes("0")).length}
-          />
-          <BentoCard
-            href="/map"
-            tone="sky"
-            icon={<MapIcon className="w-5 h-5" />}
-            label="地図で見る"
-            desc="ピンで一覧"
+            title="0歳と行ける"
+            desc="赤ちゃんと一緒に"
+            accent="#e84855"
           />
         </div>
+
+        {/* Thin editorial map strip — replaces the bulky map bento */}
+        <Link
+          href="/map"
+          className="group mt-3 md:mt-4 flex items-center gap-3 md:gap-4 px-4 md:px-5 py-3.5 rounded-2xl bg-card border border-border hover:border-charcoal/30 hover:shadow-soft transition"
+        >
+          <span className="grid place-items-center w-10 h-10 rounded-xl border border-border bg-primary-50/50 text-primary-700">
+            <MapIcon className="w-[18px] h-[18px]" strokeWidth={1.75} />
+          </span>
+          <div className="min-w-0 flex-1">
+            <span className="block text-[10px] font-bold tracking-[0.22em] uppercase text-primary-700">
+              Map
+            </span>
+            <h3 className="text-[13px] md:text-sm font-black text-charcoal leading-tight">
+              沖縄南部のスポットを地図で
+            </h3>
+          </div>
+          <span className="text-[11px] tabular-nums font-bold text-charcoal/55">
+            {SPOTS.length}件
+          </span>
+          <ArrowRight className="w-4 h-4 text-charcoal/45 transition-all group-hover:translate-x-1 group-hover:text-charcoal" />
+        </Link>
       </section>
 
       {/* Scene chips — お出かけ中のショートカット */}
@@ -282,41 +299,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Age section — 年齢別おでかけ */}
+      {/* Age section — editorial white cards with thin colored accent */}
       <section className="mx-auto max-w-5xl px-4 py-10">
         <SectionHeader eyebrow="By Age" title="年齢で選ぶ" />
         <ul className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
-          {AGE_CARDS.map(({ tag, display, suffix, desc, gradient }) => {
+          {AGE_CARDS.map(({ tag, display, suffix, desc, accent }) => {
             const count = SPOTS.filter((s) => s.ageTags.includes(tag)).length;
             return (
               <li key={tag}>
                 <Link
                   href={`/spots?age=${tag}`}
-                  className={`group relative block rounded-2xl bg-gradient-to-br ${gradient} p-5 min-h-[160px] shadow-card hover:shadow-pop hover:-translate-y-0.5 transition-all overflow-hidden`}
+                  className="group relative block rounded-3xl bg-card p-5 min-h-[170px] border border-border hover:border-charcoal/30 hover:shadow-card transition overflow-hidden"
                 >
-                  <div
-                    className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/40 blur-2xl group-hover:scale-110 transition-transform"
+                  <span
                     aria-hidden
+                    className="absolute top-0 left-5 right-5 h-[3px] rounded-b-full"
+                    style={{ background: accent }}
                   />
-                  <div className="relative">
-                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-charcoal/55">
-                      Age
+                  <span className="block text-[10px] font-bold tracking-[0.22em] uppercase text-charcoal/55">
+                    Age
+                  </span>
+                  <div className="mt-1.5 flex items-baseline gap-1 text-charcoal">
+                    <span className="text-[2.75rem] md:text-5xl font-black tracking-[-0.05em] tabular-nums leading-[0.9]">
+                      {display}
                     </span>
-                    <div className="mt-1 flex items-baseline gap-1 text-charcoal">
-                      <span className="text-[2.75rem] md:text-5xl font-black tracking-[-0.04em] tabular-nums leading-none">
-                        {display}
-                      </span>
-                      <span className="text-sm font-bold pb-1">{suffix}</span>
-                    </div>
+                    <span className="text-sm font-bold pb-1 text-charcoal/65">
+                      {suffix}
+                    </span>
                   </div>
-                  <p className="relative text-[11px] text-charcoal/75 mt-3 leading-snug">
+                  <p className="text-[11px] text-charcoal/70 mt-3 leading-snug">
                     {desc}
                   </p>
-                  <div className="relative mt-3 flex items-center justify-between">
-                    <span className="text-[11px] font-bold tabular-nums text-charcoal/65">
+                  <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+                    <span className="text-[11px] font-bold tabular-nums text-charcoal/55">
                       {count}件
                     </span>
-                    <ArrowRight className="w-4 h-4 text-charcoal/55 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-charcoal/45 group-hover:translate-x-1 group-hover:text-charcoal transition-all" />
                   </div>
                 </Link>
               </li>
@@ -498,58 +516,47 @@ function CollectionSection({
   );
 }
 
-function BentoCard({
+function EditorialBento({
   href,
-  tone,
-  icon,
-  label,
-  desc,
+  eyebrow,
   count,
-  big = false,
+  title,
+  desc,
+  accent,
 }: {
   href: string;
-  tone: "primary" | "sand" | "coral" | "sky";
-  icon: React.ReactNode;
-  label: string;
+  eyebrow: string;
+  count: number;
+  title: string;
   desc: string;
-  count?: number;
-  big?: boolean;
+  accent: string;
 }) {
-  const tones = {
-    primary: "bg-gradient-to-br from-[#3db8c9] to-[#62cad6] text-white",
-    sand: "bg-gradient-to-br from-[#fbf2d7] to-[#f4e5c2] text-charcoal",
-    coral: "gradient-coral text-white",
-    sky: "bg-gradient-to-br from-[#a8dadc] to-[#cce8ec] text-charcoal",
-  };
   return (
     <Link
       href={href}
-      className={`group relative overflow-hidden rounded-2xl p-4 shadow-card hover:shadow-pop transition ${
-        big ? "col-span-2 md:col-span-2 row-span-1" : ""
-      } ${tones[tone]}`}
+      className="group relative bg-card rounded-3xl p-5 border border-border hover:border-charcoal/30 hover:shadow-card transition flex flex-col min-h-[200px] md:min-h-[260px] overflow-hidden"
     >
-      <div
-        className="absolute -top-12 -right-10 w-32 h-32 rounded-full bg-white/15 blur-2xl group-hover:scale-110 transition-transform"
+      <span
         aria-hidden
+        className="absolute top-0 left-5 right-5 h-[3px] rounded-b-full"
+        style={{ background: accent }}
       />
-      <div className="relative flex items-start justify-between gap-2">
-        <span className="grid place-items-center w-10 h-10 rounded-xl bg-white/30 backdrop-blur-sm border border-white/40">
-          {icon}
+      <span className="block text-[10px] font-bold tracking-[0.22em] uppercase text-charcoal/55">
+        {eyebrow}
+      </span>
+      <div className="mt-2 flex items-baseline gap-1.5">
+        <span className="text-[3rem] md:text-[3.75rem] font-black tabular-nums text-charcoal tracking-[-0.05em] leading-[0.85]">
+          {count}
         </span>
-        {typeof count === "number" && (
-          <span className="px-2 py-0.5 rounded-full bg-white/30 backdrop-blur-sm text-[11px] font-bold tabular-nums">
-            {count}件
-          </span>
-        )}
+        <span className="text-xs font-bold text-charcoal/55">件</span>
       </div>
-      <div className="relative mt-4">
-        <p
-          className={`font-black text-balance leading-tight ${big ? "text-xl" : "text-base"}`}
-        >
-          {label}
-        </p>
-        <p className="text-[11px] opacity-80 mt-0.5">{desc}</p>
+      <div className="mt-auto pt-4">
+        <h3 className="text-base font-black text-charcoal leading-tight">
+          {title}
+        </h3>
+        <p className="text-[11px] text-charcoal/65 mt-0.5">{desc}</p>
       </div>
+      <ArrowRight className="absolute bottom-5 right-5 w-4 h-4 text-charcoal/45 transition-all group-hover:translate-x-1 group-hover:text-charcoal" />
     </Link>
   );
 }
