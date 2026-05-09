@@ -38,13 +38,6 @@ export function SpotCard({ spot }: { spot: Spot }) {
       href={`/spots/${spot.id}`}
       className="group relative block rounded-2xl bg-card border border-border shadow-soft hover:shadow-pop hover:-translate-y-0.5 transition-all overflow-hidden"
     >
-      {/* Top color accent strip */}
-      <div
-        className="h-1 w-full"
-        style={{ background: categoryColor }}
-        aria-hidden
-      />
-
       <div className="relative h-32 overflow-hidden bg-sand-light">
         {spot.imageUrl ? (
           <img
