@@ -89,15 +89,6 @@ export function MapView() {
   );
   const [filterOpen, setFilterOpen] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
-  const [debugLog, setDebugLog] = useState<string[]>([]);
-  const debugRef = useRef<string[]>([]);
-  const log = (msg: string) => {
-    const line = `${new Date().toISOString().slice(11, 23)} ${msg}`;
-    debugRef.current = [...debugRef.current.slice(-40), line];
-    setDebugLog(debugRef.current);
-    // eslint-disable-next-line no-console
-    console.log("[MapView]", msg);
-  };
 
   const spotsToShow = useMemo(
     () => SPOTS.filter((s) => enabledCats.has(s.category)),
@@ -109,8 +100,6 @@ export function MapView() {
     const container = containerRef.current;
     if (!container || mapRef.current) return;
 
-    log(`init container size=${container.clientWidth}x${container.clientHeight}`);
-
     let map: maplibregl.Map;
     try {
       map = new maplibregl.Map({
@@ -121,39 +110,15 @@ export function MapView() {
         attributionControl: { compact: true },
         antialias: false,
       });
-      log("Map() constructor ok");
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      log(`init FAILED: ${msg}`);
       setMapError(msg || "地図の初期化に失敗しました。");
       return;
     }
 
     map.on("error", (e) => {
-      const inner = (e && (e as { error?: unknown }).error) as unknown;
-      let msg = "(no message)";
-      if (inner instanceof Error) msg = `${inner.name}: ${inner.message}`;
-      else if (typeof inner === "string") msg = inner;
-      else if (inner && typeof inner === "object") {
-        try {
-          msg = JSON.stringify(inner);
-        } catch {
-          msg = Object.prototype.toString.call(inner);
-        }
-      } else if (e && typeof e === "object") {
-        msg = `event=${(e as { type?: string }).type ?? "?"} sourceId=${
-          (e as { sourceId?: string }).sourceId ?? "?"
-        }`;
-      }
-      log(`runtime error: ${msg}`);
-    });
-    map.on("load", () => log("map load"));
-    map.on("styledata", () => log("styledata"));
-    map.on("data", (e) => {
-      const ev = e as { dataType?: string; tile?: { state?: string } };
-      if (ev?.dataType === "source" && ev?.tile?.state) {
-        log(`tile ${ev.tile.state}`);
-      }
+      // eslint-disable-next-line no-console
+      console.error("[MapView] runtime error:", e?.error ?? e);
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");
@@ -170,8 +135,6 @@ export function MapView() {
     // changes so the canvas always fills its parent.
     const ro = new ResizeObserver(() => map.resize());
     ro.observe(container);
-    // Also force a resize on the next frame in case ResizeObserver fires
-    // before the first paint.
     requestAnimationFrame(() => map.resize());
 
     mapRef.current = map;
@@ -240,8 +203,24 @@ export function MapView() {
   };
 
   return (
-    <div className="relative w-full h-full">
-      <div ref={containerRef} className="absolute inset-0 bg-sand-light" />
+    <div
+      className="relative w-full h-full"
+      style={{ isolation: "isolate" }}
+    >
+      {/*
+        iOS Safari + body{background-attachment: fixed} と祖先の backdrop-filter
+        の組合せで WebGL canvas が描画されない既知バグへの対策。
+        translateZ(0) で独自 GPU レイヤーに切り出し、isolation: isolate で
+        スタッキングコンテキストを分離する。
+      */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0 bg-sand-light"
+        style={{
+          transform: "translateZ(0)",
+          WebkitTransform: "translateZ(0)",
+        }}
+      />
 
       {mapError && (
         <div className="absolute inset-0 grid place-items-center p-6 z-10 text-center">
@@ -256,23 +235,6 @@ export function MapView() {
           </div>
         </div>
       )}
-
-      {/* Debug log overlay (temporary, for diagnosing iOS Safari issue) */}
-      <div className="absolute bottom-3 left-3 right-3 z-20 max-h-[40%] overflow-auto rounded-xl bg-charcoal/90 text-white text-[10px] font-mono p-2 leading-snug pointer-events-auto">
-        <div className="flex items-center justify-between mb-1 sticky top-0 bg-charcoal/90">
-          <span className="font-bold">map debug</span>
-          <span className="opacity-60">{debugLog.length} lines</span>
-        </div>
-        {debugLog.length === 0 ? (
-          <div className="opacity-60">waiting for events…</div>
-        ) : (
-          debugLog.map((l, i) => (
-            <div key={i} className="whitespace-pre-wrap break-all">
-              {l}
-            </div>
-          ))
-        )}
-      </div>
 
       {/* Top filter bar */}
       <div className="absolute top-3 left-3 right-16 z-10 flex gap-2">

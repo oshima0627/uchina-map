@@ -77,7 +77,13 @@
     background-image:
       radial-gradient(at 5% 0%, rgba(168, 218, 220, 0.18) 0, transparent 40%),
       radial-gradient(at 95% 5%, rgba(244, 229, 194, 0.32) 0, transparent 40%);
-    background-attachment: fixed;
+    /*
+      NOTE: `background-attachment: fixed` triggers a known iOS Safari bug
+      where descendant WebGL canvases (used by maplibre-gl on /map) render
+      blank even though tiles load successfully. Use `scroll` to keep tiles
+      visible — the visual difference for a near-static gradient is minimal.
+    */
+    background-attachment: scroll;
   }
 
   h1, h2, h3, h4 {
