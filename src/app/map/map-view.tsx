@@ -68,7 +68,7 @@ export function MapView() {
   const mapRef = useRef<LType.Map | null>(null);
   const markersRef = useRef<LType.Marker[]>([]);
   const leafletRef = useRef<typeof LType | null>(null);
-  const [, forceRender] = useState(0);
+  const [mapReady, setMapReady] = useState(false);
 
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
   const [enabledCats, setEnabledCats] = useState<Set<Category>>(
@@ -114,8 +114,8 @@ export function MapView() {
 
       mapRef.current = map;
       leafletRef.current = L;
-      // Trigger marker effect now that L is available.
-      forceRender((n) => n + 1);
+      // Signal that the map is ready so the marker effect can run.
+      setMapReady(true);
 
       cleanup = () => {
         ro.disconnect();
@@ -133,6 +133,7 @@ export function MapView() {
 
   // sync markers when filter changes (or after map becomes ready)
   useEffect(() => {
+    if (!mapReady) return;
     const map = mapRef.current;
     const L = leafletRef.current;
     if (!map || !L) return;
@@ -167,7 +168,7 @@ export function MapView() {
       });
       markersRef.current.push(marker);
     });
-  }, [spotsToShow]);
+  }, [spotsToShow, mapReady]);
 
   const toggleCategory = (cat: Category) => {
     setEnabledCats((prev) => {
