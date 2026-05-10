@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+import "leaflet/dist/leaflet.css";
+import type * as LType from "leaflet";
 import Link from "next/link";
 import {
   Filter,
@@ -53,156 +53,118 @@ const CATEGORY_MARKER_SVG: Record<Category, string> = {
   onsen: '<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/>',
 };
 
-const SOUTH_OKINAWA_CENTER: [number, number] = [127.7, 26.18];
+const SOUTH_OKINAWA_CENTER: LType.LatLngTuple = [26.18, 127.7];
 
-// Multi-CDN raster source. CARTO's free voyager raster tiles are reliable,
-// but we list multiple subdomains so MapLibre rotates them — important when
-// a single host is blocked by mobile carriers / captive portals.
-const MAP_STYLE: maplibregl.StyleSpecification = {
-  version: 8,
-  sources: {
-    base: {
-      type: "raster",
-      tiles: [
-        "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-        "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-        "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-        "https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-      ],
-      tileSize: 256,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxzoom: 19,
-    },
-  },
-  layers: [{ id: "base", type: "raster", source: "base" }],
-};
+// CARTO Voyager raster tiles via Leaflet (DOM-based, no WebGL — works
+// reliably on iOS Safari which has known issues with maplibre's WebGL canvas).
+const TILE_URL =
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+const TILE_ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const TILE_SUBDOMAINS = ["a", "b", "c", "d"];
 
 export function MapView() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<maplibregl.Map | null>(null);
-  const markersRef = useRef<maplibregl.Marker[]>([]);
+  const mapRef = useRef<LType.Map | null>(null);
+  const markersRef = useRef<LType.Marker[]>([]);
+  const leafletRef = useRef<typeof LType | null>(null);
+  const [, forceRender] = useState(0);
 
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
   const [enabledCats, setEnabledCats] = useState<Set<Category>>(
     new Set(CATEGORIES),
   );
   const [filterOpen, setFilterOpen] = useState(false);
-  const [mapError, setMapError] = useState<string | null>(null);
 
   const spotsToShow = useMemo(
     () => SPOTS.filter((s) => enabledCats.has(s.category)),
     [enabledCats],
   );
 
-  // initialize map
+  // initialize map (Leaflet — DOM-based tiles, no WebGL).
+  // Dynamically import to avoid SSG `window is not defined` errors.
   useEffect(() => {
     const container = containerRef.current;
     if (!container || mapRef.current) return;
+    let cancelled = false;
+    let cleanup: (() => void) | null = null;
 
-    let map: maplibregl.Map;
-    try {
-      map = new maplibregl.Map({
-        container,
-        style: MAP_STYLE,
+    (async () => {
+      const L = (await import("leaflet")).default;
+      if (cancelled || !containerRef.current) return;
+
+      const map = L.map(containerRef.current, {
         center: SOUTH_OKINAWA_CENTER,
         zoom: 11,
-        attributionControl: { compact: true },
-        antialias: false,
-        // iOS Safari は double-buffer 直後に WebGL canvas のピクセルを破棄する
-        // ことがある。preserveDrawingBuffer を有効にすると合成までバッファが
-        // 保持され「タイル読込済みなのに canvas が真っ白」を回避できる。
-        preserveDrawingBuffer: true,
-        // iOS Safari でタイル合成時の取りこぼしを防ぐため、ピクセル比を
-        // window のものに合わせる
-        pixelRatio:
-          typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1,
+        zoomControl: true,
+        attributionControl: true,
       });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      setMapError(msg || "地図の初期化に失敗しました。");
-      return;
-    }
 
-    map.on("error", (e) => {
-      // eslint-disable-next-line no-console
-      console.error("[MapView] runtime error:", e?.error ?? e);
-    });
+      L.tileLayer(TILE_URL, {
+        maxZoom: 19,
+        subdomains: TILE_SUBDOMAINS,
+        attribution: TILE_ATTRIBUTION,
+        detectRetina: true,
+        crossOrigin: true,
+      }).addTo(map);
 
-    // iOS Safari ではタイル取得後も自動再描画が走らないことがあるため、
-    // load イベントで明示的に triggerRepaint() を呼ぶ。
-    map.once("load", () => {
-      map.triggerRepaint();
-    });
+      const ro = new ResizeObserver(() => map.invalidateSize());
+      ro.observe(containerRef.current);
+      requestAnimationFrame(() => map.invalidateSize());
 
-    map.addControl(new maplibregl.NavigationControl(), "top-right");
-    map.addControl(
-      new maplibregl.GeolocateControl({
-        positionOptions: { enableHighAccuracy: true },
-        trackUserLocation: true,
-      }),
-      "top-right",
-    );
+      mapRef.current = map;
+      leafletRef.current = L;
+      // Trigger marker effect now that L is available.
+      forceRender((n) => n + 1);
 
-    // iOS Safari can mount the container before its final size is computed,
-    // leaving the map canvas at 0×0. Re-resize whenever the container size
-    // changes so the canvas always fills its parent.
-    const ro = new ResizeObserver(() => map.resize());
-    ro.observe(container);
-    requestAnimationFrame(() => map.resize());
+      cleanup = () => {
+        ro.disconnect();
+        map.remove();
+        mapRef.current = null;
+        leafletRef.current = null;
+      };
+    })();
 
-    mapRef.current = map;
     return () => {
-      ro.disconnect();
-      map.remove();
-      mapRef.current = null;
+      cancelled = true;
+      cleanup?.();
     };
   }, []);
 
-  // sync markers
+  // sync markers when filter changes (or after map becomes ready)
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
+    const L = leafletRef.current;
+    if (!map || !L) return;
     markersRef.current.forEach((m) => m.remove());
     markersRef.current = [];
 
     spotsToShow.forEach((spot) => {
       const color = CATEGORY_COLORS[spot.category];
-      const el = document.createElement("button");
-      el.type = "button";
-      el.setAttribute("aria-label", spot.name);
-      el.style.cssText =
-        "width:38px;height:38px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0;line-height:1;box-sizing:border-box;";
-
-      const ring = document.createElement("span");
-      ring.style.cssText =
-        "position:absolute;inset:0;border-radius:50%;background:" +
-        color +
-        "33;animation:pulse-ring 2.4s cubic-bezier(0.2,0.7,0.2,1) infinite;pointer-events:none;will-change:transform;";
-      const dot = document.createElement("span");
-      dot.style.cssText =
-        "position:relative;width:32px;height:32px;border-radius:50%;background:" +
-        color +
-        ";border:2.5px solid #fff;box-shadow:0 6px 18px -4px rgba(15,29,51,0.35);display:grid;place-items:center;color:#fff;";
-      dot.innerHTML =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        CATEGORY_MARKER_SVG[spot.category] +
-        "</svg>";
-      el.appendChild(ring);
-      el.appendChild(dot);
-
-      el.addEventListener("click", (e) => {
-        e.stopPropagation();
-        setSelectedSpot(spot);
-        map.flyTo({ center: [spot.lng, spot.lat], zoom: 14, speed: 0.8 });
+      const html = `
+        <div style="position:relative;width:38px;height:38px;display:grid;place-items:center;">
+          <span style="position:absolute;inset:0;border-radius:50%;background:${color}33;animation:pulse-ring 2.4s cubic-bezier(0.2,0.7,0.2,1) infinite;pointer-events:none;will-change:transform;"></span>
+          <span style="position:relative;width:32px;height:32px;border-radius:50%;background:${color};border:2.5px solid #fff;box-shadow:0 6px 18px -4px rgba(15,29,51,0.35);display:grid;place-items:center;color:#fff;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CATEGORY_MARKER_SVG[spot.category]}</svg>
+          </span>
+        </div>
+      `;
+      const icon = L.divIcon({
+        html,
+        className: "spot-divicon",
+        iconSize: [38, 38],
+        iconAnchor: [19, 19],
       });
-      const marker = new maplibregl.Marker({
-        element: el,
-        anchor: "center",
-        subpixelPositioning: true,
-      })
-        .setLngLat([spot.lng, spot.lat])
-        .addTo(map);
+      const marker = L.marker([spot.lat, spot.lng], {
+        icon,
+        keyboard: true,
+        title: spot.name,
+        alt: spot.name,
+      }).addTo(map);
+      marker.on("click", () => {
+        setSelectedSpot(spot);
+        map.flyTo([spot.lat, spot.lng], 14, { duration: 0.6 });
+      });
       markersRef.current.push(marker);
     });
   }, [spotsToShow]);
@@ -217,41 +179,11 @@ export function MapView() {
   };
 
   return (
-    <div
-      className="relative w-full h-full"
-      style={{ isolation: "isolate" }}
-    >
-      {/*
-        iOS Safari + body{background-attachment: fixed} と祖先の backdrop-filter
-        の組合せで WebGL canvas が描画されない既知バグへの対策。
-        translateZ(0) で独自 GPU レイヤーに切り出し、isolation: isolate で
-        スタッキングコンテキストを分離する。
-      */}
-      <div
-        ref={containerRef}
-        className="absolute inset-0 bg-sand-light"
-        style={{
-          transform: "translateZ(0)",
-          WebkitTransform: "translateZ(0)",
-        }}
-      />
-
-      {mapError && (
-        <div className="absolute inset-0 grid place-items-center p-6 z-10 text-center">
-          <div className="rounded-2xl bg-white border border-border shadow-soft p-5 max-w-sm">
-            <p className="font-bold text-charcoal text-sm">
-              地図を読み込めませんでした
-            </p>
-            <p className="text-xs text-charcoal/70 mt-1">{mapError}</p>
-            <p className="text-[11px] text-charcoal/55 mt-3">
-              ネットワーク状況をご確認のうえ、再読み込みしてください。
-            </p>
-          </div>
-        </div>
-      )}
+    <div className="relative w-full h-full">
+      <div ref={containerRef} className="absolute inset-0 bg-sand-light" />
 
       {/* Top filter bar */}
-      <div className="absolute top-3 left-3 right-16 z-10 flex gap-2">
+      <div className="absolute top-3 left-3 right-16 z-[1000] flex gap-2">
         <button
           type="button"
           onClick={() => setFilterOpen((v) => !v)}
@@ -274,7 +206,7 @@ export function MapView() {
       </div>
 
       {filterOpen && (
-        <div className="absolute top-14 left-3 z-10 max-w-[calc(100%-1.5rem)] glass-strong rounded-2xl shadow-pop p-3 animate-slide-up">
+        <div className="absolute top-14 left-3 z-[1000] max-w-[calc(100%-1.5rem)] glass-strong rounded-2xl shadow-pop p-3 animate-slide-up">
           <div className="flex flex-wrap gap-1.5">
             {CATEGORIES.map((cat) => {
               const active = enabledCats.has(cat);
@@ -291,9 +223,7 @@ export function MapView() {
                       : "bg-white text-charcoal/70 border-border hover:border-charcoal/30",
                   )}
                   style={
-                    active
-                      ? { background: CATEGORY_COLORS[cat] }
-                      : undefined
+                    active ? { background: CATEGORY_COLORS[cat] } : undefined
                   }
                 >
                   <Icon className="w-3.5 h-3.5" strokeWidth={2} aria-hidden />
@@ -307,7 +237,7 @@ export function MapView() {
 
       {/* Spot detail bottom sheet */}
       {selectedSpot && (
-        <div className="absolute bottom-3 left-3 right-3 z-10 rounded-2xl glass-strong shadow-float overflow-hidden animate-slide-up">
+        <div className="absolute bottom-3 left-3 right-3 z-[1000] rounded-2xl glass-strong shadow-float overflow-hidden animate-slide-up">
           <button
             type="button"
             onClick={() => setSelectedSpot(null)}
