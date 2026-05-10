@@ -1,24 +1,23 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+import "leaflet/dist/leaflet.css";
+import type * as LType from "leaflet";
 
-const MAP_STYLE: maplibregl.StyleSpecification = {
-  version: 8,
-  sources: {
-    osm: {
-      type: "raster",
-      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-      tileSize: 256,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxzoom: 19,
-    },
-  },
-  layers: [{ id: "osm", type: "raster", source: "osm" }],
-  glyphs: "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
-};
+const TILE_URL =
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+const TILE_ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const TILE_SUBDOMAINS = ["a", "b", "c", "d"];
+
+const PIN_HTML = `
+  <div style="position:relative;width:32px;height:32px;background:#3DB8C9;border:3px solid #fff;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.25);display:grid;place-items:center;color:#fff;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+  </div>
+`;
 
 export function SpotMap({
   lat,
@@ -30,50 +29,65 @@ export function SpotMap({
   name: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<maplibregl.Map | null>(null);
+  const mapRef = useRef<LType.Map | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
-    const map = new maplibregl.Map({
-      container: containerRef.current,
-      style: MAP_STYLE,
-      center: [lng, lat],
-      zoom: 15,
-      attributionControl: { compact: true },
-    });
-    map.addControl(new maplibregl.NavigationControl(), "top-right");
+    const container = containerRef.current;
+    if (!container || mapRef.current) return;
+    let cancelled = false;
+    let cleanup: (() => void) | null = null;
 
-    const el = document.createElement("div");
-    el.className = "spot-marker";
-    el.style.cssText =
-      "width:38px;height:48px;display:grid;place-items:center;color:#fff;font-size:20px;line-height:1;transform:translateY(-12px);";
-    // MapPin SVG (lucide-react), inlined for non-React DOM marker
-    el.innerHTML =
-      '<div style="position:absolute;width:32px;height:32px;background:#3DB8C9;border:3px solid #fff;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.25);display:grid;place-items:center;color:#fff;">' +
-      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-      '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>' +
-      '<circle cx="12" cy="10" r="3"/>' +
-      "</svg>" +
-      "</div>";
+    (async () => {
+      const L = (await import("leaflet")).default;
+      if (cancelled || !containerRef.current) return;
 
-    new maplibregl.Marker({ element: el })
-      .setLngLat([lng, lat])
-      .setPopup(
-        new maplibregl.Popup({ offset: 28 }).setText(name),
-      )
-      .addTo(map);
+      const map = L.map(containerRef.current, {
+        center: [lat, lng],
+        zoom: 15,
+        zoomControl: true,
+        attributionControl: true,
+      });
 
-    mapRef.current = map;
+      L.tileLayer(TILE_URL, {
+        maxZoom: 19,
+        subdomains: TILE_SUBDOMAINS,
+        attribution: TILE_ATTRIBUTION,
+        detectRetina: true,
+        crossOrigin: true,
+      }).addTo(map);
+
+      const icon = L.divIcon({
+        html: PIN_HTML,
+        className: "spot-pin",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+      L.marker([lat, lng], { icon, title: name, alt: name })
+        .addTo(map)
+        .bindPopup(name);
+
+      const ro = new ResizeObserver(() => map.invalidateSize());
+      ro.observe(containerRef.current);
+      requestAnimationFrame(() => map.invalidateSize());
+
+      mapRef.current = map;
+      cleanup = () => {
+        ro.disconnect();
+        map.remove();
+        mapRef.current = null;
+      };
+    })();
+
     return () => {
-      map.remove();
-      mapRef.current = null;
+      cancelled = true;
+      cleanup?.();
     };
   }, [lat, lng, name]);
 
   return (
     <div
       ref={containerRef}
-      className="w-full h-72 rounded-2xl overflow-hidden border border-border"
+      className="w-full h-72 rounded-2xl overflow-hidden border border-border bg-sand-light"
       aria-label="スポットの地図"
     />
   );
