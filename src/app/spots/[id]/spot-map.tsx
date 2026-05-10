@@ -4,11 +4,10 @@ import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import type * as LType from "leaflet";
 
-const TILE_URL =
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+// 国土地理院（GSI）標準地図タイル — 日本語ラベル・国産・無料
+const TILE_URL = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
 const TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
-const TILE_SUBDOMAINS = ["a", "b", "c", "d"];
+  '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>';
 
 const PIN_HTML = `
   <div style="position:relative;width:32px;height:32px;background:#3DB8C9;border:3px solid #fff;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.25);display:grid;place-items:center;color:#fff;">
@@ -43,16 +42,16 @@ export function SpotMap({
 
       const map = L.map(containerRef.current, {
         center: [lat, lng],
-        zoom: 15,
+        zoom: 16,
+        minZoom: 9,
+        maxZoom: 18,
         zoomControl: true,
         attributionControl: true,
       });
 
       L.tileLayer(TILE_URL, {
-        maxZoom: 19,
-        subdomains: TILE_SUBDOMAINS,
+        maxZoom: 18,
         attribution: TILE_ATTRIBUTION,
-        detectRetina: true,
         crossOrigin: true,
       }).addTo(map);
 

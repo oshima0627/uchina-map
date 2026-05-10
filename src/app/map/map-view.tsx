@@ -54,14 +54,15 @@ const CATEGORY_MARKER_SVG: Record<Category, string> = {
 };
 
 const SOUTH_OKINAWA_CENTER: LType.LatLngTuple = [26.18, 127.7];
+const MIN_ZOOM = 9; // 沖縄本島全体が収まるズーム
+const MAX_ZOOM = 18; // GSI 標準地図の最大
+const FIT_PADDING: LType.PointTuple = [60, 60];
 
-// CARTO Voyager raster tiles via Leaflet (DOM-based, no WebGL — works
-// reliably on iOS Safari which has known issues with maplibre's WebGL canvas).
-const TILE_URL =
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+// 国土地理院（GSI）標準地図タイル — 日本語ラベル・国産・無料・利用規約上問題なし。
+// https://maps.gsi.go.jp/development/ichiran.html
+const TILE_URL = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
 const TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
-const TILE_SUBDOMAINS = ["a", "b", "c", "d"];
+  '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>';
 
 export function MapView() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,15 +97,15 @@ export function MapView() {
       const map = L.map(containerRef.current, {
         center: SOUTH_OKINAWA_CENTER,
         zoom: 11,
+        minZoom: MIN_ZOOM,
+        maxZoom: MAX_ZOOM,
         zoomControl: true,
         attributionControl: true,
       });
 
       L.tileLayer(TILE_URL, {
-        maxZoom: 19,
-        subdomains: TILE_SUBDOMAINS,
+        maxZoom: MAX_ZOOM,
         attribution: TILE_ATTRIBUTION,
-        detectRetina: true,
         crossOrigin: true,
       }).addTo(map);
 
@@ -168,6 +169,22 @@ export function MapView() {
       });
       markersRef.current.push(marker);
     });
+
+    // 表示中マーカーに合わせてズーム/中心を自動調整。
+    // 0 件: 何もしない（前回の表示を維持）
+    // 1 件: そのスポットを中央にズーム 14
+    // 2 件以上: 全件が収まるよう fitBounds（パディングと最大ズームでガード）
+    if (markersRef.current.length === 1) {
+      const m = markersRef.current[0];
+      map.flyTo(m.getLatLng(), 14, { duration: 0.4 });
+    } else if (markersRef.current.length >= 2) {
+      const group = L.featureGroup(markersRef.current);
+      map.flyToBounds(group.getBounds(), {
+        padding: FIT_PADDING,
+        maxZoom: 14,
+        duration: 0.4,
+      });
+    }
   }, [spotsToShow, mapReady]);
 
   const toggleCategory = (cat: Category) => {
