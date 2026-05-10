@@ -109,6 +109,14 @@ export function MapView() {
         zoom: 11,
         attributionControl: { compact: true },
         antialias: false,
+        // iOS Safari は double-buffer 直後に WebGL canvas のピクセルを破棄する
+        // ことがある。preserveDrawingBuffer を有効にすると合成までバッファが
+        // 保持され「タイル読込済みなのに canvas が真っ白」を回避できる。
+        preserveDrawingBuffer: true,
+        // iOS Safari でタイル合成時の取りこぼしを防ぐため、ピクセル比を
+        // window のものに合わせる
+        pixelRatio:
+          typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1,
       });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -119,6 +127,12 @@ export function MapView() {
     map.on("error", (e) => {
       // eslint-disable-next-line no-console
       console.error("[MapView] runtime error:", e?.error ?? e);
+    });
+
+    // iOS Safari ではタイル取得後も自動再描画が走らないことがあるため、
+    // load イベントで明示的に triggerRepaint() を呼ぶ。
+    map.once("load", () => {
+      map.triggerRepaint();
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");
