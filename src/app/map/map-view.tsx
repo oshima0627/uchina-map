@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import type * as LType from "leaflet";
+import type {} from "leaflet.markercluster";
 import Link from "next/link";
 import {
   Filter,
@@ -18,6 +21,8 @@ import {
   Baby,
   CloudRain,
   Car,
+  LocateFixed,
+  Loader2,
   type LucideIcon,
 } from "lucide-react";
 import { SPOTS } from "@/data/spots";
@@ -67,9 +72,13 @@ const TILE_ATTRIBUTION =
 export function MapView() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LType.Map | null>(null);
-  const markersRef = useRef<LType.Marker[]>([]);
+  const clusterRef = useRef<LType.MarkerClusterGroup | null>(null);
+  const userMarkerRef = useRef<LType.Marker | null>(null);
+  const userAccuracyRef = useRef<LType.Circle | null>(null);
   const leafletRef = useRef<typeof LType | null>(null);
   const [mapReady, setMapReady] = useState(false);
+  const [locating, setLocating] = useState(false);
+  const [locateError, setLocateError] = useState<string | null>(null);
 
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
   const [enabledCats, setEnabledCats] = useState<Set<Category>>(
@@ -92,6 +101,8 @@ export function MapView() {
 
     (async () => {
       const L = (await import("leaflet")).default;
+      // markercluster は L を拡張するモジュール。L 読込後に副作用 import。
+      await import("leaflet.markercluster");
       if (cancelled || !containerRef.current) return;
 
       const map = L.map(containerRef.current, {
@@ -109,11 +120,31 @@ export function MapView() {
         crossOrigin: true,
       }).addTo(map);
 
+      // ブランド色に合わせたクラスタアイコン。件数で大きさを段階化。
+      const cluster = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        spiderfyOnMaxZoom: true,
+        maxClusterRadius: 48,
+        chunkedLoading: true,
+        iconCreateFunction: (c) => {
+          const n = c.getChildCount();
+          const size = n < 10 ? 38 : n < 30 ? 44 : 52;
+          return L.divIcon({
+            html: `<div style="width:${size}px;height:${size}px;display:grid;place-items:center;background:#1d3557;color:#fff;border:3px solid #fff;border-radius:50%;box-shadow:0 6px 18px -4px rgba(15,29,51,0.45);font-weight:800;font-size:${n < 10 ? 13 : 14}px;font-family:Inter,system-ui,sans-serif;line-height:1;">${n}</div>`,
+            className: "spot-cluster",
+            iconSize: [size, size],
+            iconAnchor: [size / 2, size / 2],
+          });
+        },
+      });
+      cluster.addTo(map);
+
       const ro = new ResizeObserver(() => map.invalidateSize());
       ro.observe(containerRef.current);
       requestAnimationFrame(() => map.invalidateSize());
 
       mapRef.current = map;
+      clusterRef.current = cluster;
       leafletRef.current = L;
       // Signal that the map is ready so the marker effect can run.
       setMapReady(true);
@@ -122,6 +153,7 @@ export function MapView() {
         ro.disconnect();
         map.remove();
         mapRef.current = null;
+        clusterRef.current = null;
         leafletRef.current = null;
       };
     })();
@@ -137,11 +169,11 @@ export function MapView() {
     if (!mapReady) return;
     const map = mapRef.current;
     const L = leafletRef.current;
-    if (!map || !L) return;
-    markersRef.current.forEach((m) => m.remove());
-    markersRef.current = [];
+    const cluster = clusterRef.current;
+    if (!map || !L || !cluster) return;
+    cluster.clearLayers();
 
-    spotsToShow.forEach((spot) => {
+    const markers = spotsToShow.map((spot) => {
       const color = CATEGORY_COLORS[spot.category];
       const html = `
         <div style="position:relative;width:38px;height:38px;display:grid;place-items:center;">
@@ -162,30 +194,94 @@ export function MapView() {
         keyboard: true,
         title: spot.name,
         alt: spot.name,
-      }).addTo(map);
+      });
       marker.on("click", () => {
         setSelectedSpot(spot);
         map.flyTo([spot.lat, spot.lng], 14, { duration: 0.6 });
       });
-      markersRef.current.push(marker);
+      return marker;
     });
+    cluster.addLayers(markers);
 
     // 表示中マーカーに合わせてズーム/中心を自動調整。
-    // 0 件: 何もしない（前回の表示を維持）
-    // 1 件: そのスポットを中央にズーム 14
-    // 2 件以上: 全件が収まるよう fitBounds（パディングと最大ズームでガード）
-    if (markersRef.current.length === 1) {
-      const m = markersRef.current[0];
-      map.flyTo(m.getLatLng(), 14, { duration: 0.4 });
-    } else if (markersRef.current.length >= 2) {
-      const group = L.featureGroup(markersRef.current);
-      map.flyToBounds(group.getBounds(), {
-        padding: FIT_PADDING,
-        maxZoom: 14,
-        duration: 0.4,
-      });
+    // 0 件: 何もしない / 1 件: 中央ズーム / 2+ 件: fitBounds
+    if (markers.length === 1) {
+      map.flyTo(markers[0].getLatLng(), 14, { duration: 0.4 });
+    } else if (markers.length >= 2) {
+      const bounds = cluster.getBounds();
+      if (bounds.isValid()) {
+        map.flyToBounds(bounds, {
+          padding: FIT_PADDING,
+          maxZoom: 14,
+          duration: 0.4,
+        });
+      }
     }
   }, [spotsToShow, mapReady]);
+
+  // 現在地取得 → そこにフォーカス + 現在地マーカー描画
+  const locate = () => {
+    const map = mapRef.current;
+    const L = leafletRef.current;
+    if (!map || !L) return;
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setLocateError("この端末は位置情報に対応していません。");
+      return;
+    }
+    setLocateError(null);
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLocating(false);
+        const { latitude, longitude, accuracy } = pos.coords;
+        const latlng: LType.LatLngTuple = [latitude, longitude];
+        userMarkerRef.current?.remove();
+        userAccuracyRef.current?.remove();
+        // 半透明の精度円
+        userAccuracyRef.current = L.circle(latlng, {
+          radius: Math.min(accuracy || 100, 1000),
+          color: "#226574",
+          weight: 1,
+          fillColor: "#3db8c9",
+          fillOpacity: 0.15,
+          interactive: false,
+        }).addTo(map);
+        // 中央の現在地ピン（ブランド色 hibiscus）
+        const html = `
+          <div style="position:relative;width:18px;height:18px;display:grid;place-items:center;">
+            <span style="position:absolute;inset:-6px;border-radius:50%;background:#e84855;opacity:0.25;animation:pulse-ring 2.4s cubic-bezier(0.2,0.7,0.2,1) infinite;pointer-events:none;"></span>
+            <span style="position:relative;width:14px;height:14px;border-radius:50%;background:#e84855;border:3px solid #fff;box-shadow:0 4px 12px rgba(15,29,51,0.35);"></span>
+          </div>
+        `;
+        const icon = L.divIcon({
+          html,
+          className: "user-location",
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+        });
+        userMarkerRef.current = L.marker(latlng, {
+          icon,
+          interactive: false,
+          keyboard: false,
+          alt: "現在地",
+        }).addTo(map);
+        map.flyTo(latlng, Math.max(map.getZoom(), 14), { duration: 0.6 });
+      },
+      (err) => {
+        setLocating(false);
+        if (err.code === err.PERMISSION_DENIED) {
+          setLocateError("位置情報の利用が許可されていません。");
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+          setLocateError("位置情報を取得できませんでした。");
+        } else if (err.code === err.TIMEOUT) {
+          setLocateError("位置情報の取得がタイムアウトしました。");
+        } else {
+          setLocateError("位置情報の取得に失敗しました。");
+        }
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 },
+    );
+  };
 
   const toggleCategory = (cat: Category) => {
     setEnabledCats((prev) => {
@@ -222,6 +318,33 @@ export function MapView() {
           {spotsToShow.length}件表示中
         </div>
       </div>
+
+      {/* 現在地ボタン（右下、ズームコントロールの下） */}
+      <button
+        type="button"
+        onClick={locate}
+        disabled={locating}
+        aria-label="現在地を表示"
+        className={cn(
+          "absolute right-3 bottom-24 z-[1000] grid place-items-center w-11 h-11 rounded-full glass-strong shadow-pop transition active:scale-95",
+          locating ? "text-charcoal/50" : "text-charcoal hover:bg-white",
+        )}
+      >
+        {locating ? (
+          <Loader2 className="w-5 h-5 animate-spin" strokeWidth={2} />
+        ) : (
+          <LocateFixed className="w-5 h-5" strokeWidth={2} />
+        )}
+      </button>
+
+      {locateError && (
+        <div
+          role="alert"
+          className="absolute top-14 right-3 z-[1000] max-w-[280px] rounded-xl bg-white border border-border shadow-pop px-3 py-2 text-[11px] text-charcoal animate-slide-up"
+        >
+          {locateError}
+        </div>
+      )}
 
       {filterOpen && (
         <div className="absolute top-14 left-3 z-[1000] max-w-[calc(100%-1.5rem)] glass-strong rounded-2xl shadow-pop p-3 animate-slide-up">
