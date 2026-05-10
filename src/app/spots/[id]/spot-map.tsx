@@ -4,10 +4,14 @@ import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import type * as LType from "leaflet";
 
-// 国土地理院（GSI）標準地図タイル — 日本語ラベル・国産・無料
-const TILE_URL = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
-const TILE_ATTRIBUTION =
-  '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>';
+// タイル選択: Stadia API キーがあれば Alidade Smooth、無ければ GSI 淡色地図
+const STADIA_KEY = process.env.NEXT_PUBLIC_STADIA_API_KEY;
+const TILE_URL = STADIA_KEY
+  ? `https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${STADIA_KEY}`
+  : "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png";
+const TILE_ATTRIBUTION = STADIA_KEY
+  ? '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener noreferrer">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
+  : '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>';
 
 const PIN_HTML = `
   <div style="position:relative;width:32px;height:32px;background:#3DB8C9;border:3px solid #fff;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.25);display:grid;place-items:center;color:#fff;">

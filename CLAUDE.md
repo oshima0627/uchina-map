@@ -54,9 +54,23 @@ pnpm typecheck   # 型チェック (tsc --noEmit)
 - Tailwind CSS v4（CSS-first `@theme` 定義 — `src/app/globals.css`）
 - 状態管理: Zustand (`persist` でlocalStorage保存)
 - バリデーション: Zod
-- 地図: MapLibre GL JS + OpenStreetMap タイル
+- 地図: Leaflet + leaflet.markercluster（DOM タイル、iOS Safari の WebGL バグ回避）
 - 天気: Open-Meteo API（キー不要・無料）
 - アイコン: lucide-react
+
+### 環境変数
+
+| キー | 用途 | 既定 |
+|---|---|---|
+| `NEXT_PUBLIC_STADIA_API_KEY` | Stadia Maps Alidade Smooth タイルを使用。未設定時は国土地理院 淡色地図にフォールバック | 未設定 |
+
+#### Stadia Maps の API キー取得手順
+1. https://client.stadiamaps.com/signup/ で無料登録
+2. **Properties** → **Add Property** で `uchina-map.nexeed-lab.com` を追加（ドメイン制限）
+3. **API Keys** で生成、**Create API Key** で生成されたキーをコピー
+4. Cloudflare Pages → Settings → Environment Variables に
+   `NEXT_PUBLIC_STADIA_API_KEY=<キー>` を Production / Preview 両方で設定
+5. 再デプロイ（Pages 側で trigger redeploy or 次回 push 時）
 
 ## ディレクトリ構成
 

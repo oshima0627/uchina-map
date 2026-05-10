@@ -60,14 +60,19 @@ const CATEGORY_MARKER_SVG: Record<Category, string> = {
 
 const SOUTH_OKINAWA_CENTER: LType.LatLngTuple = [26.18, 127.7];
 const MIN_ZOOM = 9; // 沖縄本島全体が収まるズーム
-const MAX_ZOOM = 18; // GSI 標準地図の最大
+const MAX_ZOOM = 18;
 const FIT_PADDING: LType.PointTuple = [60, 60];
 
-// 国土地理院（GSI）標準地図タイル — 日本語ラベル・国産・無料・利用規約上問題なし。
-// https://maps.gsi.go.jp/development/ichiran.html
-const TILE_URL = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
-const TILE_ATTRIBUTION =
-  '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>';
+// タイル選択ロジック:
+// - NEXT_PUBLIC_STADIA_API_KEY があれば Stadia Alidade Smooth (モダンなミニマル)
+// - 無ければ国土地理院 淡色地図 (無料・国産・登録不要のフォールバック)
+const STADIA_KEY = process.env.NEXT_PUBLIC_STADIA_API_KEY;
+const TILE_URL = STADIA_KEY
+  ? `https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${STADIA_KEY}`
+  : "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png";
+const TILE_ATTRIBUTION = STADIA_KEY
+  ? '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener noreferrer">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
+  : '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">国土地理院</a>';
 
 export function MapView() {
   const containerRef = useRef<HTMLDivElement>(null);
