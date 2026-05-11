@@ -63,12 +63,12 @@ const MIN_ZOOM = 9; // 沖縄本島全体が収まるズーム
 const MAX_ZOOM = 18;
 const FIT_PADDING: LType.PointTuple = [60, 60];
 
-// Stadia Maps Alidade Smooth — モダンなミニマル地図
+// Stadia Maps OSM Bright — Google Maps 風のカラフルなスタイル
 // 認証: client.stadiamaps.com で `uchina-map.nexeed-lab.com` をドメインホワイトリストに
 // 追加済み。Referer 経由で認証されるので API キーは不要（PUBLIC env に出さなくて済む）。
 // 開発時の localhost / 127.0.0.1 は Stadia 側で自動許可される。
 const TILE_URL =
-  "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png";
+  "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png";
 const TILE_ATTRIBUTION =
   '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener noreferrer">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>';
 

@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import type * as LType from "leaflet";
 
-// Stadia Maps Alidade Smooth — ドメイン認証（Referer 経由）で API キー不要
+// Stadia Maps OSM Bright — Google Maps 風のカラフルなスタイル（ドメイン認証）
 const TILE_URL =
-  "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png";
+  "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png";
 const TILE_ATTRIBUTION =
   '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener noreferrer">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>';
 

@@ -60,7 +60,7 @@ pnpm typecheck   # 型チェック (tsc --noEmit)
 
 ### 地図タイル（Stadia Maps）
 
-タイル: Stadia Maps Alidade Smooth（モダンなミニマル地図）
+タイル: Stadia Maps OSM Bright（Google Maps 風のカラフルなスタイル）
 
 **認証はドメイン認証のみ**。Referer ヘッダ経由で自動チェックされるので
 API キーは不要。ブラウザ向け Web アプリの標準的な使い方。
