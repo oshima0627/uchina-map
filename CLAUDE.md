@@ -58,19 +58,23 @@ pnpm typecheck   # 型チェック (tsc --noEmit)
 - 天気: Open-Meteo API（キー不要・無料）
 - アイコン: lucide-react
 
-### 環境変数
+### 地図タイル（Stadia Maps）
 
-| キー | 用途 | 既定 |
-|---|---|---|
-| `NEXT_PUBLIC_STADIA_API_KEY` | Stadia Maps Alidade Smooth タイルを使用。未設定時は国土地理院 淡色地図にフォールバック | 未設定 |
+タイル: Stadia Maps Alidade Smooth（モダンなミニマル地図）
 
-#### Stadia Maps の API キー取得手順
-1. https://client.stadiamaps.com/signup/ で無料登録
-2. **Properties** → **Add Property** で `uchina-map.nexeed-lab.com` を追加（ドメイン制限）
-3. **API Keys** で生成、**Create API Key** で生成されたキーをコピー
-4. Cloudflare Pages → Settings → Environment Variables に
-   `NEXT_PUBLIC_STADIA_API_KEY=<キー>` を Production / Preview 両方で設定
-5. 再デプロイ（Pages 側で trigger redeploy or 次回 push 時）
+**認証はドメイン認証のみ**。Referer ヘッダ経由で自動チェックされるので
+API キーは不要。ブラウザ向け Web アプリの標準的な使い方。
+
+#### 新規ドメインを追加するときの手順
+1. https://client.stadiamaps.com/ にログイン
+2. Property「uchina-map」を開く
+3. **Authentication Configuration** → **Add Domain** で対象ドメインを追加
+4. デプロイは不要（即時反映）
+
+ローカル開発時の `localhost` / `127.0.0.1` は Stadia 側で自動許可されるので
+追加不要。
+
+環境変数は不要。`NEXT_PUBLIC_STADIA_API_KEY` は使わない。
 
 ## ディレクトリ構成
 
