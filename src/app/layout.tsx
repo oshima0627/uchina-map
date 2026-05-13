@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { Header, BottomNav } from "@/components/header";
 
@@ -88,6 +89,11 @@ export default function RootLayout({
             © 2026 うちなー子連れマップ・Nexeed Lab — 沖縄の親子が、もっと自由にお出かけできるように。
           </div>
         </footer>
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "7720cfaf118644229c48e9d586355283"}'
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
