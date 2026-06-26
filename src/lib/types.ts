@@ -134,6 +134,7 @@ export const SpotSchema = z.object({
   imageUrl: z.string().optional(),
   imageCredit: ImageCreditSchema.optional(),
   imageEmoji: z.string().optional(),
+  floor: z.string().optional(),
 });
 export type Spot = z.infer<typeof SpotSchema>;
 

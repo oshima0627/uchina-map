@@ -17,6 +17,7 @@ import {
   ToyBrick,
   Sparkles,
   Camera,
+  Building,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { FavoriteButton } from "./favorite-button";
@@ -231,6 +232,13 @@ export default async function SpotDetailPage({
               </span>
             }
           />
+          {spot.floor && (
+            <InfoRow
+              icon={<Building className="w-4 h-4" />}
+              label="フロア"
+              value={spot.floor}
+            />
+          )}
           {spot.phone && (
             <InfoRow
               icon={<Phone className="w-4 h-4" />}

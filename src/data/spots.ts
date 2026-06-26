@@ -180,6 +180,7 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/那覇空港 キッズスペース.jpg",
     imageEmoji: "✈️",
+    floor: "国内線ターミナル 2F",
   },
   {
     id: "naha-main-place",
@@ -500,6 +501,7 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/DMMかりゆし水族館.jpg",
     imageEmoji: "🐠",
+    floor: "iias沖縄豊崎 1F-2F（入口2F）",
   },
   {
     id: "tomi-senagajima",
@@ -1204,6 +1206,7 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/瀬長島ホテル 龍神の湯.webp",
     imageEmoji: "♨️",
+    floor: "瀬長島ホテル 1F",
   },
   {
     id: "naha-wakasa-park",
