@@ -1722,6 +1722,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/イオンモール沖縄ライカム.jpg",
     imageEmoji: "🛍️",
   },
   {
