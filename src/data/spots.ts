@@ -1811,6 +1811,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/体験王国むら咲むら.jpg",
     imageEmoji: "🏺",
   },
   {
