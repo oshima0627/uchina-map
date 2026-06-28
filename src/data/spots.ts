@@ -1592,6 +1592,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/HARMONY CHAFE.jpg",
     imageEmoji: "☕",
   },
   {
