@@ -1901,6 +1901,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/琉球ガラス村.jpg",
     imageEmoji: "🔮",
   },
 ];
