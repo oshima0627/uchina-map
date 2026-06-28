@@ -8,6 +8,11 @@ export const CITIES = [
   "nanjo",
   "yaese",
   "itoman",
+  "chatan",
+  "kitanakagusuku",
+  "okinawa",
+  "uruma",
+  "yomitan",
 ] as const;
 export type City = (typeof CITIES)[number];
 
@@ -19,6 +24,11 @@ export const CITY_LABELS: Record<City, string> = {
   nanjo: "南城市",
   yaese: "八重瀬町",
   itoman: "糸満市",
+  chatan: "北谷町",
+  kitanakagusuku: "北中城村",
+  okinawa: "沖縄市",
+  uruma: "うるま市",
+  yomitan: "読谷村",
 };
 
 export const CATEGORIES = [
