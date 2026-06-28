@@ -796,6 +796,7 @@ export const SPOTS: Spot[] = [
       rainOk: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/がんじゅう駅・南城.jpg",
     imageEmoji: "🚗",
   },
   {
