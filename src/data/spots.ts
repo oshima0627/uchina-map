@@ -1840,6 +1840,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/残波岬公園.jpg",
     imageEmoji: "🐐",
   },
   {
