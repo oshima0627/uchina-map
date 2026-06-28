@@ -1562,6 +1562,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/Secondo Casa.jpg",
     imageEmoji: "🍝",
   },
   {
