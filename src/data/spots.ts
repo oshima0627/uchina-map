@@ -1687,6 +1687,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/沖縄こどもの国.jpg",
     imageEmoji: "🦁",
   },
   {
