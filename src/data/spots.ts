@@ -856,6 +856,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
+    imageUrl: "/spots/シュガーホール（南城市文化センター）.jpg",
     imageEmoji: "🎵",
   },
 
