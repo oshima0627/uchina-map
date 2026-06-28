@@ -1291,6 +1291,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/宜野湾マリン支援センター（まりりんぎのわん）.jpg",
     imageEmoji: "🏊",
   },
 
