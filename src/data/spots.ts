@@ -1426,6 +1426,13 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/旧海軍司令部壕.jpg",
+    imageCredit: {
+      author: "663highland",
+      license: "CC BY 2.5",
+      source:
+        "https://commons.wikimedia.org/wiki/File:Former_Japanese_Naval_Underground_Headquarters_Okinawa12s5s3104.jpg",
+    },
     imageEmoji: "🪖",
   },
   {
@@ -1451,6 +1458,13 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: false,
     }),
+    imageUrl: "/spots/新原ビーチ.jpg",
+    imageCredit: {
+      author: "Toshihiro Matsui",
+      license: "CC BY-SA 3.0",
+      source:
+        "https://commons.wikimedia.org/wiki/File:%E5%8D%97%E5%9F%8E%E5%B8%82%E6%96%B0%E5%8E%9F%E3%83%93%E3%83%BC%E3%83%81%E3%81%AE%E8%A5%BF%E7%AB%AF_-_panoramio.jpg",
+    },
     imageEmoji: "🐚",
   },
   {
