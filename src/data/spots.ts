@@ -1532,6 +1532,7 @@ export const SPOTS: Spot[] = [
       hasParking: false,
       parkingFree: false,
     }),
+    imageUrl: "/spots/MAL食堂.jpg",
     imageEmoji: "🌮",
   },
   {
