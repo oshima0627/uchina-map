@@ -1652,6 +1652,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/Yell Cafe.jpg",
     imageEmoji: "🏓",
   },
 
