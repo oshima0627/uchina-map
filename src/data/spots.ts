@@ -1623,6 +1623,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/Cafeやぶさち.jpg",
     imageEmoji: "🌅",
   },
   {
