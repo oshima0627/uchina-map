@@ -23,6 +23,7 @@ import {
   Car,
   LocateFixed,
   Loader2,
+  Navigation,
   type LucideIcon,
 } from "lucide-react";
 import { SPOTS } from "@/data/spots";
@@ -442,12 +443,24 @@ export function MapView() {
                   </span>
                 )}
               </div>
-              <Link
-                href={`/spots/${selectedSpot.id}`}
-                className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary-700 hover:underline"
-              >
-                詳しく見る →
-              </Link>
+              <div className="mt-2.5 flex items-center gap-2">
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${selectedSpot.lat},${selectedSpot.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-primary text-white text-xs font-semibold shadow-soft active:scale-95 transition"
+                >
+                  <Navigation className="w-3.5 h-3.5" strokeWidth={2.25} />
+                  Google Mapsでナビ
+                </a>
+                <Link
+                  href={`/spots/${selectedSpot.id}`}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-primary-700 hover:underline"
+                >
+                  詳しく見る →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
