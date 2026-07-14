@@ -2220,6 +2220,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/守礼そば.png",
     imageEmoji: "🍜",
   },
   {
@@ -2252,6 +2253,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/タコライスcafe きじむなぁ イーアス豊崎.jpg",
     imageEmoji: "🌮",
     floor: "イーアス沖縄豊崎 1F",
   },
@@ -2281,6 +2283,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/そば処 玉家 本店.jpg",
     imageEmoji: "🍜",
   },
   {
@@ -2309,6 +2312,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/南部そば.jpg",
     imageEmoji: "🍜",
   },
   {
@@ -2338,6 +2342,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/沖縄そばと茶処 屋宜家.jpg",
     imageEmoji: "🍵",
   },
   {
@@ -2371,6 +2376,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/THE CALIF KITCHEN.jpg",
     imageEmoji: "🥞",
     floor: "デポアイランドシーサイドビル 3F",
   },
@@ -2401,6 +2407,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/番所亭.png",
     imageEmoji: "🍜",
   },
   {
@@ -2432,6 +2439,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/琉京甘味 SANS SOUCI.png",
     imageEmoji: "🍛",
   },
   {
@@ -2462,6 +2470,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/Birdland Cafe.webp",
     imageEmoji: "🍳",
   },
   {
@@ -2493,6 +2502,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/うるま市民食堂（うるマルシェ）.jpg",
     imageEmoji: "🍚",
   },
   {
@@ -2522,6 +2532,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/百年古家 大家.jpg",
     imageEmoji: "🏮",
   },
   {
@@ -2550,6 +2561,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/キャプテンカンガルー.jpg",
     imageEmoji: "🍔",
   },
   {
@@ -2578,6 +2590,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/きしもと食堂 八重岳店.jpg",
     imageEmoji: "🍜",
   },
   {
@@ -2606,6 +2619,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/ピザ喫茶 花人逢.jpg",
     imageEmoji: "🍕",
   },
   {
@@ -2635,6 +2649,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/焼肉もとぶ牧場 もとぶ店.jpg",
     imageEmoji: "🥩",
     floor: "本部町産業支援センター 1F",
   },
