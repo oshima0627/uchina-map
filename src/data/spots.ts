@@ -477,8 +477,8 @@ export const SPOTS: Spot[] = [
     highlights: ["完全屋内", "授乳室", "ベビーカーOK"],
     address: "沖縄県豊見城市豊崎3-35",
     city: "tomigusuku",
-    lat: 26.1577,
-    lng: 127.6484,
+    lat: 26.1563,
+    lng: 127.6507,
     phone: "098-996-4844",
     websiteUrl: "https://kariyushi-aquarium.com/",
     businessHours: "10:00-21:00",
@@ -1189,8 +1189,8 @@ export const SPOTS: Spot[] = [
     highlights: ["絶景", "家族風呂", "日帰りOK"],
     address: "沖縄県豊見城市瀬長174-5",
     city: "tomigusuku",
-    lat: 26.1773,
-    lng: 127.6407,
+    lat: 26.1763,
+    lng: 127.6414,
     phone: "098-851-7077",
     businessHours: "6:00-23:00",
     closedDays: [],
@@ -1934,6 +1934,7 @@ export const SPOTS: Spot[] = [
       parkingFree: false,
       parkingSpacious: true,
     }),
+    imageUrl: "/spots/奥武山公園.jpg",
     imageEmoji: "🛝",
   },
   {
@@ -1964,6 +1965,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/東南植物楽園.jpg",
     imageEmoji: "🌴",
   },
   {
@@ -1977,8 +1979,8 @@ export const SPOTS: Spot[] = [
     highlights: ["海の絶景", "無料駐車場", "雨OK"],
     address: "沖縄県うるま市与那城屋平4",
     city: "uruma",
-    lat: 26.3317,
-    lng: 127.9212,
+    lat: 26.3323,
+    lng: 127.9292,
     phone: "098-978-8830",
     businessHours: "9:00-17:30",
     closedDays: [],
@@ -1992,6 +1994,7 @@ export const SPOTS: Spot[] = [
       parkingFree: true,
       parkingSpacious: true,
     }),
+    imageUrl: "/spots/海の駅あやはし館.jpg",
     imageEmoji: "🌉",
   },
   {
@@ -2020,6 +2023,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/県営中城公園.jpg",
     imageEmoji: "🤸",
   },
   {
@@ -2054,6 +2058,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/沖縄美ら海水族館.jpg",
     imageEmoji: "🐋",
   },
   {
@@ -2085,6 +2090,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/海洋博公園（エメラルドビーチ）.jpg",
     imageEmoji: "🐬",
   },
   {
@@ -2112,6 +2118,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/ネオパークオキナワ.jpg",
     imageEmoji: "🦩",
   },
   {
@@ -2145,6 +2152,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/ナゴパイナップルパーク.png",
     imageEmoji: "🍍",
   },
   {
@@ -2175,6 +2183,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/OKINAWAフルーツらんど.jpg",
     imageEmoji: "🥭",
   },
   {
@@ -2188,8 +2197,8 @@ export const SPOTS: Spot[] = [
     highlights: ["恐竜80体以上", "キッズスペース", "御菓子御殿併設"],
     address: "沖縄県名護市中山1024-1",
     city: "nago",
-    lat: 26.6299,
-    lng: 127.9633,
+    lat: 26.6372,
+    lng: 127.9598,
     phone: "0980-54-8515",
     websiteUrl: "https://www.okashigoten.co.jp/subtropical/",
     businessHours: "9:00-18:00（最終入園17:30）",
@@ -2208,6 +2217,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
+    imageUrl: "/spots/DINO恐竜PARK やんばる亜熱帯の森.jpg",
     imageEmoji: "🦕",
   },
 ];
