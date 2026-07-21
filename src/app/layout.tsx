@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import Script from "next/script";
 import "./globals.css";
 import { Header, BottomNav } from "@/components/header";
+import { AdSenseScript } from "@/components/ads/adsense-script";
 
 const SITE_URL = "https://uchina-map.nexeed-lab.com";
 
@@ -85,8 +87,13 @@ export default function RootLayout({
         <main className="flex-1 pb-28 md:pb-0">{children}</main>
         <BottomNav />
         <footer className="hidden md:block border-t border-border py-6 mt-12">
-          <div className="mx-auto max-w-5xl px-4 text-xs text-charcoal/75">
-            © 2026 うちなー子連れマップ・Nexeed Lab — 沖縄の親子が、もっと自由にお出かけできるように。
+          <div className="mx-auto max-w-5xl px-4 flex items-center justify-between gap-4 text-xs text-charcoal/75">
+            <span>
+              © 2026 うちなー子連れマップ・Nexeed Lab — 沖縄の親子が、もっと自由にお出かけできるように。
+            </span>
+            <Link href="/privacy" className="shrink-0 hover:text-charcoal hover:underline">
+              プライバシーポリシー
+            </Link>
           </div>
         </footer>
         <Script
@@ -94,6 +101,7 @@ export default function RootLayout({
           data-cf-beacon='{"token": "7720cfaf118644229c48e9d586355283"}'
           strategy="afterInteractive"
         />
+        <AdSenseScript />
       </body>
     </html>
   );

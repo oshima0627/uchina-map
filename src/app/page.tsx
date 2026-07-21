@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
 import { HomeSearch } from "@/components/home-search";
+import { AdSlot } from "@/components/ads/ad-slot";
+import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SPOTS } from "@/data/spots";
 import {
   CATEGORIES,
@@ -477,6 +479,8 @@ export default function HomePage() {
         spots={collectionAllDay}
         accent="primary"
       />
+
+      <AdSlot slot={ADSENSE_SLOTS.content} className="mx-auto max-w-5xl px-4 py-8" />
     </div>
   );
 }
