@@ -1,9 +1,10 @@
 /**
  * Google AdSense 設定。
- * 審査通過後、Cloudflare Pages のビルド環境変数に実IDを設定するだけで広告が有効化される。
- * 未設定の間は広告関連の要素を一切描画しない（本番の見た目は変わらない）。
+ * パブリッシャーIDは審査・所有権確認のため常時読み込む（環境変数で上書き可能）。
+ * 広告ユニット（スロット）IDは未設定の間、広告枠を一切描画しない。
  */
-export const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "";
+export const ADSENSE_CLIENT =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? "ca-pub-4718076434751586";
 
 /** 広告枠（スロット）ID。AdSense 管理画面で作成した広告ユニットのIDを環境変数で渡す。 */
 export const ADSENSE_SLOTS = {

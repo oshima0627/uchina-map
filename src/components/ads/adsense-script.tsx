@@ -1,20 +1,18 @@
-import Script from "next/script";
 import { ADSENSE_CLIENT, adsEnabled } from "@/lib/ads";
 
 /**
  * AdSense のライブラリ読み込み。クライアントID未設定なら何も出力しない。
- * layout.tsx で一度だけ読み込む。
+ * React 19 が native <script async src> を自動で <head> に巻き上げるため、
+ * AdSense が要求するスニペットがそのまま HTML の <head> に出力される（所有権確認・審査用）。
  */
 export function AdSenseScript() {
   if (!adsEnabled) return null;
 
   return (
-    <Script
-      id="adsbygoogle-init"
+    <script
       async
-      strategy="afterInteractive"
-      crossOrigin="anonymous"
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+      crossOrigin="anonymous"
     />
   );
 }
