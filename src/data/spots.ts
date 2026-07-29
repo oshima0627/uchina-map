@@ -1015,6 +1015,8 @@ export const SPOTS: Spot[] = [
     ageTags: ["school"],
     features: f({
       hasMultipurposeToilet: true,
+      // https://www.okinawastory.jp/spot/1100 に「ベビーカー（2台）」と記載（2026年7月確認）
+      strollerRental: true,
       isIndoor: true,
       isOutdoor: false,
       rainOk: true,
@@ -1916,7 +1918,8 @@ export const SPOTS: Spot[] = [
     lng: 127.7969,
     phone: "098-965-3400",
     websiteUrl: "https://www.bios-hill.co.jp/",
-    businessHours: "9:00-18:00（入園17:00まで）",
+    // 公式サイト(bios-hill.co.jp)とおきなわ物語の双方で確認（2026年7月）
+    businessHours: "9:00-17:30（入園受付16:15まで）",
     closedDays: [],
     price: { adult: 1000, child: 500 },
     durationMin: 150,
@@ -1971,6 +1974,8 @@ export const SPOTS: Spot[] = [
     ageTags: ["4-6", "school"],
     features: f({
       hasDiaperTable: true,
+      // https://www.okinawastory.jp/spot/1331 に「車椅子・ベビーカー貸出あり」と記載（2026年7月確認）
+      strollerRental: true,
       isIndoor: true,
       rainOk: true,
       hasMultipurposeToilet: true,
