@@ -691,8 +691,6 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/おきなわワールド（玉泉洞）.jpg",
     imageEmoji: "🕳️",
-    // 出典: 沖縄観光情報WEBサイト「おきなわ物語」(okinawastory.jp/spot/1069)
-    parkingNote: "無料の駐車場が約400台分あります。",
   },
   {
     id: "nanjo-gangala",
