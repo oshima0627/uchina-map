@@ -20,6 +20,7 @@ import {
   Building,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { SpotCard } from "@/components/spot-card";
 import { JsonLd } from "@/components/json-ld";
 import { FavoriteButton } from "./favorite-button";
 import { SpotMap } from "./spot-map";
@@ -37,10 +38,40 @@ import {
   CATEGORY_EMOJIS,
   CATEGORY_LABELS,
   CITY_LABELS,
+  type Spot,
 } from "@/lib/types";
 import { formatDuration, formatPrice } from "@/lib/utils";
 
 export const dynamicParams = false;
+
+const RELATED_LIMIT = 4;
+
+/**
+ * グループ内で自分の次から巡回して選ぶ。常に先頭から取ると
+ * グループ末尾のスポットが誰からもリンクされない孤立ページになるため。
+ */
+function pickAround(group: Spot[], id: string) {
+  const i = group.findIndex((s) => s.id === id);
+  return [...group.slice(i + 1), ...group.slice(0, i)];
+}
+
+/** 同じ市町村 → 同じカテゴリの順に関連スポットを選ぶ（重複は除く） */
+function relatedSpots(spot: Spot) {
+  const sameCity = pickAround(
+    SPOTS.filter((s) => s.city === spot.city),
+    spot.id,
+  ).slice(0, RELATED_LIMIT);
+
+  const shown = new Set([spot.id, ...sameCity.map((s) => s.id)]);
+  const sameCategory = pickAround(
+    SPOTS.filter((s) => s.category === spot.category),
+    spot.id,
+  )
+    .filter((s) => !shown.has(s.id))
+    .slice(0, RELATED_LIMIT);
+
+  return { sameCity, sameCategory };
+}
 
 export function generateStaticParams() {
   return SPOTS.map((s) => ({ id: s.id }));
@@ -73,6 +104,7 @@ export default async function SpotDetailPage({
   if (!spot) notFound();
 
   const features = spot.features;
+  const { sameCity, sameCategory } = relatedSpots(spot);
 
   const categoryColor = CATEGORY_COLORS[spot.category];
   const hasImage = !!spot.imageUrl;
@@ -373,6 +405,32 @@ export default async function SpotDetailPage({
             <DetailItem ok={features.noiseTolerant}>泣いてもOK</DetailItem>
           </ul>
         </section>
+
+        {sameCity.length > 0 && (
+          <section className="mb-10">
+            <h2 className="text-lg font-bold mb-3">
+              {CITY_LABELS[spot.city]}の他の子連れスポット
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {sameCity.map((s) => (
+                <SpotCard key={s.id} spot={s} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {sameCategory.length > 0 && (
+          <section className="mb-10">
+            <h2 className="text-lg font-bold mb-3">
+              沖縄の他の{CATEGORY_LABELS[spot.category]}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {sameCategory.map((s) => (
+                <SpotCard key={s.id} spot={s} />
+              ))}
+            </div>
+          </section>
+        )}
 
         <Link
           href="/spots"
