@@ -23,6 +23,35 @@ export function spotDescription(spot: Spot) {
 }
 
 /**
+ * 検索スニペットに出す設備の要約。
+ * 「施設名＋授乳室」「施設名＋駐車場」のような検索が流入の中心なので、
+ * 検索語がそのまま含まれるよう、需要の大きい設備から並べる。
+ */
+export function spotFacilitySummary(spot: Spot): string[] {
+  const f = spot.features;
+  const out: string[] = [];
+
+  if (f.hasNursingRoom) out.push("授乳室あり");
+  if (f.hasDiaperTable) out.push("オムツ替え台あり");
+  if (f.hasParking) {
+    out.push(
+      f.parkingFree
+        ? f.parkingSpacious
+          ? "駐車場無料（広め）"
+          : "駐車場無料"
+        : "駐車場あり（有料）",
+    );
+  }
+  if (f.rainOk) out.push("雨の日OK");
+  if (f.hasKidsSpace) out.push("キッズスペースあり");
+  else if (f.hasPlayground) out.push("遊具あり");
+  if (f.strollerRental) out.push("ベビーカー貸出あり");
+  else if (f.strollerFriendly) out.push("ベビーカーOK");
+
+  return out;
+}
+
+/**
  * ページ固有の canonical / OGP / Twitter カードをまとめて生成する。
  * openGraph と twitter は親レイアウトとマージされず上書きになるため、
  * 各ページで必ずここを通してすべてのフィールドを出す。

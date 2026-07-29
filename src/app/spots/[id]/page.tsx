@@ -29,6 +29,7 @@ import {
   pageMetadata,
   spotBreadcrumbJsonLd,
   spotDescription,
+  spotFacilitySummary,
   spotJsonLd,
   spotOgImage,
 } from "@/lib/seo";
@@ -53,6 +54,77 @@ const RELATED_LIMIT = 4;
 function pickAround(group: Spot[], id: string) {
   const i = group.findIndex((s) => s.id === id);
   return [...group.slice(i + 1), ...group.slice(0, i)];
+}
+
+/**
+ * 設備の有無を見出し付きの文章にする。
+ * 「施設名＋キッズスペース」「施設名＋駐車場」のような検索で表示はされるものの、
+ * ページ上に該当する文章が無くクリックされていなかったため、
+ * データで裏の取れる範囲だけを文章化する（台数や料金は持っていないので書かない）。
+ */
+function facilityQa(spot: Spot): Array<{ q: string; a: string }> {
+  const f = spot.features;
+  const n = spot.name;
+  const qa: Array<{ q: string; a: string }> = [];
+
+  if (f.hasKidsSpace || f.hasPlayground) {
+    const items = [
+      f.hasKidsSpace ? "キッズスペース" : null,
+      f.hasPlayground ? "遊具" : null,
+    ].filter((v): v is string => v !== null);
+    // 「那覇空港 キッズスペース」のように施設名に設備語が入る場合、
+    // 「キッズスペースにキッズスペースはある？」になるのを避ける
+    const nameHasItem = items.some((i) => n.includes(i));
+    qa.push({
+      q: nameHasItem ? `${n}はどんな遊び場？` : `${n}に${items.join("と")}はある？`,
+      a:
+        `${items.join("と")}があります。` +
+        (f.noiseTolerant ? "多少にぎやかにしても気兼ねしにくい場所です。" : ""),
+    });
+  }
+
+  const baby = [
+    f.hasNursingRoom ? "授乳室" : null,
+    f.hasDiaperTable ? "オムツ替え台" : null,
+  ].filter(Boolean);
+  qa.push({
+    q: `${n}に授乳室・オムツ替え台はある？`,
+    a:
+      baby.length === 0
+        ? "授乳室・オムツ替え台は確認できていません。"
+        : `${baby.join("と")}があります。` +
+          (f.hasMultipurposeToilet ? "多目的トイレも利用できます。" : ""),
+  });
+
+  qa.push({
+    q: `${n}に駐車場はある？`,
+    a: !f.hasParking
+      ? "専用の駐車場はありません。"
+      : f.parkingFree
+        ? f.parkingSpacious
+          ? "無料の駐車場があります。駐車台数にゆとりがあります。"
+          : "無料の駐車場があります。"
+        : "駐車場がありますが、利用は有料です。",
+  });
+
+  qa.push({
+    q: `${n}は雨の日でも遊べる？`,
+    a: f.rainOk
+      ? f.isIndoor
+        ? "屋内なので雨の日でも遊べます。"
+        : "雨の日でも利用できます。"
+      : "屋外が中心のため、雨の日には向きません。",
+  });
+
+  qa.push({
+    q: `${n}はベビーカーで行ける？`,
+    a: f.strollerFriendly
+      ? "ベビーカーで回れます。" + (f.strollerRental ? "ベビーカーの貸出もあります。" : "")
+      : "ベビーカーでの移動には向きません。" +
+        (f.strollerRental ? "ベビーカーの貸出があります。" : ""),
+  });
+
+  return qa;
 }
 
 /** 同じ市町村 → 同じカテゴリの順に関連スポットを選ぶ（重複は除く） */
@@ -85,9 +157,14 @@ export async function generateMetadata({
   const { id } = await params;
   const spot = SPOTS.find((s) => s.id === id);
   if (!spot) return {};
+  const facilities = spotFacilitySummary(spot).slice(0, 4);
   return pageMetadata({
     title: `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報`,
-    description: `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ向け情報。${spotDescription(spot)} 授乳室・オムツ替え・ベビーカー・駐車場・雨の日の可否をまとめています。`,
+    description: [
+      `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報。`,
+      facilities.length > 0 ? `${facilities.join("・")}。` : "",
+      spotDescription(spot),
+    ].join(""),
     path: `/spots/${spot.id}/`,
     image: spotOgImage(spot),
     imageAlt: `${spot.name}の写真`,
@@ -404,6 +481,18 @@ export default async function SpotDetailPage({
             </DetailItem>
             <DetailItem ok={features.noiseTolerant}>泣いてもOK</DetailItem>
           </ul>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-lg font-bold mb-3">{spot.name}の子連れ設備Q&amp;A</h2>
+          <div className="rounded-2xl bg-white border border-border divide-y divide-border">
+            {facilityQa(spot).map(({ q, a }) => (
+              <div key={q} className="px-4 py-3">
+                <h3 className="text-sm font-bold text-charcoal">{q}</h3>
+                <p className="text-sm text-charcoal/80 mt-1 leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         {sameCity.length > 0 && (
