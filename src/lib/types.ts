@@ -149,6 +149,13 @@ export const SpotSchema = z.object({
   imageCredit: ImageCreditSchema.optional(),
   imageEmoji: z.string().optional(),
   floor: z.string().optional(),
+  /**
+   * 駐車場・授乳室の具体的な説明文。設備の boolean だけでは
+   * 「◯◯ 駐車場」のような検索意図に答えられないため、公式情報で
+   * 裏の取れたスポットにだけ書く。設定するとQ&Aの回答文を置き換える。
+   */
+  parkingNote: z.string().optional(),
+  nursingNote: z.string().optional(),
 });
 export type Spot = z.infer<typeof SpotSchema>;
 

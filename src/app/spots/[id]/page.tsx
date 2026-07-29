@@ -90,21 +90,24 @@ function facilityQa(spot: Spot): Array<{ q: string; a: string }> {
   qa.push({
     q: `${n}に授乳室・オムツ替え台はある？`,
     a:
-      baby.length === 0
+      spot.nursingNote ??
+      (baby.length === 0
         ? "授乳室・オムツ替え台は確認できていません。"
         : `${baby.join("と")}があります。` +
-          (f.hasMultipurposeToilet ? "多目的トイレも利用できます。" : ""),
+          (f.hasMultipurposeToilet ? "多目的トイレも利用できます。" : "")),
   });
 
   qa.push({
     q: `${n}に駐車場はある？`,
-    a: !f.hasParking
-      ? "専用の駐車場はありません。"
-      : f.parkingFree
-        ? f.parkingSpacious
-          ? "無料の駐車場があります。駐車台数にゆとりがあります。"
-          : "無料の駐車場があります。"
-        : "駐車場がありますが、利用は有料です。",
+    a:
+      spot.parkingNote ??
+      (!f.hasParking
+        ? "専用の駐車場はありません。"
+        : f.parkingFree
+          ? f.parkingSpacious
+            ? "無料の駐車場があります。駐車台数にゆとりがあります。"
+            : "無料の駐車場があります。"
+          : "駐車場がありますが、利用は有料です。"),
   });
 
   qa.push({
