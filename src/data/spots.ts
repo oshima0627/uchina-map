@@ -369,6 +369,10 @@ export const SPOTS: Spot[] = [
     durationMin: 60,
     ageTags: ["4-6", "school"],
     features: f({
+      // https://www.okinawastory.jp/spot/600014409 に記載あり（2026年7月確認）
+      hasNursingRoom: true,
+      // https://www.okinawastory.jp/spot/600014409 に記載あり（2026年7月確認）
+      hasKidsChair: true,
       hasDiaperTable: true,
       isIndoor: true,
       isOutdoor: false,
@@ -630,6 +634,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/道の駅 豊崎.jpg",
     imageEmoji: "🥬",
+    parkingNote: {
+      text: "無料の駐車場があります。176台分で、24時間利用できます。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/600005932",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "tomi-ashibinaa",
@@ -661,6 +673,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/沖縄アウトレットモール あしびなー.jpg",
     imageEmoji: "🛍️",
+    parkingNote: {
+      text: "無料の駐車場があります。1,000台分です。大型バスも無料です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/600001191",
+      },
+      checkedOn: "2026年7月",
+    },
   },
 
   // ===== 南城市 =====
@@ -729,6 +749,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/ガンガラーの谷.jpg",
     imageEmoji: "🌿",
+    parkingNote: {
+      text: "無料の駐車場があります。100台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1055",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nanjo-chinen-misaki",
@@ -956,6 +984,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/平和祈念公園.jpg",
     imageEmoji: "🕊️",
+    parkingNote: {
+      text: "無料の駐車場があります。546台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1417",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "itoman-himeyuri",
@@ -1424,6 +1460,14 @@ export const SPOTS: Spot[] = [
         "https://commons.wikimedia.org/wiki/File:Former_Japanese_Naval_Underground_Headquarters_Okinawa12s5s3104.jpg",
     },
     imageEmoji: "🪖",
+    parkingNote: {
+      text: "無料の駐車場があります。105台分で、大型バスは10台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1391",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nanjo-mibaru-beach",
@@ -1456,6 +1500,14 @@ export const SPOTS: Spot[] = [
         "https://commons.wikimedia.org/wiki/File:%E5%8D%97%E5%9F%8E%E5%B8%82%E6%96%B0%E5%8E%9F%E3%83%93%E3%83%BC%E3%83%81%E3%81%AE%E8%A5%BF%E7%AB%AF_-_panoramio.jpg",
     },
     imageEmoji: "🐚",
+    parkingNote: {
+      text: "駐車場は有料です（500円）。30台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1100",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "yaese-seibu-plaza-park",
@@ -1601,6 +1653,8 @@ export const SPOTS: Spot[] = [
     durationMin: 90,
     ageTags: ["1-3", "4-6", "school"],
     features: f({
+      // https://www.okinawastory.jp/spot/600011341 に記載あり（2026年7月確認）
+      hasDiaperTable: true,
       isIndoor: true,
       rainOk: true,
       hasKidsChair: true,
@@ -1664,6 +1718,8 @@ export const SPOTS: Spot[] = [
     durationMin: 180,
     ageTags: ["0", "1-3", "4-6", "school"],
     features: f({
+      // https://www.okinawastory.jp/spot/600009200 に記載あり（2026年7月確認）
+      hasKidsChair: true,
       hasNursingRoom: true,
       hasDiaperTable: true,
       isIndoor: true,
@@ -1675,6 +1731,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/沖縄こどもの国.jpg",
     imageEmoji: "🦁",
+    parkingNote: {
+      text: "無料の駐車場があります。700台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/600009200",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "kitanakagusuku-aeon-rycom",
@@ -1915,6 +1979,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/琉球ガラス村.jpg",
     imageEmoji: "🔮",
+    parkingNote: {
+      text: "無料の駐車場があります。100台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1331",
+      },
+      checkedOn: "2026年7月",
+    },
   },
 
   // ===== 追加（北部・中部の定番スポット 2026 / 一次情報で検証） =====
@@ -1977,6 +2049,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/東南植物楽園.jpg",
     imageEmoji: "🌴",
+    parkingNote: {
+      text: "無料の駐車場があります。340台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1347",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "uruma-ayahashi",
@@ -2006,6 +2086,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/海の駅あやはし館.jpg",
     imageEmoji: "🌉",
+    parkingNote: {
+      text: "無料の駐車場があります。300台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/10121100",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "kitanakagusuku-nakagusuku-park",
@@ -2139,6 +2227,10 @@ export const SPOTS: Spot[] = [
     durationMin: 120,
     ageTags: ["1-3", "4-6", "school"],
     features: f({
+      // https://www.okinawastory.jp/spot/1346 に記載あり（2026年7月確認）
+      hasNursingRoom: true,
+      // https://www.okinawastory.jp/spot/1346 に記載あり（2026年7月確認）
+      hasMultipurposeToilet: true,
       hasDiaperTable: true,
       strollerRental: true,
       parkingSpacious: true,
@@ -2146,6 +2238,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/ネオパークオキナワ.jpg",
     imageEmoji: "🦩",
+    parkingNote: {
+      text: "無料の駐車場があります。533台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1346",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nago-pineapple-park",
@@ -2219,6 +2319,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/OKINAWAフルーツらんど.jpg",
     imageEmoji: "🥭",
+    parkingNote: {
+      text: "無料の駐車場があります。100台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1343",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nago-dino-park",
@@ -2589,6 +2697,8 @@ export const SPOTS: Spot[] = [
     durationMin: 60,
     ageTags: ["0", "1-3", "4-6", "school"],
     features: f({
+      // https://www.okinawastory.jp/spot/600008535 に記載あり（2026年7月確認）
+      hasDiaperTable: true,
       isIndoor: true,
       rainOk: true,
       noiseTolerant: true,
@@ -2597,6 +2707,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/百年古家 大家.jpg",
     imageEmoji: "🏮",
+    parkingNote: {
+      text: "無料の駐車場があります。100台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/600008535",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "motobu-captain-kangaroo",
