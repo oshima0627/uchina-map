@@ -125,6 +125,24 @@ export const ImageCreditSchema = z.object({
 });
 export type ImageCredit = z.infer<typeof ImageCreditSchema>;
 
+/**
+ * 駐車場・授乳室などの補足説明。数字を含む情報は必ず出典と確認時期を残す。
+ * 施設情報は変わるため、いつの情報かが分からない状態にしない。
+ */
+export const FacilityNoteSchema = z.object({
+  text: z.string(),
+  /** 出典。現地で自分が確認した場合など、URLが無いときは省略 */
+  source: z
+    .object({
+      name: z.string(),
+      url: z.string().url(),
+    })
+    .optional(),
+  /** 情報を確認した時期。例: "2026年7月" */
+  checkedOn: z.string().optional(),
+});
+export type FacilityNote = z.infer<typeof FacilityNoteSchema>;
+
 export const SpotSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -154,12 +172,13 @@ export const SpotSchema = z.object({
    * 「◯◯ 駐車場」のような検索意図に答えられないため補足する。
    * 設定するとQ&Aの回答文を置き換える。
    *
-   * 台数・料金・室数などの数字は、運営元の公式情報で確認できたものだけを書く。
-   * 裏が取れないものは数字を出さず「ゆとりがあります」のような書き方にする。
-   * 第三者サイトの数字は食い違うことがあるため根拠にしない。
+   * 台数・料金・室数などの数字を書くときは、公式サイトか自治体・観光協会などの
+   * 観光情報サイトを出典として source に残す。個人ブログやポータルの数字は
+   * 食い違うことがあるため根拠にしない。裏が取れないものは数字を出さず
+   * 「ゆとりがあります」のような書き方にする。
    */
-  parkingNote: z.string().optional(),
-  nursingNote: z.string().optional(),
+  parkingNote: FacilityNoteSchema.optional(),
+  nursingNote: FacilityNoteSchema.optional(),
 });
 export type Spot = z.infer<typeof SpotSchema>;
 

@@ -181,9 +181,14 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/那覇空港 キッズスペース.jpg",
     imageEmoji: "✈️",
     floor: "国内線ターミナル 2F",
-    // 出典: 那覇空港旅客ターミナルビル公式（駐車場ページ／park&rideページ）
-    parkingNote:
-      "駐車場は有料です。通常期と多客期で料金が変わります。連休や繁忙期は混雑して駐車できないこともあるため、時間に余裕をもって向かってください。",
+    parkingNote: {
+      text: "駐車場は有料です。通常期と多客期で料金が変わります。連休や繁忙期は混雑して駐車できないこともあるため、時間に余裕をもって向かってください。",
+      source: {
+        name: "那覇空港旅客ターミナルビル 公式サイト",
+        url: "https://www.naha-airport.co.jp/access/parking/",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "naha-main-place",
@@ -691,6 +696,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/おきなわワールド（玉泉洞）.jpg",
     imageEmoji: "🕳️",
+    parkingNote: {
+      text: "無料の駐車場が約400台分あります。",
+      source: { name: "おきなわ物語（沖縄観光情報WEBサイト）", url: "https://www.okinawastory.jp/spot/1069" },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nanjo-gangala",

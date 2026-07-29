@@ -39,6 +39,7 @@ import {
   CATEGORY_EMOJIS,
   CATEGORY_LABELS,
   CITY_LABELS,
+  type FacilityNote,
   type Spot,
 } from "@/lib/types";
 import { formatDuration, formatPrice } from "@/lib/utils";
@@ -62,10 +63,10 @@ function pickAround(group: Spot[], id: string) {
  * ページ上に該当する文章が無くクリックされていなかったため、
  * データで裏の取れる範囲だけを文章化する（台数や料金は持っていないので書かない）。
  */
-function facilityQa(spot: Spot): Array<{ q: string; a: string }> {
+function facilityQa(spot: Spot): Array<{ q: string; a: string; note?: FacilityNote }> {
   const f = spot.features;
   const n = spot.name;
-  const qa: Array<{ q: string; a: string }> = [];
+  const qa: Array<{ q: string; a: string; note?: FacilityNote }> = [];
 
   if (f.hasKidsSpace || f.hasPlayground) {
     const items = [
@@ -90,17 +91,18 @@ function facilityQa(spot: Spot): Array<{ q: string; a: string }> {
   qa.push({
     q: `${n}に授乳室・オムツ替え台はある？`,
     a:
-      spot.nursingNote ??
+      spot.nursingNote?.text ??
       (baby.length === 0
         ? "授乳室・オムツ替え台は確認できていません。"
         : `${baby.join("と")}があります。` +
           (f.hasMultipurposeToilet ? "多目的トイレも利用できます。" : "")),
+    note: spot.nursingNote,
   });
 
   qa.push({
     q: `${n}に駐車場はある？`,
     a:
-      spot.parkingNote ??
+      spot.parkingNote?.text ??
       (!f.hasParking
         ? "専用の駐車場はありません。"
         : f.parkingFree
@@ -108,6 +110,7 @@ function facilityQa(spot: Spot): Array<{ q: string; a: string }> {
             ? "無料の駐車場があります。駐車台数にゆとりがあります。"
             : "無料の駐車場があります。"
           : "駐車場がありますが、利用は有料です。"),
+    note: spot.parkingNote,
   });
 
   qa.push({
@@ -489,10 +492,30 @@ export default async function SpotDetailPage({
         <section className="mb-10">
           <h2 className="text-lg font-bold mb-3">{spot.name}の子連れ設備Q&amp;A</h2>
           <div className="rounded-2xl bg-white border border-border divide-y divide-border">
-            {facilityQa(spot).map(({ q, a }) => (
+            {facilityQa(spot).map(({ q, a, note }) => (
               <div key={q} className="px-4 py-3">
                 <h3 className="text-sm font-bold text-charcoal">{q}</h3>
                 <p className="text-sm text-charcoal/80 mt-1 leading-relaxed">{a}</p>
+                {(note?.source || note?.checkedOn) && (
+                  <p className="text-[11px] text-charcoal/60 mt-1.5">
+                    {note.source ? (
+                      <>
+                        出典:{" "}
+                        <a
+                          href={note.source.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-charcoal"
+                        >
+                          {note.source.name}
+                        </a>
+                      </>
+                    ) : (
+                      "現地確認"
+                    )}
+                    {note.checkedOn && `（${note.checkedOn}確認）`}
+                  </p>
+                )}
               </div>
             ))}
           </div>
