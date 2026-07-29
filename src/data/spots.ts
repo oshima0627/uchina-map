@@ -1739,6 +1739,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/美浜アメリカンビレッジ.jpg",
     imageEmoji: "🎡",
+    parkingNote: {
+      text: "無料の駐車場があります。約1,500台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1010",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "chatan-araha-park",
@@ -1850,6 +1858,8 @@ export const SPOTS: Spot[] = [
     durationMin: 150,
     ageTags: ["1-3", "4-6", "school"],
     features: f({
+      // おきなわ物語(okinawastory.jp/spot/1345)に授乳室ありと記載。false は誤りだった
+      hasNursingRoom: true,
       hasDiaperTable: true,
       strollerRental: true,
       hasMultipurposeToilet: true,
@@ -1858,6 +1868,22 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/ビオスの丘.jpg",
     imageEmoji: "🐃",
+    parkingNote: {
+      text: "無料の駐車場があります。130台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1345",
+      },
+      checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "授乳室があります。オムツ替えができるスペースもあります。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1345",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "itoman-ryukyu-glass-village",
@@ -2044,6 +2070,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/沖縄美ら海水族館.jpg",
     imageEmoji: "🐋",
+    parkingNote: {
+      text: "無料の駐車場があります。海洋博公園全体で約1,900台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1342",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "motobu-kaiyohaku-park",
@@ -2076,6 +2110,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/海洋博公園（エメラルドビーチ）.jpg",
     imageEmoji: "🐬",
+    parkingNote: {
+      text: "無料の駐車場があります。海洋博公園全体で約1,900台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1349",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nago-neopark",
@@ -2138,6 +2180,14 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/ナゴパイナップルパーク.png",
     imageEmoji: "🍍",
+    parkingNote: {
+      text: "無料の駐車場があります。乗用車は約200台分です。",
+      source: {
+        name: "おきなわ物語（沖縄観光情報WEBサイト）",
+        url: "https://www.okinawastory.jp/spot/1072",
+      },
+      checkedOn: "2026年7月",
+    },
   },
   {
     id: "nago-fruitsland",
