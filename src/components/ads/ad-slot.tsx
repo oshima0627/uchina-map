@@ -52,7 +52,8 @@ export function AdSlot({
       </span>
       <ins
         className="adsbygoogle mt-1 block"
-        style={{ display: "block" }}
+        // 広告が入るまでの高さを先に確保しておく（CLS対策）
+        style={{ display: "block", minHeight: 280 }}
         data-ad-client={ADSENSE_CLIENT}
         data-ad-slot={slot}
         data-ad-format={format}
