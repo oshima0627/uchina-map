@@ -115,7 +115,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden flex flex-col min-h-[calc(100svh-3.5rem)]">
         {/* Background photo — Okinawa beach */}
         <img
-          src="/spots/豊崎海浜公園 美らSUNビーチ.jpg"
+          src="/spots/豊崎海浜公園 美らSUNビーチ.webp"
           alt=""
           aria-hidden
           width={1600}
@@ -216,7 +216,7 @@ export default function HomePage() {
             className="group relative col-span-2 overflow-hidden rounded-3xl min-h-[200px] md:min-h-[260px]"
           >
             <img
-              src="/spots/DMMかりゆし水族館.jpg"
+              src="/spots/card/DMMかりゆし水族館.webp"
               alt=""
               aria-hidden
               width={800}

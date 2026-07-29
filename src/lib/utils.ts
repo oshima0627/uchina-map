@@ -18,6 +18,15 @@ export function formatPrice(price: number): string {
   return `¥${price.toLocaleString()}`;
 }
 
+/**
+ * 一覧カード用の軽い画像（最大幅800）に差し替える。
+ * 詳細ヒーロー用は最大幅1600あり、カードの表示サイズには過大なため。
+ * 生成は scripts/optimize-images.mjs。
+ */
+export function cardImageUrl(imageUrl: string) {
+  return imageUrl.replace(/^\/spots\//, "/spots/card/");
+}
+
 const EARTH_R = 6371;
 export function distanceKm(
   a: { lat: number; lng: number },

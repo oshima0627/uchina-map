@@ -32,12 +32,25 @@
 ## 開発コマンド
 
 ```bash
-pnpm install     # 依存関係のインストール
-pnpm dev         # 開発サーバ (http://localhost:3000)
-pnpm build       # 静的エクスポート（out/ に書き出し）
-pnpm preview     # out/ をローカルプレビュー (http://localhost:4173)
-pnpm typecheck   # 型チェック (tsc --noEmit)
+pnpm install          # 依存関係のインストール
+pnpm dev              # 開発サーバ (http://localhost:3000)
+pnpm build            # 静的エクスポート（out/ に書き出し）
+pnpm preview          # out/ をローカルプレビュー (http://localhost:4173)
+pnpm typecheck        # 型チェック (tsc --noEmit)
+pnpm optimize:images  # assets/spots/ の元画像から public/spots/ の配信用WebPを生成
 ```
+
+### 画像
+
+元画像は `assets/spots/`（配信されない）に置き、`pnpm optimize:images` で
+`public/spots/` に WebP を生成する。生成物もコミットする（Cloudflare Pages の
+ビルドでは生成しない）。詳細は `assets/spots/README.md`。
+
+- `public/spots/<name>.webp` … 詳細ヒーロー用（最大幅1600）
+- `public/spots/card/<name>.webp` … 一覧カード用（最大幅800）。`cardImageUrl()` で参照
+
+静的エクスポートのため `next/image` の最適化は使えない（`images.unoptimized: true`）。
+画像の軽量化はこのスクリプトが唯一の手段。
 
 ## デプロイ
 

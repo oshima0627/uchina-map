@@ -17,7 +17,7 @@ import {
   CITY_LABELS,
   type Spot,
 } from "@/lib/types";
-import { cn, formatDuration } from "@/lib/utils";
+import { cardImageUrl, cn, formatDuration } from "@/lib/utils";
 import { useFavorites } from "@/lib/favorites-store";
 
 export function SpotCard({ spot }: { spot: Spot }) {
@@ -41,7 +41,7 @@ export function SpotCard({ spot }: { spot: Spot }) {
       <div className="relative h-32 overflow-hidden bg-sand-light">
         {spot.imageUrl ? (
           <img
-            src={spot.imageUrl}
+            src={cardImageUrl(spot.imageUrl)}
             alt={`${spot.name}の写真`}
             loading="lazy"
             decoding="async"

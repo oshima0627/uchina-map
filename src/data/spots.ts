@@ -85,7 +85,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingSpacious: true,
     }),
-    imageUrl: "/spots/沖縄県立博物館.jpg",
+    imageUrl: "/spots/沖縄県立博物館.webp",
     imageEmoji: "🏛️",
   },
   {
@@ -143,7 +143,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/那覇市立森の家みんみん.jpg",
+    imageUrl: "/spots/那覇市立森の家みんみん.webp",
     imageEmoji: "🌲",
   },
   {
@@ -178,7 +178,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/那覇空港 キッズスペース.jpg",
+    imageUrl: "/spots/那覇空港 キッズスペース.webp",
     imageEmoji: "✈️",
     floor: "国内線ターミナル 2F",
     parkingNote: {
@@ -223,7 +223,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/サンエー那覇メインプレイス.jpg",
+    imageUrl: "/spots/サンエー那覇メインプレイス.webp",
     imageEmoji: "🛒",
   },
   {
@@ -250,7 +250,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingSpacious: true,
     }),
-    imageUrl: "/spots/新都心公園.jpg",
+    imageUrl: "/spots/新都心公園.webp",
     imageEmoji: "🛝",
   },
   {
@@ -279,7 +279,7 @@ export const SPOTS: Spot[] = [
       parkingFree: true,
       strollerFriendly: false,
     }),
-    imageUrl: "/spots/tomariiyumachi-2.jpg",
+    imageUrl: "/spots/tomariiyumachi-2.webp",
     imageEmoji: "🐟",
   },
 
@@ -310,7 +310,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingSpacious: true,
     }),
-    imageUrl: "/spots/浦添大公園.jpg",
+    imageUrl: "/spots/浦添大公園.webp",
     imageEmoji: "🛝",
   },
   {
@@ -346,7 +346,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/サンエー浦添西海岸PARCO CITY.jpg",
+    imageUrl: "/spots/サンエー浦添西海岸PARCO CITY.webp",
     imageEmoji: "🛍️",
   },
   {
@@ -413,7 +413,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/宜野湾トロピカルビーチ.jpg",
+    imageUrl: "/spots/宜野湾トロピカルビーチ.webp",
     imageEmoji: "🏖️",
   },
   {
@@ -441,7 +441,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/沖縄コンベンションセンター 海浜公園.jpg",
+    imageUrl: "/spots/沖縄コンベンションセンター 海浜公園.webp",
     imageEmoji: "🌅",
   },
   {
@@ -473,7 +473,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
-    imageUrl: "/spots/宜野湾市立博物館.jpg",
+    imageUrl: "/spots/宜野湾市立博物館.webp",
     imageEmoji: "📜",
   },
 
@@ -511,7 +511,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/DMMかりゆし水族館.jpg",
+    imageUrl: "/spots/DMMかりゆし水族館.webp",
     imageEmoji: "🐠",
     floor: "iias沖縄豊崎 1F-2F（入口2F）",
   },
@@ -573,7 +573,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/豊崎海浜公園 美らSUNビーチ.jpg",
+    imageUrl: "/spots/豊崎海浜公園 美らSUNビーチ.webp",
     imageEmoji: "🏖️",
   },
   {
@@ -601,7 +601,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/豊見城総合公園.jpg",
+    imageUrl: "/spots/豊見城総合公園.webp",
     imageEmoji: "⚾",
   },
   {
@@ -632,7 +632,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/道の駅 豊崎.jpg",
+    imageUrl: "/spots/道の駅 豊崎.webp",
     imageEmoji: "🥬",
     parkingNote: {
       text: "無料の駐車場があります。176台分で、24時間利用できます。",
@@ -671,7 +671,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/沖縄アウトレットモール あしびなー.jpg",
+    imageUrl: "/spots/沖縄アウトレットモール あしびなー.webp",
     imageEmoji: "🛍️",
     parkingNote: {
       text: "無料の駐車場があります。1,000台分です。大型バスも無料です。",
@@ -714,7 +714,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/おきなわワールド（玉泉洞）.jpg",
+    imageUrl: "/spots/おきなわワールド（玉泉洞）.webp",
     imageEmoji: "🕳️",
     parkingNote: {
       text: "無料の駐車場が約400台分あります。",
@@ -747,7 +747,7 @@ export const SPOTS: Spot[] = [
       strollerFriendly: false,
       parkingFree: true,
     }),
-    imageUrl: "/spots/ガンガラーの谷.jpg",
+    imageUrl: "/spots/ガンガラーの谷.webp",
     imageEmoji: "🌿",
     parkingNote: {
       text: "無料の駐車場があります。100台分です。",
@@ -781,7 +781,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/知念岬公園.jpg",
+    imageUrl: "/spots/知念岬公園.webp",
     imageEmoji: "🏝️",
   },
   {
@@ -809,7 +809,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/あざまサンサンビーチ.jpg",
+    imageUrl: "/spots/あざまサンサンビーチ.webp",
     imageEmoji: "🌊",
   },
   {
@@ -837,7 +837,7 @@ export const SPOTS: Spot[] = [
       rainOk: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/がんじゅう駅・南城.jpg",
+    imageUrl: "/spots/がんじゅう駅・南城.webp",
     imageEmoji: "🚗",
   },
   {
@@ -865,7 +865,7 @@ export const SPOTS: Spot[] = [
       rainOk: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/美らイチゴ南城農場.jpg",
+    imageUrl: "/spots/美らイチゴ南城農場.webp",
     imageEmoji: "🍓",
   },
   {
@@ -897,7 +897,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
-    imageUrl: "/spots/シュガーホール（南城市文化センター）.jpg",
+    imageUrl: "/spots/シュガーホール（南城市文化センター）.webp",
     imageEmoji: "🎵",
   },
 
@@ -925,7 +925,7 @@ export const SPOTS: Spot[] = [
       strollerFriendly: false,
       parkingFree: true,
     }),
-    imageUrl: "/spots/八重瀬公園.jpg",
+    imageUrl: "/spots/八重瀬公園.webp",
     imageEmoji: "🌸",
   },
   {
@@ -951,7 +951,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/富盛の石彫大獅子.jpg",
+    imageUrl: "/spots/富盛の石彫大獅子.webp",
     imageEmoji: "🦁",
   },
 
@@ -982,7 +982,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/平和祈念公園.jpg",
+    imageUrl: "/spots/平和祈念公園.webp",
     imageEmoji: "🕊️",
     parkingNote: {
       text: "無料の駐車場があります。546台分です。",
@@ -1024,7 +1024,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: false,
       parkingFree: true,
     }),
-    imageUrl: "/spots/ひめゆり平和祈念資料館.jpg",
+    imageUrl: "/spots/ひめゆり平和祈念資料館.webp",
     imageEmoji: "📖",
   },
   {
@@ -1053,7 +1053,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/美々ビーチいとまん.jpg",
+    imageUrl: "/spots/美々ビーチいとまん.webp",
     imageEmoji: "🏖️",
   },
   {
@@ -1084,7 +1084,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/道の駅 いとまん.jpg",
+    imageUrl: "/spots/道の駅 いとまん.webp",
     imageEmoji: "🛒",
   },
   {
@@ -1139,7 +1139,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/糸満漁民食堂.jpg",
+    imageUrl: "/spots/糸満漁民食堂.webp",
     imageEmoji: "🍣",
   },
   {
@@ -1255,7 +1255,7 @@ export const SPOTS: Spot[] = [
       hasPlayground: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/若狭海浜公園.jpeg",
+    imageUrl: "/spots/若狭海浜公園.webp",
     imageEmoji: "🚢",
   },
   {
@@ -1313,7 +1313,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/宜野湾マリン支援センター（まりりんぎのわん）.jpg",
+    imageUrl: "/spots/宜野湾マリン支援センター（まりりんぎのわん）.webp",
     imageEmoji: "🏊",
   },
 
@@ -1350,7 +1350,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/波の上わくわくキッズランド.jpg",
+    imageUrl: "/spots/波の上わくわくキッズランド.webp",
     imageEmoji: "🎈",
     floor: "エスパーナ 2F",
   },
@@ -1385,7 +1385,7 @@ export const SPOTS: Spot[] = [
       hasParking: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/ザキッズ 沖縄パレットくもじ店.jpg",
+    imageUrl: "/spots/ザキッズ 沖縄パレットくもじ店.webp",
     imageEmoji: "🎡",
     floor: "デパートリウボウ 7F",
   },
@@ -1420,7 +1420,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/あそびパーク サンエー経塚シティ店.jpg",
+    imageUrl: "/spots/あそびパーク サンエー経塚シティ店.webp",
     imageEmoji: "🧸",
     floor: "サンエー経塚シティ 2F",
   },
@@ -1454,7 +1454,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/旧海軍司令部壕.jpg",
+    imageUrl: "/spots/旧海軍司令部壕.webp",
     imageCredit: {
       author: "663highland",
       license: "CC BY 2.5",
@@ -1494,7 +1494,7 @@ export const SPOTS: Spot[] = [
       hasMultipurposeToilet: true,
       parkingFree: false,
     }),
-    imageUrl: "/spots/新原ビーチ.jpg",
+    imageUrl: "/spots/新原ビーチ.webp",
     imageCredit: {
       author: "Toshihiro Matsui",
       license: "CC BY-SA 3.0",
@@ -1536,7 +1536,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/西部プラザ公園.jpg",
+    imageUrl: "/spots/西部プラザ公園.webp",
     imageEmoji: "🔭",
   },
 
@@ -1570,7 +1570,7 @@ export const SPOTS: Spot[] = [
       hasParking: false,
       parkingFree: false,
     }),
-    imageUrl: "/spots/MAL食堂.jpg",
+    imageUrl: "/spots/MAL食堂.webp",
     imageEmoji: "🌮",
   },
   {
@@ -1600,7 +1600,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/Secondo Casa.jpg",
+    imageUrl: "/spots/Secondo Casa.webp",
     imageEmoji: "🍝",
   },
   {
@@ -1631,7 +1631,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/HARMONY CHAFE.jpg",
+    imageUrl: "/spots/HARMONY CHAFE.webp",
     imageEmoji: "☕",
   },
   {
@@ -1664,7 +1664,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/Cafeやぶさち.jpg",
+    imageUrl: "/spots/Cafeやぶさち.webp",
     imageEmoji: "🌅",
   },
   {
@@ -1694,7 +1694,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/Yell Cafe.jpg",
+    imageUrl: "/spots/Yell Cafe.webp",
     imageEmoji: "🏓",
   },
 
@@ -1731,7 +1731,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/沖縄こどもの国.jpg",
+    imageUrl: "/spots/沖縄こどもの国.webp",
     imageEmoji: "🦁",
     parkingNote: {
       text: "無料の駐車場があります。700台分です。",
@@ -1774,7 +1774,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/イオンモール沖縄ライカム.jpg",
+    imageUrl: "/spots/イオンモール沖縄ライカム.webp",
     imageEmoji: "🛍️",
   },
   {
@@ -1803,7 +1803,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/美浜アメリカンビレッジ.jpg",
+    imageUrl: "/spots/美浜アメリカンビレッジ.webp",
     imageEmoji: "🎡",
     parkingNote: {
       text: "無料の駐車場があります。約1,500台分です。",
@@ -1840,7 +1840,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/安良波公園・アラハビーチ.jpg",
+    imageUrl: "/spots/安良波公園・アラハビーチ.webp",
     imageEmoji: "🚢",
   },
   {
@@ -1871,7 +1871,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/体験王国むら咲むら.jpg",
+    imageUrl: "/spots/体験王国むら咲むら.webp",
     imageEmoji: "🏺",
   },
   {
@@ -1900,7 +1900,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/残波岬公園.jpg",
+    imageUrl: "/spots/残波岬公園.webp",
     imageEmoji: "🐐",
   },
   {
@@ -1933,7 +1933,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/ビオスの丘.jpg",
+    imageUrl: "/spots/ビオスの丘.webp",
     imageEmoji: "🐃",
     parkingNote: {
       text: "無料の駐車場があります。130台分です。",
@@ -1982,7 +1982,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/琉球ガラス村.jpg",
+    imageUrl: "/spots/琉球ガラス村.webp",
     imageEmoji: "🔮",
     parkingNote: {
       text: "無料の駐車場があります。100台分です。",
@@ -2021,7 +2021,7 @@ export const SPOTS: Spot[] = [
       parkingFree: false,
       parkingSpacious: true,
     }),
-    imageUrl: "/spots/奥武山公園.jpg",
+    imageUrl: "/spots/奥武山公園.webp",
     imageEmoji: "🛝",
   },
   {
@@ -2052,7 +2052,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/東南植物楽園.jpg",
+    imageUrl: "/spots/東南植物楽園.webp",
     imageEmoji: "🌴",
     parkingNote: {
       text: "無料の駐車場があります。340台分です。",
@@ -2089,7 +2089,7 @@ export const SPOTS: Spot[] = [
       parkingFree: true,
       parkingSpacious: true,
     }),
-    imageUrl: "/spots/海の駅あやはし館.jpg",
+    imageUrl: "/spots/海の駅あやはし館.webp",
     imageEmoji: "🌉",
     parkingNote: {
       text: "無料の駐車場があります。300台分です。",
@@ -2126,7 +2126,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/県営中城公園.jpg",
+    imageUrl: "/spots/県営中城公園.webp",
     imageEmoji: "🤸",
   },
   {
@@ -2161,7 +2161,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/沖縄美ら海水族館.jpg",
+    imageUrl: "/spots/沖縄美ら海水族館.webp",
     imageEmoji: "🐋",
     parkingNote: {
       text: "無料の駐車場があります。海洋博公園全体で約1,900台分です。",
@@ -2201,7 +2201,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/海洋博公園（エメラルドビーチ）.jpg",
+    imageUrl: "/spots/海洋博公園（エメラルドビーチ）.webp",
     imageEmoji: "🐬",
     parkingNote: {
       text: "無料の駐車場があります。海洋博公園全体で約1,900台分です。",
@@ -2241,7 +2241,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/ネオパークオキナワ.jpg",
+    imageUrl: "/spots/ネオパークオキナワ.webp",
     imageEmoji: "🦩",
     parkingNote: {
       text: "無料の駐車場があります。533台分です。",
@@ -2283,7 +2283,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/ナゴパイナップルパーク.png",
+    imageUrl: "/spots/ナゴパイナップルパーク.webp",
     imageEmoji: "🍍",
     parkingNote: {
       text: "無料の駐車場があります。乗用車は約200台分です。",
@@ -2322,7 +2322,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/OKINAWAフルーツらんど.jpg",
+    imageUrl: "/spots/OKINAWAフルーツらんど.webp",
     imageEmoji: "🥭",
     parkingNote: {
       text: "無料の駐車場があります。100台分です。",
@@ -2364,7 +2364,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/DINO恐竜PARK やんばる亜熱帯の森.jpg",
+    imageUrl: "/spots/DINO恐竜PARK やんばる亜熱帯の森.webp",
     imageEmoji: "🦕",
   },
 
@@ -2396,7 +2396,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/守礼そば.png",
+    imageUrl: "/spots/守礼そば.webp",
     imageEmoji: "🍜",
   },
   {
@@ -2429,7 +2429,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/タコライスcafe きじむなぁ イーアス豊崎.jpg",
+    imageUrl: "/spots/タコライスcafe きじむなぁ イーアス豊崎.webp",
     imageEmoji: "🌮",
     floor: "イーアス沖縄豊崎 1F",
   },
@@ -2459,7 +2459,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/そば処 玉家 本店.jpg",
+    imageUrl: "/spots/そば処 玉家 本店.webp",
     imageEmoji: "🍜",
   },
   {
@@ -2488,7 +2488,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/南部そば.jpg",
+    imageUrl: "/spots/南部そば.webp",
     imageEmoji: "🍜",
   },
   {
@@ -2518,7 +2518,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/沖縄そばと茶処 屋宜家.jpg",
+    imageUrl: "/spots/沖縄そばと茶処 屋宜家.webp",
     imageEmoji: "🍵",
   },
   {
@@ -2552,7 +2552,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/THE CALIF KITCHEN.jpg",
+    imageUrl: "/spots/THE CALIF KITCHEN.webp",
     imageEmoji: "🥞",
     floor: "デポアイランドシーサイドビル 3F",
   },
@@ -2583,7 +2583,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/番所亭.png",
+    imageUrl: "/spots/番所亭.webp",
     imageEmoji: "🍜",
   },
   {
@@ -2615,7 +2615,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/琉京甘味 SANS SOUCI.png",
+    imageUrl: "/spots/琉京甘味 SANS SOUCI.webp",
     imageEmoji: "🍛",
   },
   {
@@ -2678,7 +2678,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/うるま市民食堂（うるマルシェ）.jpg",
+    imageUrl: "/spots/うるま市民食堂（うるマルシェ）.webp",
     imageEmoji: "🍚",
   },
   {
@@ -2710,7 +2710,7 @@ export const SPOTS: Spot[] = [
       parkingSpacious: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/百年古家 大家.jpg",
+    imageUrl: "/spots/百年古家 大家.webp",
     imageEmoji: "🏮",
     parkingNote: {
       text: "無料の駐車場があります。100台分です。",
@@ -2747,7 +2747,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/キャプテンカンガルー.jpg",
+    imageUrl: "/spots/キャプテンカンガルー.webp",
     imageEmoji: "🍔",
   },
   {
@@ -2776,7 +2776,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/きしもと食堂 八重岳店.jpg",
+    imageUrl: "/spots/きしもと食堂 八重岳店.webp",
     imageEmoji: "🍜",
   },
   {
@@ -2805,7 +2805,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/ピザ喫茶 花人逢.jpg",
+    imageUrl: "/spots/ピザ喫茶 花人逢.webp",
     imageEmoji: "🍕",
   },
   {
@@ -2835,7 +2835,7 @@ export const SPOTS: Spot[] = [
       noiseTolerant: true,
       parkingFree: true,
     }),
-    imageUrl: "/spots/焼肉もとぶ牧場 もとぶ店.jpg",
+    imageUrl: "/spots/焼肉もとぶ牧場 もとぶ店.webp",
     imageEmoji: "🥩",
     floor: "本部町産業支援センター 1F",
   },
