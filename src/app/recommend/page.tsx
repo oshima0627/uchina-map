@@ -1,11 +1,13 @@
 import { Sparkles } from "lucide-react";
 import { RecommendClient } from "./recommend-client";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "今日どこ？",
   description:
-    "天気・年齢・滞在時間に応じて、今日ぴったりのお出かけ先をレコメンド。",
-};
+    "今日の沖縄の天気・子どもの年齢・滞在時間から、ぴったりのお出かけ先をレコメンド。雨の日は屋内、晴れならビーチや公園を自動で提案します。",
+  path: "/recommend/",
+});
 
 export default function RecommendPage() {
   return (

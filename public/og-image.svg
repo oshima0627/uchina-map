@@ -13,16 +13,16 @@
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
 
+  <!-- decorative circles（絵文字はPNG化時にカラー絵文字フォントが無く黒塗りになるため図形で表現） -->
+  <circle cx="1110" cy="95" r="58" fill="#FFD166" opacity="0.55"/>
+  <circle cx="1120" cy="300" r="16" fill="#FDFCFA" opacity="0.45"/>
+  <circle cx="1060" cy="360" r="10" fill="#FDFCFA" opacity="0.35"/>
+
   <!-- waves -->
   <path d="M0,520 C200,560 400,470 600,510 C800,550 1000,470 1200,510 L1200,630 L0,630 Z"
         fill="#FDFCFA" opacity="0.25"/>
   <path d="M0,560 C200,590 400,520 600,560 C800,600 1000,520 1200,560 L1200,630 L0,630 Z"
         fill="#FDFCFA" opacity="0.55"/>
-
-  <!-- decorative -->
-  <text x="950" y="180" font-size="120" opacity="0.65">🏝️</text>
-  <text x="120" y="540" font-size="80" opacity="0.7">🌺</text>
-  <text x="1040" y="540" font-size="74" opacity="0.55">🐠</text>
 
   <!-- Pin -->
   <g transform="translate(110,170)">
@@ -32,13 +32,13 @@
   </g>
 
   <!-- Title -->
-  <text x="280" y="240" font-family="'Noto Sans JP', sans-serif" font-weight="900" font-size="86" fill="#FDFCFA" letter-spacing="-2">
+  <text x="280" y="238" font-family="'Noto Sans JP', sans-serif" font-weight="900" font-size="78" fill="#FDFCFA" letter-spacing="-2">
     うちなー子連れマップ
   </text>
-  <text x="280" y="320" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="38" fill="#1D3557">
+  <text x="280" y="316" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="36" fill="#1D3557">
     「授乳室ある？」「ベビーカーで入れる？」
   </text>
-  <text x="280" y="372" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="38" fill="#1D3557">
+  <text x="280" y="366" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="36" fill="#1D3557">
     が一目でわかる、沖縄の子連れマップ。
   </text>
 
@@ -54,7 +54,7 @@
     <text x="480" y="38" text-anchor="middle" fill="#226574">雨OK</text>
 
     <rect x="580" y="0" width="180" height="56" rx="28" fill="#E84855"/>
-    <text x="670" y="38" text-anchor="middle" fill="#FDFCFA">沖縄南部</text>
+    <text x="670" y="38" text-anchor="middle" fill="#FDFCFA">沖縄本島</text>
   </g>
 
   <text x="600" y="595" text-anchor="middle" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="20" fill="#1D3557" opacity="0.7">

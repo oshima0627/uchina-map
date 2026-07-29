@@ -1,9 +1,13 @@
 import { FavoritesList } from "./favorites-list";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
+// 端末ローカルの保存内容しか表示しないため、検索結果には出さない
+export const metadata = pageMetadata({
   title: "お気に入り",
   description: "あなたが保存したスポット一覧。",
-};
+  path: "/favorites/",
+  noindex: true,
+});
 
 export default function FavoritesPage() {
   return (

@@ -20,9 +20,17 @@ import {
   Building,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { JsonLd } from "@/components/json-ld";
 import { FavoriteButton } from "./favorite-button";
 import { SpotMap } from "./spot-map";
 import { SPOTS } from "@/data/spots";
+import {
+  pageMetadata,
+  spotBreadcrumbJsonLd,
+  spotDescription,
+  spotJsonLd,
+  spotOgImage,
+} from "@/lib/seo";
 import {
   AGE_LABELS,
   CATEGORY_COLORS,
@@ -46,10 +54,13 @@ export async function generateMetadata({
   const { id } = await params;
   const spot = SPOTS.find((s) => s.id === id);
   if (!spot) return {};
-  return {
-    title: spot.name,
-    description: spot.shortDescription ?? spot.description.slice(0, 120),
-  };
+  return pageMetadata({
+    title: `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報`,
+    description: `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ向け情報。${spotDescription(spot)} 授乳室・オムツ替え・ベビーカー・駐車場・雨の日の可否をまとめています。`,
+    path: `/spots/${spot.id}/`,
+    image: spotOgImage(spot),
+    imageAlt: `${spot.name}の写真`,
+  });
 }
 
 export default async function SpotDetailPage({
@@ -68,6 +79,8 @@ export default async function SpotDetailPage({
 
   return (
     <article>
+      <JsonLd data={spotJsonLd(spot)} />
+      <JsonLd data={spotBreadcrumbJsonLd(spot)} />
       {/* Hero */}
       <div
         className="relative h-64 md:h-80 overflow-hidden bg-sand-light"

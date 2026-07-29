@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
 import { HomeSearch } from "@/components/home-search";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata, siteJsonLd } from "@/lib/seo";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SPOTS } from "@/data/spots";
@@ -80,6 +82,12 @@ const AGE_CARDS: Array<{
   { tag: "school", display: "小学生", suffix: "", desc: "1日遊べる施設", accent: "#226574" },
 ];
 
+export const metadata = pageMetadata({
+  description:
+    "沖縄県内の「子連れで安心して行ける場所」が、親目線の本当に欲しい情報付きで見つかるWebアプリ。授乳室・ベビーカー可・雨OKなど、必要な設備で絞り込めます。",
+  path: "/",
+});
+
 export default function HomePage() {
   const featuredSpots = SPOTS.slice(0, 6);
 
@@ -102,6 +110,7 @@ export default function HomePage() {
 
   return (
     <div>
+      <JsonLd data={siteJsonLd()} />
       {/* Hero */}
       <section className="relative overflow-hidden flex flex-col min-h-[calc(100svh-3.5rem)]">
         {/* Background photo — Okinawa beach */}

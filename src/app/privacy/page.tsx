@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "プライバシーポリシー",
   description:
     "うちなー子連れマップのプライバシーポリシー。アクセス解析・広告配信における情報の取り扱いについて記載しています。",
-  alternates: { canonical: "/privacy" },
-};
+  path: "/privacy/",
+});
 
 export default function PrivacyPage() {
   return (

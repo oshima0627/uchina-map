@@ -4,8 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Header, BottomNav } from "@/components/header";
 import { AdSenseScript } from "@/components/ads/adsense-script";
-
-const SITE_URL = "https://uchina-map.nexeed-lab.com";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -17,9 +16,6 @@ export const metadata: Metadata = {
     "沖縄県内の「子連れで安心して行ける場所」が、親目線の本当に欲しい情報付きで見つかるWebアプリ。授乳室・ベビーカー可・雨OKなど、必要な設備で絞り込めます。",
   keywords: ["沖縄", "子連れ", "お出かけ", "授乳室", "ベビーカー", "公園", "雨の日"],
   manifest: "/manifest.webmanifest",
-  alternates: {
-    canonical: "/",
-  },
   icons: {
     icon: [{ url: "/icon-192.svg", type: "image/svg+xml" }],
     apple: [{ url: "/icon-192.svg" }],
@@ -39,9 +35,10 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     images: [
       {
-        url: "/og-image.svg",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
+        type: "image/png",
         alt: "うちなー子連れマップ",
       },
     ],
@@ -51,7 +48,7 @@ export const metadata: Metadata = {
     title: "うちなー子連れマップ",
     description:
       "沖縄の子連れOKスポットが、設備フィルタと地図で見つかる。",
-    images: ["/og-image.svg"],
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
