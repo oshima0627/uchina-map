@@ -1,5 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { RecommendClient } from "./recommend-client";
+import { AdSlot } from "@/components/ads/ad-slot";
+import { ADSENSE_SLOTS } from "@/lib/ads";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -26,6 +28,8 @@ export default function RecommendPage() {
       </header>
 
       <RecommendClient />
+      {/* 提案結果より下に置く。条件選択と結果の間には入れない */}
+      <AdSlot slot={ADSENSE_SLOTS.content} className="mt-10" />
     </div>
   );
 }

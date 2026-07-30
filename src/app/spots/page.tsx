@@ -2,7 +2,9 @@ import { Suspense } from "react";
 import { SpotsBrowser } from "./spots-browser";
 import { SpotCard } from "@/components/spot-card";
 import { JsonLd } from "@/components/json-ld";
+import { AdSlot } from "@/components/ads/ad-slot";
 import { SPOTS } from "@/data/spots";
+import { ADSENSE_SLOTS } from "@/lib/ads";
 import { pageMetadata, spotListJsonLd } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -27,6 +29,8 @@ export default function SpotsPage() {
       <Suspense fallback={<SpotsFallback />}>
         <SpotsBrowser />
       </Suspense>
+      {/* 一覧を見終わった位置。絞り込みUIとカードの間には入れない */}
+      <AdSlot slot={ADSENSE_SLOTS.content} className="mt-10" />
     </div>
   );
 }

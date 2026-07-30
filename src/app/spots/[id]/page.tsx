@@ -20,6 +20,8 @@ import {
   Building,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { AdSlot } from "@/components/ads/ad-slot";
+import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SpotCard } from "@/components/spot-card";
 import { JsonLd } from "@/components/json-ld";
 import { FavoriteButton } from "./favorite-button";
@@ -520,6 +522,9 @@ export default async function SpotDetailPage({
             ))}
           </div>
         </section>
+
+        {/* 本文（設備情報）を読み終えた位置に置く。関連スポットより前に出して誤タップを避ける */}
+        <AdSlot slot={ADSENSE_SLOTS.content} className="mb-10" />
 
         {sameCity.length > 0 && (
           <section className="mb-10">
