@@ -146,12 +146,18 @@ export default function HomePage() {
                 <Sparkles className="w-3.5 h-3.5" />
                 めんそーれ｜沖縄本島南部・親子のお出かけ
               </span>
+              {/* h1 はページの主題を示す唯一の見出し。以前は「子連れOKが、一目でわかる。」
+                  というキャッチコピーだけで、検索語（沖縄・子連れ・スポット）が入っていなかった。
+                  title タグには入っているのに h1 に無いのはもったいないため、
+                  主題を1行目に置き、キャッチコピーは2行目に残す。 */}
               <h1 className="mt-4 text-[2.5rem] md:text-6xl font-black text-white text-balance leading-[1.05] tracking-[-0.03em] drop-shadow-md">
-                <span className="block">子連れOKが、</span>
+                <span className="block text-[1.75rem] md:text-[2.75rem] leading-[1.15]">
+                  沖縄の子連れOKスポット
+                </span>
                 <span className="block text-gradient-ocean">一目でわかる。</span>
               </h1>
               <p className="mt-4 text-white/95 text-balance md:text-lg leading-relaxed max-w-xl drop-shadow-md">
-                うちなーの子連れOKスポットを、地図と設備フィルタで。
+                授乳室・ベビーカー可・雨OK・駐車場。うちなーの子連れOKスポットを、地図と設備フィルタでさがせます。
               </p>
 
               <div className="mt-5 max-w-xl">
@@ -209,7 +215,11 @@ export default function HomePage() {
 
       {/* Editorial needs — photo lead + 2 white text cards + thin map row */}
       <section className="mx-auto max-w-5xl px-4 mt-2 md:mt-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {/* このセクションには h3 のカードが4枚あるのに h2 が無く、
+            h1 → h3 と階層が飛んでいた。見出しの階層は文書構造として読まれるため、
+            親の h2 を置いて h1 → h2 → h3 に直す。 */}
+        <SectionHeader eyebrow="Needs" title="こだわり条件からさがす" />
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {/* Lead: real photo + overlay */}
           <Link
             href="/spots?feature=rainOk"

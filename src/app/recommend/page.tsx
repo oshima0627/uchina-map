@@ -19,8 +19,10 @@ export default function RecommendPage() {
           <Sparkles className="w-3 h-3" strokeWidth={2.25} />
           Today
         </span>
+        {/* h1「今日どこ？」だけでは何のページか検索エンジンに伝わらない。
+            title 側の内容に寄せて主題を含める。 */}
         <h1 className="text-2xl md:text-3xl font-black text-charcoal mt-2 tracking-tight">
-          今日どこ？
+          今日どこ？沖縄の子連れおでかけ先レコメンド
         </h1>
         <p className="text-sm text-charcoal/75 mt-1">
           条件を選ぶと、今日の天気を加味したおすすめスポットが見つかります。
