@@ -19,9 +19,12 @@ export default function SpotsPage() {
     <div className="mx-auto max-w-5xl px-4 py-6">
       <JsonLd data={spotListJsonLd(SPOTS)} />
       <header className="mb-5">
-        <h1 className="text-2xl font-bold text-charcoal">スポットをさがす</h1>
+        {/* h1 に検索語（沖縄・子連れ）が入っていなかった。title 側と揃える。 */}
+        <h1 className="text-2xl font-bold text-charcoal">
+          沖縄の子連れOKスポットをさがす
+        </h1>
         <p className="text-sm text-charcoal/75 mt-1">
-          条件で絞り込んで、ぴったりのお出かけ先を見つけましょう。
+          カテゴリ・エリア・設備で絞り込んで、ぴったりのお出かけ先を見つけましょう。
         </p>
       </header>
       {/* SpotsBrowser は useSearchParams を使うため静的HTMLにはフォールバックが出力される。
@@ -38,6 +41,10 @@ export default function SpotsPage() {
 function SpotsFallback() {
   return (
     <div>
+      {/* スポットカードは h3。親の h2 が無いと h1 → h3 と階層が飛ぶ。
+          静的HTMLに出力されるのはこのフォールバックなので、
+          クローラが読む文書構造もここで決まる。 */}
+      <h2 className="text-lg font-bold text-charcoal mb-1">スポット一覧</h2>
       <p className="text-sm text-charcoal/75 mb-3">{SPOTS.length}件のスポット</p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {SPOTS.map((spot) => (

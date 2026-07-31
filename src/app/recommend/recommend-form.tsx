@@ -184,11 +184,15 @@ function FieldGroup({
   label: string;
   children: React.ReactNode;
 }) {
+  // 以前は h3 を使っていたが、これは文書の見出しではなく入力欄のラベル。
+  // h3 のままだと h1 → h3 と階層が飛んで文書構造が壊れるうえ、
+  // スクリーンリーダーの見出しジャンプにもフォーム項目が混ざる。
+  // グループ化されたコントロールのラベルは fieldset + legend が正しい。
   return (
-    <div className="mb-4">
-      <h3 className="text-xs font-bold text-charcoal/70 mb-2">{label}</h3>
+    <fieldset className="mb-4 border-0 p-0">
+      <legend className="text-xs font-bold text-charcoal/70 mb-2">{label}</legend>
       {children}
-    </div>
+    </fieldset>
   );
 }
 
