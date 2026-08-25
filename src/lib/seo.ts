@@ -58,6 +58,7 @@ export function spotFacilitySummary(spot: Spot): string[] {
  */
 export function pageMetadata({
   title,
+  titleAbsolute = false,
   description,
   path,
   image = DEFAULT_OG_IMAGE,
@@ -66,6 +67,8 @@ export function pageMetadata({
 }: {
   /** 省略するとレイアウトの既定タイトルを使う（トップページ用） */
   title?: string;
+  /** true にするとサイト名を付けず title をそのまま <title> にする */
+  titleAbsolute?: boolean;
   description: string;
   /** 先頭と末尾にスラッシュを付けたサイト内パス（例: "/spots/"） */
   path: string;
@@ -74,10 +77,14 @@ export function pageMetadata({
   noindex?: boolean;
 }): Metadata {
   const url = `${SITE_URL}${path}`;
-  const fullTitle = title ? `${title}｜${SITE_NAME}` : `${SITE_NAME}｜沖縄の子連れOKスポット`;
+  const fullTitle = title
+    ? titleAbsolute
+      ? title
+      : `${title}｜${SITE_NAME}`
+    : `${SITE_NAME}｜沖縄の子連れOKスポット`;
 
   return {
-    ...(title ? { title } : {}),
+    ...(title ? { title: titleAbsolute ? { absolute: title } : title } : {}),
     description,
     alternates: { canonical: url },
     ...(noindex ? { robots: { index: false, follow: true } } : {}),

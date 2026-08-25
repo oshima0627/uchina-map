@@ -179,6 +179,16 @@ export const SpotSchema = z.object({
    */
   parkingNote: FacilityNoteSchema.optional(),
   nursingNote: FacilityNoteSchema.optional(),
+  /**
+   * 検索結果向けのタイトル・説明文の上書き。
+   * 既定はテンプレート生成（「◯◯（市町村）の子連れ情報」＋設備の羅列）だが、
+   * 表示回数が多いのにクリックされていないページは、検索語を前方に置き
+   * フロア・時間などの具体情報を入れた文言に差し替える。
+   * seoTitle はサイト名を付けずそのままタイトルになる（全角30文字前後に収める）。
+   * 事実はこのファイルの他フィールド（floor / businessHours / features）から取る。
+   */
+  seoTitle: z.string().optional(),
+  seoDescription: z.string().optional(),
 });
 export type Spot = z.infer<typeof SpotSchema>;
 
