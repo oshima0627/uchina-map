@@ -13,6 +13,7 @@ export const CITIES = [
   "okinawa",
   "uruma",
   "yomitan",
+  "onna",
   "nago",
   "motobu",
 ] as const;
@@ -31,6 +32,7 @@ export const CITY_LABELS: Record<City, string> = {
   okinawa: "沖縄市",
   uruma: "うるま市",
   yomitan: "読谷村",
+  onna: "恩納村",
   nago: "名護市",
   motobu: "本部町",
 };

@@ -2395,6 +2395,65 @@ export const SPOTS: Spot[] = [
     imageEmoji: "🦕",
   },
 
+  // ===== 恩納村（旅行客の宿泊拠点。2026-08 時点でサイト初のスポット） =====
+  {
+    id: "onna-manzamo",
+    name: "万座毛",
+    nameKana: "まんざもう",
+    category: "park",
+    description:
+      "東シナ海に突き出した断崖の上に広がる恩納村の景勝地。2020年に開業した3階建ての「万座毛周辺活性化施設」に物販・飲食と展望デッキがあり、館内は段差が無くエレベーターも備える。授乳室・ベビーベッド・多目的トイレが揃い、ベビーカーの無料貸出もある。",
+    shortDescription: "断崖と東シナ海を望む恩納村の景勝地",
+    highlights: ["授乳室あり", "ベビーカー無料貸出", "駐車場315台が無料"],
+    address: "沖縄県国頭郡恩納村字恩納2767",
+    city: "onna",
+    lat: 26.5041,
+    lng: 127.8509,
+    phone: "098-966-8080",
+    websiteUrl: "https://www.manzamo.jp/",
+    businessHours: "8:00-20:00（11〜2月は8:00-19:00）",
+    closedDays: [],
+    price: { adult: 100, child: 100, freeUnder: 6 },
+    durationMin: 60,
+    ageTags: ["0", "1-3", "4-6", "school"],
+    features: f({
+      hasNursingRoom: true,
+      hasDiaperTable: true,
+      hasMultipurposeToilet: true,
+      strollerFriendly: true,
+      strollerRental: true,
+      isIndoor: true,
+      isOutdoor: true,
+      hasParking: true,
+      parkingFree: true,
+      parkingSpacious: true,
+    }),
+    imageEmoji: "🌊",
+    parkingNote: {
+      text: "第一駐車場97台・第二駐車場218台がいずれも無料です。身体障がい者専用は第一に3台、第二に5台あります。",
+      source: {
+        name: "恩納村観光協会 Go to ONNA",
+        url: "https://goto-onna.com/facility/manzamo/",
+      },
+      checkedOn: "2026年8月",
+    },
+    nursingNote: {
+      text: "授乳室・ベビーベッド・多目的トイレがあり、哺乳瓶の洗い場とミルク用のお湯の提供もあります。ベビーカーは無料で借りられます。館内は段差が無く、エレベーターが2基あります。",
+      source: {
+        name: "沖縄県バリアフリーマップ（沖縄県）",
+        url: "http://okinawa-bf-map.jp/facility-info/detail?facility_id=3453",
+      },
+      checkedOn: "2024年5月（同ページの最終更新日）",
+    },
+    // 新規ページなので既存ページのCTR実験には影響しない。テンプレート文言
+    // （「◯◯（市町村）の子連れ情報」）は実測でCTR0%が確認されているため、
+    // 最初から「施設名＋駐車場／授乳室」の形で作る。ただしこのページには
+    // まだ検索クエリの実績が無く、既存ページから得たパターンの適用である。
+    seoTitle: "万座毛の駐車場は無料｜授乳室・ベビーカー貸出あり",
+    seoDescription:
+      "万座毛の駐車場は第一97台・第二218台がいずれも無料です。展望施設には授乳室・ベビーベッド・多目的トイレがあり、ベビーカーも無料で借りられます。館内は段差が無くエレベーターは2基。観覧料100円・小学生未満は無料で、8:00-20:00（11〜2月は19:00まで）。",
+  },
+
   // ===== 追加（子連れ歓迎の飲食店 全島 2026 / 一次情報で検証） =====
   {
     id: "naha-shurei-soba",
