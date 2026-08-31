@@ -26,6 +26,7 @@ import { pageMetadata, siteJsonLd } from "@/lib/seo";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SPOTS } from "@/data/spots";
+import { collectionPath } from "@/lib/spot-collections";
 import {
   CATEGORIES,
   CATEGORY_COLORS,
@@ -59,14 +60,14 @@ const HERO_STATS = [
 
 // Quick scenarios — mixed-axis shortcuts in horizontal scroll
 const SCENE_CHIPS: Array<{ href: string; Icon: LucideIcon; label: string }> = [
-  { href: "/spots?feature=rainOk", Icon: CloudRain, label: "雨でもOK" },
+  { href: collectionPath.feature("rainOk"), Icon: CloudRain, label: "雨でもOK" },
   { href: "/spots?age=0", Icon: Heart, label: "0歳と一緒" },
-  { href: "/spots?feature=strollerFriendly", Icon: Wind, label: "ベビーカー" },
-  { href: "/spots?feature=hasParking", Icon: Car, label: "駐車場あり" },
-  { href: "/spots?category=beach", Icon: Waves, label: "ビーチ" },
-  { href: "/spots?category=aquarium", Icon: Fish, label: "水族館" },
-  { href: "/spots?category=restaurant", Icon: Utensils, label: "ランチ" },
-  { href: "/spots?category=park", Icon: TreePine, label: "大型遊具" },
+  { href: collectionPath.feature("strollerFriendly"), Icon: Wind, label: "ベビーカー" },
+  { href: collectionPath.feature("hasParking"), Icon: Car, label: "駐車場あり" },
+  { href: collectionPath.category("beach"), Icon: Waves, label: "ビーチ" },
+  { href: collectionPath.category("aquarium"), Icon: Fish, label: "水族館" },
+  { href: collectionPath.category("restaurant"), Icon: Utensils, label: "ランチ" },
+  { href: collectionPath.category("park"), Icon: TreePine, label: "大型遊具" },
 ];
 
 const AGE_CARDS: Array<{
@@ -222,7 +223,7 @@ export default function HomePage() {
         <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {/* Lead: real photo + overlay */}
           <Link
-            href="/spots?feature=rainOk"
+            href={collectionPath.feature("rainOk")}
             className="group relative col-span-2 overflow-hidden rounded-3xl min-h-[200px] md:min-h-[260px]"
           >
             <img
@@ -260,7 +261,7 @@ export default function HomePage() {
           </Link>
 
           <EditorialBento
-            href="/spots?feature=hasNursingRoom"
+            href={collectionPath.feature("hasNursingRoom")}
             eyebrow="Nursing"
             count={SPOTS.filter((s) => s.features.hasNursingRoom).length}
             title="授乳室あり"
@@ -399,7 +400,7 @@ export default function HomePage() {
             return (
               <li key={cat}>
                 <Link
-                  href={`/spots?category=${cat}`}
+                  href={collectionPath.category(cat)}
                   className="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-border hover:border-charcoal/30 hover:shadow-soft transition"
                 >
                   <span
@@ -435,7 +436,7 @@ export default function HomePage() {
             return (
               <li key={city}>
                 <Link
-                  href={`/spots?city=${city}`}
+                  href={collectionPath.city(city)}
                   className="group inline-flex items-center gap-2.5 pl-4 pr-3 h-10 rounded-full bg-card text-charcoal border border-border hover:border-charcoal/30 hover:shadow-soft transition"
                 >
                   <span className="text-sm font-medium">
@@ -476,7 +477,7 @@ export default function HomePage() {
         title="雨でも飽きない屋内施設"
         description="梅雨や台風の日も、子供が思い切り遊べる屋内スポット。"
         icon={<CloudRain className="w-5 h-5" />}
-        allHref="/spots?feature=rainOk"
+        allHref={collectionPath.feature("rainOk")}
         spots={collectionRain}
         accent="sand"
       />

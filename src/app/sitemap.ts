@@ -5,7 +5,6 @@ import {
   collectionPath,
   indexableCategories,
   indexableCities,
-  indexableCityFeaturePairs,
   indexableFeatures,
 } from "@/lib/spot-collections";
 
@@ -47,14 +46,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly",
   }));
 
-  const cityFeatureRoutes: MetadataRoute.Sitemap = indexableCityFeaturePairs().map(
-    ({ city, feature }) => ({
-      url: `${SITE_URL}${collectionPath.cityFeature(city, feature)}`,
-      lastModified: now,
-      priority: 0.7,
-      changeFrequency: "weekly",
-    }),
-  );
+  // 市町村 × 設備の40ページは sitemap に載せない。
+  //
+  // Search Console の実測（2026/05/29-08/28）では、絞り込みページ66枚の合計が
+  // 26表示・0クリック（サイト全体の表示回数の0.5%）で、うち市町村×設備は
+  // 12表示・0クリック。同じ期間にスポット詳細29ページが「検出 - インデックス
+  // 未登録」のまま一度もクロールされていない。外部リンクが0件でクロール予算が
+  // 絞られている状態なので、まず固有名詞で戦えるスポット詳細に回す。
+  //
+  // ページとルートと内部リンク（市町村ページの relatedLinks）は残してあるので、
+  // 流入が増えて予算に余裕が出たらこの配列を戻すだけで復帰できる。
 
   const spotRoutes: MetadataRoute.Sitemap = SPOTS.map((spot) => ({
     url: `${SITE_URL}/spots/${spot.id}/`,
@@ -68,7 +69,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cityRoutes,
     ...categoryRoutes,
     ...featureRoutes,
-    ...cityFeatureRoutes,
     ...spotRoutes,
   ];
 }

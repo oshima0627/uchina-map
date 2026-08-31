@@ -1,111 +1,149 @@
 # HANDOFF
 
-最終更新: 2026-08-25
+最終更新: 2026-08-31
 
 ## いま何をしているか
 
-Google Search Console の実測値をもとに、**表示回数は多いのにクリックされていないスポット詳細ページ**の
-タイトル・メタディスクリプションを、テンプレート生成から個別最適な文言に差し替える作業。
-第1弾として `naha-airport-kids`（サイト全体の表示回数の約19%を占める最大の入口）に対応した。
+「サイトを育てたい（＝検索流入を増やしたい、主軸は沖縄旅行に来る子連れ観光客）」という目的に対し、
+Google Search Console の実測値からボトルネックを特定し、対策を実装した。
+実装は完了・ローカル検証済み。**デプロイは未実行。**
 
-## 今回やったこと
+## GSC で測った事実（Claude in Chrome で直接取得。プロパティ `sc-domain:uchina-map.nexeed-lab.com`）
 
-1. `src/lib/types.ts` の `SpotSchema` に `seoTitle` / `seoDescription`（どちらも optional）を追加。
-2. `src/lib/seo.ts` の `pageMetadata()` に `titleAbsolute`（既定 false）を追加。
-   true のときサイト名 `｜うちなー子連れマップ` を付けず、`title: { absolute }` でレイアウトの
-   `template` をバイパスする。
-3. `src/app/spots/[id]/page.tsx` の `generateMetadata()` で、`seoTitle` / `seoDescription` が
-   設定されているスポットだけ上書きを使う分岐を追加。未設定のスポットは従来どおりテンプレート生成。
-4. `src/data/spots.ts` の `naha-airport-kids` に `seoTitle` / `seoDescription` を設定。
+期間 2026/05/29〜2026/08/28（90日）。
 
-## 検証済みの事実（実際に実行・取得して確認したもの）
+### 全体
+- クリック 139 / 表示回数 5,170 / CTR 2.7% / 平均掲載順位 9.6
+- `naha-airport-kids` が表示 2,331（全体の45%）、クリック 34、CTR 1.5%
+- `naha-main-place` が表示 557、クリック 43、CTR 7.7%
+- この2ページで全クリックの55%（77/139）
 
-### 変更前（2026-08-25 に本番 https://uchina-map.nexeed-lab.com を curl して取得）
+### インデックス登録レポート
+- 登録済み 94 / 未登録 121
+- 内訳: 検出-インデックス未登録 **79**、代替ページ（canonicalあり）23、リダイレクトあり 17、クロール済み-未登録 2
+- **79件すべて「前回のクロール: 該当なし」＝ 一度もクロールされていない**
+- 79件の内訳: スポット詳細 29ページ + 絞り込み 50ページ
+- 未クロールのスポット詳細に含まれる主要観光地: 海洋博公園、ネオパーク、ナゴパイナップルパーク、
+  DINO恐竜PARK、フルーツランド、ビオスの丘、むら咲むら、イオンモール沖縄ライカム、琉球ガラス村、
+  アメリカンビレッジ、キッズパレット、ワクワクキッズランド
+- サイトマップ: 2026/08/07 送信、2026/08/28 最終読込、ステータス成功、検出 156 URL
 
-- naha-airport-kids
-  - title: `那覇空港 キッズスペース（那覇市）の子連れ情報｜うちなー子連れマップ`（全角34文字）
-  - description: `那覇空港 キッズスペース（那覇市）の子連れ情報。授乳室あり・オムツ替え台あり・駐車場あり（有料）・雨の日OK。飛行機を見ながら遊べる空港内施設`（71文字）
-  - h1: `那覇空港 キッズスペース`
-  - OGP: og:title / og:description は上記と同一。og:url・og:image・og:locale・twitter:card(summary_large_image) あり。
-- naha-main-place
-  - title: `サンエー那覇メインプレイス（那覇市）の子連れ情報｜うちなー子連れマップ`（35文字）
-  - description: `サンエー那覇メインプレイス（那覇市）の子連れ情報。授乳室あり・オムツ替え台あり・駐車場無料（広め）・雨の日OK。子連れ向け設備が揃う大型モール`（71文字）
+### リンクレポート
+- **外部リンク 合計 0 件**
+- 内部リンク 合計 11 件（Google が認識している数）
 
-**両ページはまったく同じテンプレートから生成されている**（`generateMetadata` の1箇所）。
-つまり CTR 5倍差は「テンプレートの出来の違い」では説明できない。差分として確認できたのは以下。
+### 索引済みなのにクリック0のクエリ
+- 浦添大公園 駐車場 157表示 0クリック
+- おきなわワールド 駐車場 49表示 0クリック
+- メインプレイス 授乳室 40表示 0クリック
+- パルコシティ 授乳室 29表示 0クリック
+- おきみゅー 駐車場 21表示 0クリック
+- 流入クエリ123件の大半が「施設名 + 駐車場 / 授乳室 / キッズスペース」
 
-- naha-main-place は施設名そのものが検索語（指名／ナビゲーショナル検索）。テンプレの定型文でもクリックされる。
-- naha-airport-kids の主要クエリ「那覇空港 キッズスペース」は情報検索で、知りたいのは
-  **どこにあるか（ターミナル・階）・営業時間・授乳室の有無**。旧タイトルは「（那覇市）の子連れ情報」という
-  中身のない定型句で、その答えが1つも入っていない。
-- 旧タイトルは34文字で、サイト名 `｜うちなー子連れマップ` が末尾11文字を占める。日本語SERPの表示上限
-  （おおむね30文字前後）を超えるため、後半は切れる可能性が高く、その11文字はクリック誘因になっていない。
-- 旧ディスクリプションは設備フラグの羅列で、**全スポットで同じ語がほぼ同じ順に並ぶ**ため差別化がない。
+### 絞り込みページの実績（90日）
+- 66ページ合計で 26表示・0クリック（サイト全体の表示回数の0.5%）
+- うち市町村×設備は 12表示・0クリック
 
-### 変更後（`pnpm build` の生成物 `out/spots/naha-airport-kids/index.html` を grep して確認）
+## 本番HTMLを curl して確認した事実
 
-- title: `那覇空港 キッズスペースはどこ？国内線2F・授乳室あり`（全角27文字）
-- description: `那覇空港のキッズスペースは国内線ターミナル2Fにあります。飛行機を眺めながら遊べて、授乳室・オムツ替え台・多目的トイレも利用可。利用は無料で5:30-22:00、駐車場は有料。子連れの待ち時間や乗り継ぎの時間調整に。`（108文字）
-- og:title / twitter:title も同じ文字列に更新されている（サイト名は付かない）
-- canonical は `https://uchina-map.nexeed-lab.com/spots/naha-airport-kids/` のまま
-- h1 は `那覇空港 キッズスペース` のまま（すでに主要クエリを含むため未変更）
+- トップページの絞り込みリンクは全て旧クエリ形式だった:
+  `/spots/?city=naha` 13本、`/spots/?category=park` 8本、`/spots/?feature=rainOk` 5本。
+  **ディレクトリ版 `/spots/city/naha/` へのリンクは 0本。**
+- `/spots/?city=naha` の canonical は `https://uchina-map.nexeed-lab.com/spots/`。
+  つまりトップの絞り込みリンク26本の評価は全て `/spots/` に吸収され、
+  ディレクトリ版66ページには1本も届いていなかった（commit 8a0b942 の取りこぼし）。
+- `/spots/` 側には85スポット全部と単軸ページへのリンクが実在する（リンク切れではない）。
+- `naha-airport-kids` の `seoTitle`/`seoDescription` は本番に反映済み。
+  （前回の HANDOFF の「デプロイは未実行」は誤り。既にデプロイされていた）
+- **Cloudflare Web Analytics は稼働中**（`static.cloudflareinsights.com/beacon.min.js` を確認）。
+  `src/` に埋め込みが無いのは Cloudflare 側でエッジ注入しているため。解析の追加導入は不要。
 
-新しい文言に書いた事実は、すべて `src/data/spots.ts` の既存フィールドから取った。創作していない。
-- 国内線ターミナル2F → `floor: "国内線ターミナル 2F"`
-- 5:30-22:00 → `businessHours: "5:30-22:00"`
-- 無料 → `price: { adult: 0, free: true }`
-- 授乳室・オムツ替え台・多目的トイレ → `features` の各フラグ true
-- 駐車場は有料 → `hasParking: true, parkingFree: false`
+## 今回の変更（3ファイル）
 
-### naha-main-place は未変更
+### 1. `src/app/page.tsx` — 内部リンクをディレクトリ版に張り替え
+`collectionPath` を import し、12箇所のリンクを差し替えた（distinct 26 URL）。
+`?age=` 4本と `?feature=hasParking&minDuration=180` 1本は対応するディレクトリページが無いのでクエリのまま。
 
-ビルド生成物 `out/spots/naha-main-place/index.html` の title / description / og:* が
-本番の現行値と完全一致することを確認済み。
+### 2. `src/app/sitemap.ts` — 市町村×設備の40ページを sitemap から除外
+`cityFeatureRoutes` と未使用になった import を削除し、理由をコメントで残した。
+**ページ・ルート・内部リンクは残してある**ので、配列を戻すだけで復帰できる。
 
-### コマンドの実行結果
+### 3. `src/data/spots.ts` — 8ページに `seoTitle` / `seoDescription` を追加
+対象は「表示回数60以上 かつ CTR 3%未満」で機械的に選定:
+`urasoe-parco-city` / `urasoe-daikoen` / `nanjo-okinawa-world` / `naha-okimu` /
+`naha-shuri-castle-park` / `tomi-dmm-aquarium` / `ginowan-harmony-chafe` / `naha-mori-no-ie-minmin`
 
-- `pnpm install` … 成功（`node_modules` が無い状態だったので実行が必要だった）
+意図的に除外（成績が良いので触らない）: `naha-main-place`(7.7%) / `ginowan-tropical-beach`(8.1%) /
+`tomi-toyosaki-beach`(12.5%) / `chatan-araha-park`(25%)
+
+書いた事実はすべて `src/data/spots.ts` の既存フィールドから取った。創作していない。
+
+## 検証済みの事実（実際に実行して出力を確認したもの）
+
+- `pnpm install` … 成功
 - `pnpm typecheck`（`tsc --noEmit`） … 成功・エラー出力なし
-- `pnpm build` … 成功。`/spots/[id]` が85件 SSG（`+82 more paths` 表示）、静的エクスポート `out/` 生成
+- `pnpm build` … 成功。`/spots/[id]` 85件、`city/[city]/[feature]` 40件を含め全ルートSSG
+- `out/index.html` を grep … `/spots/(city|category|feature)/` 形式のリンクが **distinct 26本**
+  （変更前は0本）。残るクエリ形式は `?age=` 4本と `?feature=hasParking&minDuration=180` 1本のみ
+- `out/sitemap.xml` … **116 URL**（変更前156）、市町村×設備は **0件**
+- `out/spots/city/naha/` … `nursing` `parking` `rain` `stroller` が存在（ページ自体は残っている）
+- 変更した8ページの `<title>` と `<meta name="description">` が新しい文言になっていることを
+  `out/` の生成HTMLで確認。全 `seoTitle` の全角換算幅は 23.5〜27.0（30以下）
+- 触っていない `naha-main-place` / `ginowan-tropical-beach` の `<title>` が
+  本番の現行値と完全一致することを確認
 
 ## 未検証のもの（推測であって事実ではない）
 
-- **この変更でCTRが上がるかどうかは未検証**。効果はGSCで実測するまで分からない。
-  再クロール・スニペット再生成には数日〜数週間かかる。Googleがタイトルを書き換える可能性もある。
-- GSCが警告している「naha-airport-kids の表示回数 68%減」の原因は特定していない。
-  今回の変更はCTR対策であって、表示回数減の対策ではない。別問題として調査が必要。
-- 「タイトルが34文字でSERPで切れていた」は日本語SERPの一般的な表示幅からの推定であり、
-  実際の検索結果画面で切れていることを確認したわけではない。
-- **デプロイは未実行**。本番は変更前のままである。
+- **この変更で流入が増えるかは未検証。** 効果はGSCで実測するまで分からない
+- 「検出-インデックス未登録79件」の原因を内部リンクの孤児化と断定したわけではない。
+  外部リンク0件によるクロール予算不足のほうが支配的な可能性がある
+- **デプロイは未実行。本番は変更前のまま**（`naha-airport-kids` の個別化だけが反映済み）
+- `parkingFree` を明示していないスポットが3件あり、デフォルト値 `true`（＝無料）が効いている:
+  **`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`**。
+  `urasoe-daikoen` は「浦添大公園 駐車場」が157表示の最重要クエリなので、
+  新しいタイトルに「駐車場は無料・広め」と書いた。**この無料はデフォルト値であって未確認。**
+  `naha-okimu` は同じ理由で意図的に「無料」と書かず「広めの駐車場」に留めた。
+  3件とも公式情報で有料/無料を確認して `spots.ts` に明示すべき
 
 ## 次にやること
 
-1. デプロイ（下記「デプロイ手順」参照）。デプロイ後に本番HTMLを curl して反映を確認する。
-2. デプロイ後、GSC で `https://uchina-map.nexeed-lab.com/spots/naha-airport-kids/` を URL検査 →
-   インデックス登録をリクエストして再クロールを促す。
-3. 2〜4週間後にGSCで CTR を再計測する。改善したら、同じ `seoTitle` / `seoDescription` の仕組みを
-   他の「表示回数が多いのにCTRが低い」ページへ横展開する。改善しなければ文言を変えて再測定する。
-4. 表示回数68%減の原因調査（別タスク）。
-
-## デプロイ手順（このリポジトリでの実際の構成）
-
-- ホスティングは **Cloudflare Workers の静的アセット配信**（旧 Cloudflare Pages）。
-- ルートの `wrangler.jsonc` が `assets.directory: "./out"` を指定。Workerスクリプト（`main`）は無い。
-- 手動デプロイ: `pnpm deploy`（中身は `next build && wrangler deploy`）。`wrangler` は devDependencies に入っている。
-  Cloudflare アカウントへのログイン（`wrangler login`）が必要。
-- 自動デプロイ: Cloudflare ダッシュボードの Workers Builds で GitHub リポジトリ `oshima0627/uchina-map`
-  と連携済み。`main` への push でビルド（Build command `pnpm build`）が走る想定。
-- カスタムドメイン `uchina-map.nexeed-lab.com` は Worker の Settings → Domains & Routes で設定。
+1. デプロイ。デプロイ後に本番HTMLを curl して反映を確認する:
+   ```bash
+   curl -s https://uchina-map.nexeed-lab.com/ | grep -oE 'href="/spots/(city|category|feature)/[a-z/-]*"' | sort -u | wc -l
+   curl -s https://uchina-map.nexeed-lab.com/sitemap.xml | grep -c '<loc>'
+   curl -s https://uchina-map.nexeed-lab.com/spots/urasoe-daikoen/ | grep -oE '<title>[^<]*</title>'
+   ```
+2. GSC でサイトマップを再送信し、未クロールの観光地スポットを URL検査 → インデックス登録リクエスト。
+   優先順: 海洋博公園 → ネオパーク → ナゴパイナップルパーク → イオンモール沖縄ライカム →
+   アメリカンビレッジ → ビオスの丘 → むら咲むら → 琉球ガラス村 → DINO恐竜PARK → フルーツランド
+3. `parkingFree` 未指定の3件（`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`）の
+   駐車場料金を公式情報で確認し `spots.ts` に明示する
+4. 外部リンク0件の解消（コードでは解決できない。最大のボトルネック）
+5. 4週間後（2026-09-28以降）にGSCで答え合わせ:
+   - B: 上の「クリック0のクエリ」表と、対象8ページのCTRを再取得
+   - A: 「検出-インデックス未登録 79件 / 登録済み 94件」の推移を再取得
+   改善しなければ文言を変えて再測定する
 
 ## 触ってはいけないところ
 
-- **`src/data/spots.ts` の `naha-main-place`**。CTR 7.1% と成績が良いので現状維持。
-  同様に、成績の良いページのテンプレート出力を変えないこと（`seoTitle` を設定しない限り従来の
-  テンプレートがそのまま使われる設計にしてある）。
-- `public/_headers`（セキュリティヘッダとキャッシュ規則）。意味を理解せずに編集しない。
-- `next.config.ts` の `output: "export"` / `trailingSlash: true` / `images.unoptimized: true`。
-  静的エクスポート前提の構成なので Server Actions・ISR・middleware は使えない。
+- **成績の良いページ**: `naha-main-place`(CTR 7.7%) / `ginowan-tropical-beach`(8.1%) /
+  `tomi-toyosaki-beach`(12.5%) / `chatan-araha-park`(25%)。
+  `seoTitle` を設定しない限り従来のテンプレートが使われる設計なので、放置でよい
 - `src/lib/seo.ts` の `pageMetadata()` は全ページが通る共通関数。`titleAbsolute` の既定値 false を
-  変えると全ページのタイトルが壊れる。
+  変えると全ページのタイトルが壊れる
+- `public/_headers`（セキュリティヘッダとキャッシュ規則）。意味を理解せずに編集しない
+- `next.config.ts` の `output: "export"` / `trailingSlash: true` / `images.unoptimized: true`。
+  静的エクスポート前提なので Server Actions・ISR・middleware は使えない
 - スポットの事実（階・営業時間・料金・設備）は `src/data/spots.ts` が唯一の出所。
-  メタ文言に書く数字はここに無ければ書かない。
+  メタ文言に書く数字はここに無ければ書かない
+- `src/app/sitemap.ts` の市町村×設備の除外は**意図的**。ページを消したわけではないので、
+  「ルートがあるのに sitemap に無い」のを不整合とみなして戻さないこと
+
+## デプロイ手順
+
+- ホスティングは Cloudflare Workers の静的アセット配信。ルートの `wrangler.jsonc` が
+  `assets.directory: "./out"` を指定。Workerスクリプト（`main`）は無い
+- 手動デプロイ: `pnpm deploy`（`next build && wrangler deploy`）。`wrangler login` が必要
+- 自動デプロイ: Cloudflare の Workers Builds が GitHub `oshima0627/uchina-map` と連携済み。
+  `main` への push でビルド（Build command `pnpm build`）が走る
+- カスタムドメイン `uchina-map.nexeed-lab.com` は Worker の Settings → Domains & Routes

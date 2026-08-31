@@ -53,6 +53,9 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/首里城.webp",
     imageEmoji: "🏯",
+    seoTitle: "首里城公園はベビーカーで回れる？授乳室・駐車場情報",
+    seoDescription:
+      "首里城公園は園内に起伏があり、ベビーカーでの移動には向きません。授乳室・オムツ替え台・多目的トイレはあり、駐車場は有料で広め。無料エリアにも見どころが多く、子連れの散策に人気です。8:30-18:00（季節変動あり）。",
   },
   {
     id: "naha-okimu",
@@ -87,6 +90,9 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/沖縄県立博物館.webp",
     imageEmoji: "🏛️",
+    seoTitle: "おきみゅーの駐車場・授乳室｜沖縄県立博物館・美術館",
+    seoDescription:
+      "沖縄県立博物館・美術館（おきみゅー）には広めの駐車場があり、授乳室・オムツ替え台・多目的トイレ・キッズスペースも揃っています。冷房の効いた屋内なので雨の日も台風の日も安心。9:00-18:00（金土〜20:00）、月曜休館。大人530円・子ども150円、6歳未満は無料。",
   },
   {
     id: "naha-yogi-park",
@@ -145,6 +151,9 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/那覇市立森の家みんみん.webp",
     imageEmoji: "🌲",
+    seoTitle: "森の家みんみん（那覇）の自然体験と駐車場｜利用無料",
+    seoDescription:
+      "那覇市立森の家みんみんは末吉公園内にある那覇市立の自然体験施設。自然観察やネイチャーゲーム、工作教室ができ、キャンプ場・宿泊施設も併設しています。利用も駐車場も無料。オムツ替え台・多目的トイレ・キッズスペースがあり、雨の日でも過ごせます。",
   },
   {
     id: "naha-airport-kids",
@@ -315,6 +324,9 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/浦添大公園.webp",
     imageEmoji: "🛝",
+    seoTitle: "浦添大公園の駐車場は無料・広め｜90mローラー滑り台",
+    seoDescription:
+      "浦添大公園の駐車場は無料で、広めにとられています。名物は県内屈指の長さ約90mのローラー滑り台。授乳室・オムツ替え台・多目的トイレがあり、利用は無料で9:00-21:00。遊具が充実していて半日は遊べます。",
   },
   {
     id: "urasoe-parco-city",
@@ -351,6 +363,9 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/サンエー浦添西海岸PARCO CITY.webp",
     imageEmoji: "🛍️",
+    seoTitle: "パルコシティの授乳室・キッズパーク｜ベビーカー貸出あり",
+    seoDescription:
+      "サンエー浦添西海岸PARCO CITYには授乳室とオムツ替え台があり、屋内キッズパークとベビーカー貸出も利用できます。営業は10:00-22:00で入場は無料、駐車場も無料で広め。雨の日や台風の日でも遊べる屋内モールです。",
   },
   {
     id: "urasoe-art-museum",
@@ -517,6 +532,9 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/DMMかりゆし水族館.webp",
     imageEmoji: "🐠",
     floor: "iias沖縄豊崎 1F-2F（入口2F）",
+    seoTitle: "DMMかりゆし水族館は子連れOK｜授乳室・ベビーカー貸出",
+    seoDescription:
+      "DMMかりゆし水族館はiias沖縄豊崎の1F-2F（入口2F）にある完全屋内型の水族館。授乳室・オムツ替え台・多目的トイレがあり、ベビーカーの貸出も利用できます。10:00-21:00、大人2,400円・子ども1,500円、4歳未満は無料。駐車場は無料で広め。",
   },
   {
     id: "tomi-senagajima",
@@ -724,6 +742,9 @@ export const SPOTS: Spot[] = [
       source: { name: "おきなわ物語（沖縄観光情報WEBサイト）", url: "https://www.okinawastory.jp/spot/1069" },
       checkedOn: "2026年7月",
     },
+    seoTitle: "おきなわワールドの駐車場は無料400台｜授乳室あり",
+    seoDescription:
+      "おきなわワールド(玉泉洞)の駐車場は無料で約400台分。授乳室・オムツ替え台・多目的トイレ・キッズスペースがあり、鍾乳洞は雨の日でも楽しめます。園内に起伏があるためベビーカーでの移動には向きません。9:00-17:30、大人2,000円・子ども1,000円、4歳未満は無料。",
   },
   {
     id: "nanjo-gangala",
@@ -1636,6 +1657,9 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/HARMONY CHAFE.webp",
     imageEmoji: "☕",
+    seoTitle: "ハーモニーチャフェ（宜野湾）のキッズスペースと営業時間",
+    seoDescription:
+      "HARMONY CHA/FÉ（ハーモニーチャフェ）は宜野湾市真志喜の2Fにあるカフェ。マットを敷いたキッズスペースと絵本があり、子供用椅子・オムツ替え台も使えます。9:00-21:00、水曜定休、駐車場は無料。モーニングやランチが楽しめます。",
   },
   {
     id: "nanjo-cafe-yabusachi",
