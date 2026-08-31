@@ -115,9 +115,33 @@ Google Search Console の実測値からボトルネックを特定し、対策�
   `naha-okimu` は同じ理由で意図的に「無料」と書かず「広めの駐車場」に留めた。
   3件とも公式情報で有料/無料を確認して `spots.ts` に明示すべき
 
+## 専門エージェントを5体作成した（2026-08-31）
+
+`.claude/agents/` に技術領域ごとの専門家を定義した。`description` に発火条件を書いてあるので、
+作業内容に応じて自動で振り分けられる。追加の仕組み（コマンドやオーケストレーター）は作っていない。
+`harness-agents-skills.md` の「最初からオーケストレーター・ワーカーを設計しない」に従った。
+
+| ファイル | 担当 | Edit/Write |
+|---|---|---|
+| `seo-analyst.md` | GSC実測、CTR/インデックス診断、seoTitle/seoDescription、sitemap、JSON-LD | Edit のみ |
+| `spot-data-curator.md` | spots.ts の事実データ、設備フラグ、出典つき parkingNote、Zod型 | あり |
+| `frontend-dev.md` | Next.js/React/Tailwind のUI、見出し構造、レスポンシブ | あり |
+| `deploy-operator.md` | build、wrangler、_headers、main への push、本番検証 | なし |
+| `verifier.md` | 他エージェントの成果物の独立検証 | **なし（意図的）** |
+
+`verifier` から Edit/Write を外してあるのは、`harness-agents-skills.md` の
+「生成と評価を分離する」を指示ではなく構造で守るため。
+ただし **`verifier` は Bash を持っている**（typecheck/build の実行に必要）ため、
+シェル経由でファイルを書くことは技術的には可能。完全な封鎖ではなく、
+「編集の導線を外したうえで定義文で禁止している」状態である。
+
+5体とも frontmatter の `name` とファイル名の一致、ツール名の妥当性を検証済み。
+**実際にエージェントを起動して動作確認はしていない（未検証）。**
+
 ## 次にやること
 
-1. GSC で未クロールの観光地スポットを URL検査 → インデックス登録リクエスト。
+1. GSC で未クロールの観光地スポットを URL検査 → インデックス登録リクエスト（`seo-analyst` に担当させる）。
+   **2026-08-31 時点で「観光地優先で10件」の実行がユーザー承認済み。未実行のまま保留中。**
    優先順: 海洋博公園 → ネオパーク → ナゴパイナップルパーク → イオンモール沖縄ライカム →
    アメリカンビレッジ → ビオスの丘 → むら咲むら → 琉球ガラス村 → DINO恐竜PARK → フルーツランド
 2. `parkingFree` 未指定の3件（`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`）の
