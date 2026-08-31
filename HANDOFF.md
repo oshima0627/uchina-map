@@ -210,61 +210,55 @@ Google Search Console の実測値からボトルネックを特定し、対策�
 
 ## インデックス登録リクエストの実行結果（2026-08-31）
 
-Search Console の URL 検査から、未クロールの観光地ページに対して実行した。
+Search Console の URL 検査から、未クロールの観光地ページ10件に実行した。
+**10件すべて「インデックス登録をリクエスト済み」を画面で確認した。**
 
 | # | ページ | 結果 |
 |---|---|---|
-| 1 | `motobu-kaiyohaku-park`（海洋博公園） | **成功**（「インデックス登録をリクエスト済み」を画面で確認） |
-| 2 | `nago-neopark`（ネオパークオキナワ） | **成功**（同上） |
-| 3 | `nago-pineapple-park`（ナゴパイナップルパーク） | **成功**（同上） |
-| 4 | `kitanakagusuku-aeon-rycom`（イオンモール沖縄ライカム） | **未確認**。リクエストのクリックは発行したが、拡張が切断され完了画面を見ていない |
-| 5 | `chatan-american-village`（アメリカンビレッジ） | **失敗**。Google が「インデックス登録リクエストの送信中に問題が発生しました」を返した。時間を空けて再試行したが今度は無反応 |
-| 6-10 | ビオスの丘 / むら咲むら / 琉球ガラス村 / DINO恐竜PARK / フルーツランド | **未実行** |
+| 1 | `motobu-kaiyohaku-park`（海洋博公園） | 成功 |
+| 2 | `nago-neopark`（ネオパークオキナワ） | 成功 |
+| 3 | `nago-pineapple-park`（ナゴパイナップルパーク） | 成功 |
+| 4 | `kitanakagusuku-aeon-rycom`（イオンモール沖縄ライカム） | 成功。**再検査時に「URL は Google に登録されています／ページはインデックスに登録済みです」に変化していた** |
+| 5 | `chatan-american-village`（アメリカンビレッジ） | 成功（1回目は Google 側エラー、時間を空けて再試行して成功） |
+| 6 | `uruma-bios-hill`（ビオスの丘） | 成功 |
+| 7 | `yomitan-murasakimura`（体験王国むら咲むら） | 成功（操作ミスで二重送信。Google の表示どおりキュー順位は変わらない） |
+| 8 | `itoman-ryukyu-glass-village`（琉球ガラス村） | 成功 |
+| 9 | `nago-dino-park`（DINO恐竜PARK） | 成功 |
+| 10 | `nago-fruitsland`（OKINAWAフルーツらんど） | 成功 |
 
-**確実に送信できたのは3件。** 4番は不明、5番は失敗、6〜10番は未着手。
+4番は数分のうちにインデックス登録まで到達した。リクエストが実際に効くことの実例。
 
-### 止まった原因
-
-Claude in Chrome 拡張が `search.google.com` のホスト権限を失った。
-
-```
-Cannot access contents of the page.
-Extension manifest must request permission to access the respective host.
-```
-
-この状態ではスクリーンショットも要素検索もできない。**拡張側の権限を付け直す必要があり、
-コード側では回復できない。** 作業中は他にも切断が数回発生し、レンダラーが固まって
-タブを再読み込みする場面もあった。
-
-### 分かった手順（次回のため）
+### 手順（次回のため）
 
 - 直接URL `.../search-console/inspect?resource_id=...&id=<対象URL>` は **404 になる**。
-  `id` は Google 側が振る不透明なトークン（例 `Aezktk_f73uuzh3JiXF7MQ`）で、URLそのものではない
-- 正しい手順は **画面上部の検査ボックスに URL を入力して Enter**。左ナビの「URL 検査」を
-  クリックすると入力欄にフォーカスが入る
-- パネルが開いたら右下の「インデックス登録をリクエスト」。処理に1〜2分かかる
-- 一度検査したURLは、タブに残る不透明トークン付きURLへ直接 navigate すれば開き直せる
-- **連続で送信すると Google 側がエラーを返す。** 1件ごとに十分な間隔を空けること
+  `id` は Google が振る不透明なトークン（例 `oqXTbR2UX1CjgSDeIRwt1Q`）であってURLではない
+- 正しい手順は **画面上部の検査ボックスに URL を入力して Enter**
+- パネルが開いたら「インデックス登録をリクエスト」。処理に1〜2分かかる
+- **完了ダイアログを閉じてから次のURLを入力すること。** 閉じずに入力すると
+  フォーカスが入らず前のURLのまま残り、二重送信になる。
+  毎回スクリーンショットでURL欄を確認してからリクエストを押す
+- **連続で送るとGoogleが「送信中に問題が発生しました」を返す。** 数分空けて再試行すれば通る
+- 作業中に Claude in Chrome 拡張の切断が複数回、レンダラー凍結が1回、
+  ホスト権限の一時喪失が1回あった。いずれも時間をおくと復帰した
 
-### 副産物として分かったこと（内部リンク診断の裏付け）
+### 副産物（内部リンク診断の裏付け）
 
 URL検査の「検出」欄に出た参照元ページ:
 
-- `motobu-kaiyohaku-park` … 参照元ページ `https://uchina-map.nexeed-lab.com/spots/?age=0`
-- `nago-neopark` / `nago-pineapple-park` / `chatan-american-village` … **「検出されませんでした」**
-- `kitanakagusuku-aeon-rycom` … 「参照元サイトマップが検出されませんでした」
+| ページ | 参照元ページ |
+|---|---|
+| `motobu-kaiyohaku-park` | `https://uchina-map.nexeed-lab.com/spots/?age=0` |
+| `nago-fruitsland` | `https://uchina-map.nexeed-lab.com/spots/?feature=rainOk` |
+| その他8件 | **検出されませんでした**（うち3件は「参照元サイトマップが検出されませんでした」） |
 
-**Google はこれらのページへの内部リンクをほとんど認識していなかった。**
-唯一認識されていた参照元もクエリ形式URL（canonical は `/spots/`）だった。
-2026-08-31 に修正した内部リンクの孤児化が実在したことの裏付けになる。
+**Google が認識できていた参照元は2件だけで、どちらもクエリ形式URL**（canonical は `/spots/`）。
+2026-08-31 に修正した内部リンクの孤児化が実在したことの、Google 側からの裏付けになる。
+次回GSCを見るときは、この参照元ページ欄がディレクトリ型URLに変わっているかを観測点にする。
 
 ## 次にやること
 
-1. インデックス登録リクエストの残り。**まず Claude in Chrome 拡張の
-   `search.google.com` へのホスト権限を付け直す必要がある。**
-   確認が取れていない `kitanakagusuku-aeon-rycom` と、失敗した `chatan-american-village`、
-   未実行の `uruma-bios-hill` / `yomitan-murasakimura` / `itoman-ryukyu-glass-village` /
-   `nago-dino-park` / `nago-fruitsland`。1件ずつ間隔を空けて送ること。
+1. 残り19ページの未クロールスポットへのインデックス登録リクエスト（1日あたりの上限に注意）。
+   ただし今回の10件がどうなるかを数日見てから判断してよい。
    優先順: 海洋博公園 → ネオパーク → ナゴパイナップルパーク → イオンモール沖縄ライカム →
    アメリカンビレッジ → ビオスの丘 → むら咲むら → 琉球ガラス村 → DINO恐竜PARK → フルーツランド
 2. `parkingFree` 未指定の3件（`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`）の
