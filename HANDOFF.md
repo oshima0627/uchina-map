@@ -6,7 +6,8 @@
 
 「サイトを育てたい（＝検索流入を増やしたい、主軸は沖縄旅行に来る子連れ観光客）」という目的に対し、
 Google Search Console の実測値からボトルネックを特定し、対策を実装した。
-実装は完了・ローカル検証済み。**デプロイは未実行。**
+**実装・デプロイともに完了し、本番で反映を検証済み。**
+次は GSC 側の操作（インデックス登録リクエスト）と、4週間後の答え合わせ。
 
 ## GSC で測った事実（Claude in Chrome で直接取得。プロパティ `sc-domain:uchina-map.nexeed-lab.com`）
 
@@ -92,12 +93,21 @@ Google Search Console の実測値からボトルネックを特定し、対策�
 - 触っていない `naha-main-place` / `ginowan-tropical-beach` の `<title>` が
   本番の現行値と完全一致することを確認
 
+### デプロイ後に本番を curl して確認した（2026-08-31）
+
+- `git push origin HEAD:main` … 成功（`1f46ffb..cb5f7f5`）。Cloudflare Workers Builds が自動実行
+- 本番トップの `/spots/(city|category|feature)/` 形式リンク … **distinct 26本**
+- 本番トップの残存クエリ型 … `?age=` 4本と `?feature=hasParking&minDuration=180` 1本のみ
+- 本番 `sitemap.xml` … **116 URL**、市町村×設備 **0件**
+- `https://uchina-map.nexeed-lab.com/spots/city/naha/nursing/` … **HTTP 200**（ページは生きている）
+- 変更した8ページの `<title>` が新しい文言で配信されていることを確認
+- `naha-main-place` / `ginowan-tropical-beach` の `<title>` は変更前のまま
+
 ## 未検証のもの（推測であって事実ではない）
 
 - **この変更で流入が増えるかは未検証。** 効果はGSCで実測するまで分からない
 - 「検出-インデックス未登録79件」の原因を内部リンクの孤児化と断定したわけではない。
   外部リンク0件によるクロール予算不足のほうが支配的な可能性がある
-- **デプロイは未実行。本番は変更前のまま**（`naha-airport-kids` の個別化だけが反映済み）
 - `parkingFree` を明示していないスポットが3件あり、デフォルト値 `true`（＝無料）が効いている:
   **`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`**。
   `urasoe-daikoen` は「浦添大公園 駐車場」が157表示の最重要クエリなので、
@@ -107,19 +117,13 @@ Google Search Console の実測値からボトルネックを特定し、対策�
 
 ## 次にやること
 
-1. デプロイ。デプロイ後に本番HTMLを curl して反映を確認する:
-   ```bash
-   curl -s https://uchina-map.nexeed-lab.com/ | grep -oE 'href="/spots/(city|category|feature)/[a-z/-]*"' | sort -u | wc -l
-   curl -s https://uchina-map.nexeed-lab.com/sitemap.xml | grep -c '<loc>'
-   curl -s https://uchina-map.nexeed-lab.com/spots/urasoe-daikoen/ | grep -oE '<title>[^<]*</title>'
-   ```
-2. GSC でサイトマップを再送信し、未クロールの観光地スポットを URL検査 → インデックス登録リクエスト。
+1. GSC で未クロールの観光地スポットを URL検査 → インデックス登録リクエスト。
    優先順: 海洋博公園 → ネオパーク → ナゴパイナップルパーク → イオンモール沖縄ライカム →
    アメリカンビレッジ → ビオスの丘 → むら咲むら → 琉球ガラス村 → DINO恐竜PARK → フルーツランド
-3. `parkingFree` 未指定の3件（`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`）の
+2. `parkingFree` 未指定の3件（`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`）の
    駐車場料金を公式情報で確認し `spots.ts` に明示する
-4. 外部リンク0件の解消（コードでは解決できない。最大のボトルネック）
-5. 4週間後（2026-09-28以降）にGSCで答え合わせ:
+3. 外部リンク0件の解消（コードでは解決できない。最大のボトルネック）
+4. 4週間後（2026-09-28以降）にGSCで答え合わせ:
    - B: 上の「クリック0のクエリ」表と、対象8ページのCTRを再取得
    - A: 「検出-インデックス未登録 79件 / 登録済み 94件」の推移を再取得
    改善しなければ文言を変えて再測定する
