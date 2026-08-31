@@ -186,6 +186,18 @@ Google Search Console の実測値からボトルネックを特定し、対策�
 - `out/sitemap.xml` … 116 → **118 URL**（スポット +1、市町村ページ +1）
 - `out/index.html` のトップの市町村リンク … 14 → **15**
 
+### デプロイ後に本番を curl して確認した（2026-08-31）
+
+- `git push origin HEAD:main` … 成功（`f7eb427..da71fe8`）
+- `https://uchina-map.nexeed-lab.com/spots/onna-manzamo/` … **HTTP 200**、
+  `<title>` は `万座毛の駐車場は無料｜授乳室・ベビーカー貸出あり`
+- 出典URL2件（`goto-onna.com` / `okinawa-bf-map.jp`）がページに出ている
+- 構造化データ … `"@type":"Park"` / `"addressLocality":"恩納村"` / `"latitude":26.5041`
+- `https://uchina-map.nexeed-lab.com/spots/city/onna/` … **HTTP 200**
+- 本番トップの市町村リンク … **15**
+- 本番 `sitemap.xml` … **118 URL**
+- 触っていない `naha-main-place` の `<title>` は変更前のまま
+
 ### 未検証
 
 - **この追加で流入が増えるかは未検証。** 既存スポット詳細の表示回数の中央値は
