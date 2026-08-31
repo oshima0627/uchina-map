@@ -208,10 +208,63 @@ Google Search Console の実測値からボトルネックを特定し、対策�
   多目的トイレ有・駐車場155台）。ただし**観覧料の一次情報が未取得**
   （`nakijinjoseki.jp` が接続タイムアウト）なので追加していない
 
+## インデックス登録リクエストの実行結果（2026-08-31）
+
+Search Console の URL 検査から、未クロールの観光地ページに対して実行した。
+
+| # | ページ | 結果 |
+|---|---|---|
+| 1 | `motobu-kaiyohaku-park`（海洋博公園） | **成功**（「インデックス登録をリクエスト済み」を画面で確認） |
+| 2 | `nago-neopark`（ネオパークオキナワ） | **成功**（同上） |
+| 3 | `nago-pineapple-park`（ナゴパイナップルパーク） | **成功**（同上） |
+| 4 | `kitanakagusuku-aeon-rycom`（イオンモール沖縄ライカム） | **未確認**。リクエストのクリックは発行したが、拡張が切断され完了画面を見ていない |
+| 5 | `chatan-american-village`（アメリカンビレッジ） | **失敗**。Google が「インデックス登録リクエストの送信中に問題が発生しました」を返した。時間を空けて再試行したが今度は無反応 |
+| 6-10 | ビオスの丘 / むら咲むら / 琉球ガラス村 / DINO恐竜PARK / フルーツランド | **未実行** |
+
+**確実に送信できたのは3件。** 4番は不明、5番は失敗、6〜10番は未着手。
+
+### 止まった原因
+
+Claude in Chrome 拡張が `search.google.com` のホスト権限を失った。
+
+```
+Cannot access contents of the page.
+Extension manifest must request permission to access the respective host.
+```
+
+この状態ではスクリーンショットも要素検索もできない。**拡張側の権限を付け直す必要があり、
+コード側では回復できない。** 作業中は他にも切断が数回発生し、レンダラーが固まって
+タブを再読み込みする場面もあった。
+
+### 分かった手順（次回のため）
+
+- 直接URL `.../search-console/inspect?resource_id=...&id=<対象URL>` は **404 になる**。
+  `id` は Google 側が振る不透明なトークン（例 `Aezktk_f73uuzh3JiXF7MQ`）で、URLそのものではない
+- 正しい手順は **画面上部の検査ボックスに URL を入力して Enter**。左ナビの「URL 検査」を
+  クリックすると入力欄にフォーカスが入る
+- パネルが開いたら右下の「インデックス登録をリクエスト」。処理に1〜2分かかる
+- 一度検査したURLは、タブに残る不透明トークン付きURLへ直接 navigate すれば開き直せる
+- **連続で送信すると Google 側がエラーを返す。** 1件ごとに十分な間隔を空けること
+
+### 副産物として分かったこと（内部リンク診断の裏付け）
+
+URL検査の「検出」欄に出た参照元ページ:
+
+- `motobu-kaiyohaku-park` … 参照元ページ `https://uchina-map.nexeed-lab.com/spots/?age=0`
+- `nago-neopark` / `nago-pineapple-park` / `chatan-american-village` … **「検出されませんでした」**
+- `kitanakagusuku-aeon-rycom` … 「参照元サイトマップが検出されませんでした」
+
+**Google はこれらのページへの内部リンクをほとんど認識していなかった。**
+唯一認識されていた参照元もクエリ形式URL（canonical は `/spots/`）だった。
+2026-08-31 に修正した内部リンクの孤児化が実在したことの裏付けになる。
+
 ## 次にやること
 
-1. GSC で未クロールの観光地スポットを URL検査 → インデックス登録リクエスト（`seo-analyst` に担当させる）。
-   **2026-08-31 時点で「観光地優先で10件」の実行がユーザー承認済み。未実行のまま保留中。**
+1. インデックス登録リクエストの残り。**まず Claude in Chrome 拡張の
+   `search.google.com` へのホスト権限を付け直す必要がある。**
+   確認が取れていない `kitanakagusuku-aeon-rycom` と、失敗した `chatan-american-village`、
+   未実行の `uruma-bios-hill` / `yomitan-murasakimura` / `itoman-ryukyu-glass-village` /
+   `nago-dino-park` / `nago-fruitsland`。1件ずつ間隔を空けて送ること。
    優先順: 海洋博公園 → ネオパーク → ナゴパイナップルパーク → イオンモール沖縄ライカム →
    アメリカンビレッジ → ビオスの丘 → むら咲むら → 琉球ガラス村 → DINO恐竜PARK → フルーツランド
 2. `parkingFree` 未指定の3件（`naha-okimu` / `naha-shintoshin-park` / `urasoe-daikoen`）の
