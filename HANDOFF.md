@@ -228,6 +228,24 @@ Search Console の URL 検査から、未クロールの観光地ページ10件�
 
 4番は数分のうちにインデックス登録まで到達した。リクエストが実際に効くことの実例。
 
+### 第2弾: 残り19ページ + 万座毛（2026-08-31、同日中に実施）
+
+**20件すべて「インデックス登録をリクエスト済み」を画面で確認した。**
+
+`naha-waku-kids-land` / `naha-the-kids-palette` / `urasoe-asobi-park-kyozuka` /
+`nanjo-mibaru-beach` / `yaese-seibu-plaza-park` / `tomi-kaigungou` / `uruma-ayahashi` /
+`uruma-shimin-shokudo` / `okinawa-birdland-cafe` / `kitanakagusuku-sans-souci` /
+`chatan-calif-kitchen` / `nanjo-cafe-yabusachi` / `naha-mal-shokudo` / `urasoe-secondo-casa` /
+`yaese-yagiya` / `yaese-yell-cafe` / `nago-ufuya` / `motobu-kajinhou` /
+`motobu-kishimoto-yaedake` / `onna-manzamo`（当日追加した新規ページ）
+
+**これで「検出 - インデックス未登録」だったスポット詳細29ページすべてに送信が完了した。**
+クォータ上限には当たらなかった（同日で合計32回送信、うち重複2回）。
+`nanjo-cafe-yabusachi` で操作ミスによる二重送信が1回。
+
+残る未クロールは絞り込みページ50件だが、これらは 2026-08-31 に sitemap から
+市町村×設備40件を外した対象と重なるため、意図的に送信していない。
+
 ### 手順（次回のため）
 
 - 直接URL `.../search-console/inspect?resource_id=...&id=<対象URL>` は **404 になる**。
