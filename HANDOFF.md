@@ -114,16 +114,7 @@ ikunavi・childcare・maternity のフッターから各1本。`rel="nofollow"` 
 
 ## 次にやること
 
-1. **本番反映の確認**（最優先。まだ未確認）
-
-```bash
-curl -s -o /dev/null -w "%{http_code}\n" https://uchina-map.nexeed-lab.com/about/
-curl -s https://uchina-map.nexeed-lab.com/about/ | grep -o 'mailto:info@nexeed-lab.com'
-curl -s https://uchina-map.nexeed-lab.com/ | grep -o '"@type":"Organization"'
-curl -s https://uchina-map.nexeed-lab.com/sitemap.xml | grep -c '<loc>'   # 119
-```
-
-2. **うちなーマネーの表示回数急落の原因調査**（別タスク）。うちなーマネーからのリンクを張るのは
+1. **うちなーマネーの表示回数急落の原因調査**（別タスク）。うちなーマネーからのリンクを張るのは
    このあと。表示0のサイトから張っても効果は薄い
 2. モバイルのフッター問題をユーザーと決める
 3. 段階3（自治体・観光協会への掲載依頼）。**メール送信は必ず事前に許可を取る**。
