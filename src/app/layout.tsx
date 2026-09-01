@@ -88,9 +88,14 @@ export default function RootLayout({
             <span>
               © 2026 うちなー子連れマップ・Nexeed Lab — 沖縄の親子が、もっと自由にお出かけできるように。
             </span>
-            <Link href="/privacy" className="shrink-0 hover:text-charcoal hover:underline">
-              プライバシーポリシー
-            </Link>
+            <div className="shrink-0 flex items-center gap-4">
+              <Link href="/about" className="hover:text-charcoal hover:underline">
+                このサイトについて
+              </Link>
+              <Link href="/privacy" className="hover:text-charcoal hover:underline">
+                プライバシーポリシー
+              </Link>
+            </div>
           </div>
         </footer>
         <Script

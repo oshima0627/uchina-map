@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/spots/`, lastModified: now, priority: 0.9, changeFrequency: "daily" },
     { url: `${SITE_URL}/map/`, lastModified: now, priority: 0.7, changeFrequency: "weekly" },
     { url: `${SITE_URL}/recommend/`, lastModified: now, priority: 0.8, changeFrequency: "daily" },
+    { url: `${SITE_URL}/about/`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
     { url: `${SITE_URL}/privacy/`, lastModified: now, priority: 0.2, changeFrequency: "yearly" },
   ];
 
