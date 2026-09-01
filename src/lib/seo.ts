@@ -191,6 +191,17 @@ export function spotListJsonLd(spots: Spot[]) {
   };
 }
 
+/**
+ * 運営主体。GSC のリンクレポートで外部リンクが0件、かつトップの構造化データに
+ * Organization も publisher も無い状態だったため、誰が作っているサイトなのかを
+ * 機械可読な形で示す。自治体や観光協会がリンク先として検討するときに参照される。
+ */
+export const PUBLISHER = {
+  name: "Nexeed Lab",
+  url: "https://nexeed-lab.com/",
+  email: "info@nexeed-lab.com",
+} as const;
+
 export function siteJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -199,6 +210,13 @@ export function siteJsonLd() {
     name: SITE_NAME,
     url: `${SITE_URL}/`,
     inLanguage: "ja",
+    publisher: {
+      "@type": "Organization",
+      "@id": `${PUBLISHER.url}#organization`,
+      name: PUBLISHER.name,
+      url: PUBLISHER.url,
+      email: PUBLISHER.email,
+    },
     description:
       "沖縄県内の「子連れで安心して行ける場所」が、授乳室・ベビーカー可・雨OKなどの設備で絞り込んで見つかるマップ。",
     potentialAction: {

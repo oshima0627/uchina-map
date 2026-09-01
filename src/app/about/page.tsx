@@ -23,7 +23,11 @@ export default function AboutPage() {
 
         <section className="space-y-2">
           <h2 className="text-lg font-semibold text-charcoal">運営者</h2>
-          <p>Nexeed Lab</p>
+          <p>
+            <a className="text-primary-700 hover:underline" href="https://nexeed-lab.com/">
+              Nexeed Lab
+            </a>
+          </p>
           <p>
             お問い合わせ:{" "}
             <a className="text-primary-700 hover:underline" href="mailto:info@nexeed-lab.com">
