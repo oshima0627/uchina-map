@@ -90,6 +90,16 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/沖縄県立博物館.webp",
     imageEmoji: "🏛️",
+    parkingNote: {
+      text: "駐車場は無料で、一般駐車場158台と大型バス用10台があります。大型バス駐車場の利用は事前予約が必要です。",
+      source: { name: "沖縄県立博物館・美術館 よくある質問", url: "https://okimu.jp/faq/" },
+      checkedOn: "2026年9月",
+    },
+    nursingNote: {
+      text: "授乳室とベビーカーの貸出があり、どちらも無料で総合案内で受け付けています（事前予約は不可）。おむつ交換台はすべての多目的トイレにあります。",
+      source: { name: "沖縄県立博物館・美術館 館内サービス", url: "https://okimu.jp/guide/service/" },
+      checkedOn: "2026年9月",
+    },
     seoTitle: "おきみゅーの駐車場・授乳室｜沖縄県立博物館・美術館",
     seoDescription:
       "沖縄県立博物館・美術館（おきみゅー）には広めの駐車場があり、授乳室・オムツ替え台・多目的トイレ・キッズスペースも揃っています。冷房の効いた屋内なので雨の日も台風の日も安心。9:00-18:00（金土〜20:00）、月曜休館。大人530円・子ども150円、6歳未満は無料。",
@@ -237,6 +247,19 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/サンエー那覇メインプレイス.webp",
     imageEmoji: "🛒",
+    parkingNote: {
+      text: "無料駐車場が2,500台分あります。",
+      source: { name: "サンエー那覇メインプレイス（株式会社サンエー）", url: "https://www.san-a.co.jp/nahamainplace/" },
+      checkedOn: "2026年9月",
+    },
+    nursingNote: {
+      text: "授乳室があり、ベビーカーは無料で借りられます。トイレにはベビーベッドとベビーチェアがあり、多目的トイレも利用できます。",
+      source: {
+        name: "沖縄県バリアフリーマップ（沖縄県）",
+        url: "http://okinawa-bf-map.jp/facility-info/detail?facility_id=1806",
+      },
+      checkedOn: "2023年7月（同ページの最終更新日）",
+    },
   },
   {
     id: "naha-shintoshin-park",
@@ -316,17 +339,22 @@ export const SPOTS: Spot[] = [
     durationMin: 180,
     ageTags: ["4-6", "school"],
     features: f({
-      hasDiaperTable: true,
-      hasNursingRoom: true,
+      hasDiaperTable: false,
+      hasNursingRoom: false,
       hasMultipurposeToilet: true,
       hasPlayground: true,
       parkingSpacious: true,
     }),
     imageUrl: "/spots/浦添大公園.webp",
     imageEmoji: "🛝",
-    seoTitle: "浦添大公園の駐車場は無料・広め｜90mローラー滑り台",
+    parkingNote: {
+      text: "駐車場はゾーンごとに分かれていて、南エントランス駐車場、憩いの広場ゾーンのC-1駐車場、ふれあい広場ゾーンのC-2駐車場があります。大型ローラースライダーはふれあい広場ゾーンにあるので、C-2駐車場が近いです。夏休みなど学校の長期休み期間は各ゾーンの駐車場が満車になります。",
+      source: { name: "浦添大公園 公式サイト", url: "https://www.urasoedaipark-osi.jp/" },
+      checkedOn: "2026年9月",
+    },
+    seoTitle: "浦添大公園の駐車場はどこ？滑り台に近いのはC-2",
     seoDescription:
-      "浦添大公園の駐車場は無料で、広めにとられています。名物は県内屈指の長さ約90mのローラー滑り台。授乳室・オムツ替え台・多目的トイレがあり、利用は無料で9:00-21:00。遊具が充実していて半日は遊べます。",
+      "浦添大公園の駐車場は南エントランス・C-1・C-2の3か所。名物の約90mローラー滑り台に近いのはふれあい広場ゾーンのC-2駐車場です。長期休み期間は満車になりやすいので早めに。入園無料で9:00-21:00、半日は遊べます。",
   },
   {
     id: "urasoe-parco-city",
@@ -363,6 +391,16 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/サンエー浦添西海岸PARCO CITY.webp",
     imageEmoji: "🛍️",
+    parkingNote: {
+      text: "無料駐車場が約4,000台分あり、駐車場棟・店舗棟駐車場・平面駐車場に分かれています。",
+      source: { name: "サンエー浦添西海岸PARCO CITY アクセス", url: "https://www.parcocity.jp/access" },
+      checkedOn: "2026年9月",
+    },
+    nursingNote: {
+      text: "ベビーケアルームはグリーンゾーン・オレンジゾーン・ブルーゾーンにあります。ベビーカーは1階オレンジゾーンのインフォメーションカウンター（9:00〜22:00）で借りられます。哺乳瓶の洗い場とミルク用のお湯の提供もあります（沖縄県バリアフリーマップ、2024年5月時点）。",
+      source: { name: "サンエー浦添西海岸PARCO CITY 館内施設", url: "https://www.parcocity.jp/facilities" },
+      checkedOn: "2026年9月",
+    },
     seoTitle: "パルコシティの授乳室・キッズパーク｜ベビーカー貸出あり",
     seoDescription:
       "サンエー浦添西海岸PARCO CITYには授乳室とオムツ替え台があり、屋内キッズパークとベビーカー貸出も利用できます。営業は10:00-22:00で入場は無料、駐車場も無料で広め。雨の日や台風の日でも遊べる屋内モールです。",
@@ -741,6 +779,14 @@ export const SPOTS: Spot[] = [
       text: "無料の駐車場が約400台分あります。",
       source: { name: "おきなわ物語（沖縄観光情報WEBサイト）", url: "https://www.okinawastory.jp/spot/1069" },
       checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "授乳室と、ベビーベッド・ベビーチェアつきのトイレ、多目的トイレがあります。ミルク用のお湯は要望に応じて提供され、哺乳瓶の洗い場はありません。ベビーカーの貸出は有料（300円）です。",
+      source: {
+        name: "沖縄県バリアフリーマップ（沖縄県）",
+        url: "http://okinawa-bf-map.jp/facility-info/detail?facility_id=1857",
+      },
+      checkedOn: "2026年6月（同ページの最終更新日）",
     },
     seoTitle: "おきなわワールドの駐車場は無料400台｜授乳室あり",
     seoDescription:
@@ -1803,6 +1849,16 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/イオンモール沖縄ライカム.webp",
     imageEmoji: "🛍️",
+    parkingNote: {
+      text: "すべての駐車場が無料で、約4,000台分あります。",
+      source: { name: "イオンモール沖縄ライカム アクセスガイド", url: "https://okinawarycom.aeonmall.jp/access" },
+      checkedOn: "2026年9月",
+    },
+    nursingNote: {
+      text: "赤ちゃんルームは2階「BAY FLOW」横、3階フードコート横と「THE KISS」横、4階「SPINNS」横・イオンスタイル内・トイザらス内の6か所にあります。個別授乳室・ベビーシート・調乳用温水器・哺乳瓶洗浄用シンクを備えています。キッズトイレは4階「SPINNS」横です。",
+      source: { name: "イオンモール沖縄ライカム 設備・サービスのご案内", url: "https://okinawarycom.aeonmall.jp/guide/equipment" },
+      checkedOn: "2026年9月",
+    },
   },
   {
     id: "chatan-american-village",
@@ -1823,7 +1879,7 @@ export const SPOTS: Spot[] = [
     durationMin: 180,
     ageTags: ["0", "1-3", "4-6", "school"],
     features: f({
-      hasNursingRoom: true,
+      hasNursingRoom: false,
       hasDiaperTable: true,
       hasKidsChair: true,
       hasMultipurposeToilet: true,
@@ -1839,6 +1895,14 @@ export const SPOTS: Spot[] = [
         url: "https://www.okinawastory.jp/spot/1010",
       },
       checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "アメリカンビレッジ内の北谷町観光情報センターに、おむつ交換台つきの多目的トイレとベビーカーの貸出があります。授乳室については公式サイトに記載がなく、確認できていません。",
+      source: {
+        name: "アメリカンビレッジ 北谷町観光情報センター",
+        url: "https://www.okinawa-americanvillage.com/shop/information-center/",
+      },
+      checkedOn: "2026年9月",
     },
   },
   {
@@ -2687,8 +2751,8 @@ export const SPOTS: Spot[] = [
     lng: 127.7941,
     phone: "098-935-1012",
     websiteUrl: "http://sanssouci-kitanaka.com/",
-    businessHours: "11:00-21:00（平日は16:00-18:00休憩あり）",
-    closedDays: ["不定休"],
+    businessHours: "11:00-16:00（L.O. 15:00）",
+    closedDays: [],
     price: { adult: 1300 },
     durationMin: 90,
     ageTags: ["0", "1-3", "4-6", "school"],
@@ -2703,6 +2767,16 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/琉京甘味 SANS SOUCI.webp",
     imageEmoji: "🍛",
+    parkingNote: {
+      text: "駐車場は18台分です。土日祝は非常に混み合うため、乗り合いでの来店を呼びかけています。",
+      source: { name: "SANS SOUCI 公式サイト", url: "http://sanssouci-kitanaka.com/" },
+      checkedOn: "2026年9月",
+    },
+    nursingNote: {
+      text: "キッズルームが1部屋あり、子供椅子とベビーベッドがあります。授乳室については公式サイトに記載がなく、確認できていません。",
+      source: { name: "SANS SOUCI 公式サイト", url: "http://sanssouci-kitanaka.com/" },
+      checkedOn: "2026年9月",
+    },
   },
   {
     id: "okinawa-birdland-cafe",
