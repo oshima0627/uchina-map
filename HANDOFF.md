@@ -7,7 +7,8 @@
 **手薄な中北部へのスポット追加**（ユーザー指示 2026-09-11）。docs §4-8。
 2班の `spot-data-curator` が計 **11件** を追加し、`types.ts` に今帰仁村を追加。86→**97件**、15→**16市町村**。
 `verifier` 12条件合格 → `main` に push（`d95f13f`）→ **本番反映を確認済み**（2026-09-11）。
-残りは GSC の登録リクエスト（`seo-analyst` 実行中。本日すでに12件送っているため上限で止まる可能性あり）。
+GSC の登録リクエストは `/spots/city/nakijin/` と `/spots/nakijin-castle/` の2件を送った時点で
+**1日の割り当て量を超過**（「明日、もう一度お試しください」）。残り10件は 2026-09-12 以降に送る。
 - 北部班 **完了**（末尾に7件追加、`types.ts` の `CITIES` 末尾に `"nakijin"`、`CITY_LABELS` に `nakijin: "今帰仁村"`）:
   `nakijin-castle`（今帰仁城跡）/ `nakijin-kouri-ocean-tower` / `nakijin-kouri-beach` / `onna-onnanoeki`（おんなの駅）/
   `onna-ryukyu-mura`（琉球村）/ `nago-21seiki-forest`（21世紀の森公園）/ `motobu-bise-fukugi`（備瀬のフクギ並木）
@@ -36,6 +37,12 @@
 
 既存86件に削除行 0、`types.ts` の差分2行のみ、新規11件すべてで `hasParking`/`parkingFree`/`strollerFriendly`/`isIndoor` を明示、
 `parkingNote`/`nursingNote` の出典URL 18本すべてが `out/` の HTML に出力、`/map/` は「97件表示中」で北部にクラスタと今帰仁城跡のマーカー。
+
+### 中北部追加の GSC 登録リクエスト（2026-09-11）
+
+- `/spots/city/nakijin/` `/spots/nakijin-castle/` … 「URL が Google に登録されていません」→ 「インデックス登録をリクエスト済み」「URL を優先クロール キューに追加しました」
+- 3件目で「割り当て量を超えています（1日の割り当て量を超えたため…明日、もう一度お試しください）」。本日は計14件目の試行で拒否
+- サマリー: 登録済み 127 / 未登録 94（レポートはデプロイ前の集計）
 
 ### 中北部追加のデプロイ後の本番 curl（2026-09-11、push から約1分で反映）
 
@@ -132,7 +139,9 @@ title が本番と完全一致することを確認。差分に `any` / `@ts-ign
 
 ## 次にやること
 
-1. `seo-analyst` の登録リクエスト結果を記録する。上限で送れなかった分は**翌日以降に送る**（対象は新規11件 + `/spots/city/nakijin/`）
+1. **2026-09-12 以降**: GSC で残り10件の登録リクエストを送る（`seo-analyst` に依頼。検索ボックスは `find` の ref でクリックし、入力が入ったことを `zoom` で確認してから Return。空のまま Return すると直前ページの再リクエストが発火する）:
+   `/spots/nakijin-kouri-ocean-tower/` `/spots/nakijin-kouri-beach/` `/spots/onna-onnanoeki/` `/spots/onna-ryukyu-mura/` `/spots/nago-21seiki-forest/`
+   `/spots/motobu-bise-fukugi/` `/spots/uruma-katsuren-castle/` `/spots/uruma-ikei-beach/` `/spots/okinawa-koza-sports-park/` `/spots/yomitan-zakimi-castle/`
 2. 見送った八重島公園・北谷公園は、駐車場・遊具の一次情報が取れたら追加する
 3. **2〜7日後**: GSC で年齢ページ4件が「登録済み」になったか、sitemap の検出ページ数を確認
 4. docs §4: 飲食店の「座敷」「個室」「夜営業」フラグ追加（`types.ts` の `FeaturesSchema` 変更が要る）。
