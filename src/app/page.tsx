@@ -61,7 +61,7 @@ const HERO_STATS = [
 // Quick scenarios — mixed-axis shortcuts in horizontal scroll
 const SCENE_CHIPS: Array<{ href: string; Icon: LucideIcon; label: string }> = [
   { href: collectionPath.feature("rainOk"), Icon: CloudRain, label: "雨でもOK" },
-  { href: "/spots?age=0", Icon: Heart, label: "0歳と一緒" },
+  { href: collectionPath.age("0"), Icon: Heart, label: "0歳と一緒" },
   { href: collectionPath.feature("strollerFriendly"), Icon: Wind, label: "ベビーカー" },
   { href: collectionPath.feature("hasParking"), Icon: Car, label: "駐車場あり" },
   { href: collectionPath.category("beach"), Icon: Waves, label: "ビーチ" },
@@ -269,7 +269,7 @@ export default function HomePage() {
             accent="#e89a2d"
           />
           <EditorialBento
-            href="/spots?age=0"
+            href={collectionPath.age("0")}
             eyebrow="With Baby"
             count={SPOTS.filter((s) => s.ageTags.includes("0")).length}
             title="0歳と行ける"
@@ -337,7 +337,7 @@ export default function HomePage() {
             return (
               <li key={tag}>
                 <Link
-                  href={`/spots?age=${tag}`}
+                  href={collectionPath.age(tag)}
                   className="group relative block rounded-3xl bg-card p-5 min-h-[170px] border border-border hover:border-charcoal/30 hover:shadow-card transition overflow-hidden"
                 >
                   <span
@@ -486,7 +486,7 @@ export default function HomePage() {
         title="赤ちゃんと行ける安心スポット"
         description="授乳室・オムツ替え台完備で、ベビーカーで入れる施設だけ。"
         icon={<Baby className="w-5 h-5" />}
-        allHref="/spots?age=0"
+        allHref={collectionPath.age("0")}
         spots={collectionBaby}
         accent="coral"
       />

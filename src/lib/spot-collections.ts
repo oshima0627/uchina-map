@@ -1,10 +1,12 @@
 import { SPOTS } from "@/data/spots";
 import {
+  AGE_TAGS,
   CATEGORIES,
   CATEGORY_LABELS,
   CITIES,
   CITY_LABELS,
   FILTER_FEATURES,
+  type AgeTag,
   type Category,
   type City,
   type FilterFeature,
@@ -53,6 +55,26 @@ export const FEATURE_HEADINGS: Record<FilterFeature, string> = {
   hasParking: "駐車場のある",
 };
 
+/**
+ * 年齢の見出し。トップの「年齢で選ぶ」は長らく `/spots?age=0` のクエリ版に
+ * リンクしていて、canonical が `/spots/` に向くため索引されていなかった。
+ * 年齢軸は競合（いこーよ・るるぶKids）が持つ需要のある軸なので、実URLを用意する。
+ */
+export const AGE_HEADINGS: Record<AgeTag, string> = {
+  "0": "0歳の赤ちゃんと行ける",
+  "1-3": "1〜3歳と行ける",
+  "4-6": "4〜6歳と行ける",
+  school: "小学生と行ける",
+};
+
+export function isAgeTag(value: string): value is AgeTag {
+  return (AGE_TAGS as readonly string[]).includes(value);
+}
+
+export function spotsByAge(age: AgeTag): Spot[] {
+  return SPOTS.filter((s) => s.ageTags.includes(age));
+}
+
 export function isCity(value: string): value is City {
   return (CITIES as readonly string[]).includes(value);
 }
@@ -96,6 +118,10 @@ export function indexableCities(): City[] {
   return CITIES.filter((c) => spotsByCity(c).length >= MIN_SPOTS_FOR_SINGLE_AXIS);
 }
 
+export function indexableAges(): AgeTag[] {
+  return AGE_TAGS.filter((a) => spotsByAge(a).length >= MIN_SPOTS_FOR_SINGLE_AXIS);
+}
+
 export function indexableCategories(): Category[] {
   return CATEGORIES.filter((c) => spotsByCategory(c).length >= MIN_SPOTS_FOR_SINGLE_AXIS);
 }
@@ -121,6 +147,7 @@ export function isIndexableCityFeature(city: City, feature: FilterFeature): bool
 export const collectionPath = {
   city: (city: City) => `/spots/city/${city}/`,
   category: (category: Category) => `/spots/category/${category}/`,
+  age: (age: AgeTag) => `/spots/age/${age}/`,
   feature: (feature: FilterFeature) => `/spots/feature/${FEATURE_SLUGS[feature]}/`,
   cityFeature: (city: City, feature: FilterFeature) =>
     `/spots/city/${city}/${FEATURE_SLUGS[feature]}/`,
@@ -130,5 +157,6 @@ export const collectionPath = {
 export const collectionLabel = {
   city: (city: City) => CITY_LABELS[city],
   category: (category: Category) => CATEGORY_LABELS[category],
+  age: (age: AgeTag) => AGE_HEADINGS[age],
   feature: (feature: FilterFeature) => FEATURE_HEADINGS[feature],
 };

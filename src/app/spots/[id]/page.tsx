@@ -25,10 +25,12 @@ import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SpotCard } from "@/components/spot-card";
 import { JsonLd } from "@/components/json-ld";
 import { FavoriteButton } from "./favorite-button";
+import { ShareButton } from "@/components/share-button";
 import { SpotMap } from "./spot-map";
 import { SPOTS } from "@/data/spots";
 import {
   pageMetadata,
+  reportMailto,
   spotBreadcrumbJsonLd,
   spotDescription,
   spotFacilitySummary,
@@ -291,6 +293,9 @@ export default async function SpotDetailPage({
                 {AGE_LABELS[a]}
               </Badge>
             ))}
+          </div>
+          <div className="mt-4">
+            <ShareButton title={spot.name} path={`/spots/${spot.id}/`} />
           </div>
         </header>
 
@@ -570,6 +575,15 @@ export default async function SpotDetailPage({
         >
           ← 一覧にもどる
         </Link>
+
+        <p className="mt-8 text-[11px] leading-relaxed text-charcoal/55">
+          掲載内容は変更される場合があります。おでかけ前に施設の公式情報をご確認ください。
+          設備や営業時間に誤りを見つけられた場合は
+          <a href={reportMailto(spot.name, `/spots/${spot.id}/`)} className="underline">
+            メールでお知らせください
+          </a>
+          。
+        </p>
       </div>
     </article>
   );

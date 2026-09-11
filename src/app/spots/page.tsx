@@ -10,14 +10,16 @@ import { pageMetadata, spotListJsonLd } from "@/lib/seo";
 import {
   FEATURE_HEADINGS,
   collectionPath,
+  indexableAges,
   indexableCategories,
   indexableCities,
   indexableFeatures,
+  spotsByAge,
   spotsByCategory,
   spotsByCity,
   spotsByFeature,
 } from "@/lib/spot-collections";
-import { CATEGORY_LABELS, CITY_LABELS } from "@/lib/types";
+import { AGE_LABELS, CATEGORY_LABELS, CITY_LABELS } from "@/lib/types";
 
 export const metadata = pageMetadata({
   title: "スポットをさがす",
@@ -71,6 +73,14 @@ function CollectionLinks() {
         label: FEATURE_HEADINGS[feature],
         href: collectionPath.feature(feature),
         count: spotsByFeature(feature).length,
+      })),
+    },
+    {
+      heading: "年齢からさがす",
+      links: indexableAges().map((age) => ({
+        label: AGE_LABELS[age],
+        href: collectionPath.age(age),
+        count: spotsByAge(age).length,
       })),
     },
     {

@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/json-ld";
 import { SpotCard } from "@/components/spot-card";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { ADSENSE_SLOTS } from "@/lib/ads";
-import { SITE_URL, spotUrl } from "@/lib/seo";
+import { SITE_URL, reportMailto, spotUrl } from "@/lib/seo";
 import type { Spot } from "@/lib/types";
 
 /**
@@ -100,10 +100,11 @@ export function SpotCollection({
 
       <p className="mt-8 text-[11px] leading-relaxed text-charcoal/55">
         掲載内容は変更される場合があります。おでかけ前に各施設の公式情報をご確認ください。
-        <Link href={path} className="underline">
-          このページ
-        </Link>
-        の情報に誤りを見つけられた場合はお知らせください。
+        このページの情報に誤りを見つけられた場合は
+        <a href={reportMailto(heading, path)} className="underline">
+          メールでお知らせください
+        </a>
+        。
       </p>
     </div>
   );

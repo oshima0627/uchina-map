@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SpotCollection } from "@/components/spot-collection";
@@ -13,7 +14,7 @@ import {
   spotsByCityAndFeature,
   spotsByFeature,
 } from "@/lib/spot-collections";
-import { CITY_LABELS } from "@/lib/types";
+import { CITY_LABELS, type Spot } from "@/lib/types";
 
 export const dynamicParams = false;
 
@@ -65,6 +66,50 @@ export default async function FeaturePage({ params }: { params: Promise<{ featur
         { name: FEATURE_HEADINGS[feature], path: collectionPath.feature(feature) },
       ]}
       relatedLinks={related}
-    />
+    >
+      {feature === "rainOk" && <TyphoonSection spots={spots} />}
+    </SpotCollection>
+  );
+}
+
+/**
+ * 「雨の日」ページにだけ置く台風の案内。
+ *
+ * 「沖縄 子連れ 台風 過ごし方」の記事は各社にあるが、暴風のときにも営業する
+ * 屋内施設を条件で出せるサイトは無い。`typhoonOk` フラグはこのサイトだけが持つ軸。
+ */
+function TyphoonSection({ spots }: { spots: Spot[] }) {
+  const typhoon = spots.filter((s) => s.features.typhoonOk);
+  const indoor = spots.filter((s) => s.features.isIndoor).length;
+
+  return (
+    <section className="mt-10">
+      <h2 className="text-lg font-bold text-charcoal mb-3">台風のときはどこに行ける？</h2>
+      <div className="rounded-2xl bg-white border border-border px-4 py-3 text-sm text-charcoal/80 leading-relaxed space-y-2">
+        <p>
+          沖縄の台風は雨だけでなく風が強く、屋外の公園やビーチは使えません。
+          このページの{spots.length}件のうち屋内の施設は{indoor}件、
+          台風のときにも利用できる施設は{typhoon.length}件です。
+        </p>
+        {typhoon.length > 0 && (
+          <ul className="flex flex-wrap gap-2 pt-1">
+            {typhoon.map((s) => (
+              <li key={s.id}>
+                <Link
+                  href={`/spots/${s.id}/`}
+                  className="inline-flex items-center px-3 h-8 rounded-full bg-card border border-border text-xs font-bold text-charcoal hover:border-charcoal/30 transition"
+                >
+                  {s.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="text-xs text-charcoal/60">
+          暴風警報が出ると商業施設も臨時休業することがあります。出かける前に各施設の公式サイトや
+          SNS で当日の営業を確認してください。
+        </p>
+      </div>
+    </section>
   );
 }

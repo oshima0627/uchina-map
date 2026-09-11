@@ -3,6 +3,7 @@ import { SPOTS } from "@/data/spots";
 import { SITE_URL } from "@/lib/seo";
 import {
   collectionPath,
+  indexableAges,
   indexableCategories,
   indexableCities,
   indexableFeatures,
@@ -40,6 +41,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly",
   }));
 
+  const ageRoutes: MetadataRoute.Sitemap = indexableAges().map((age) => ({
+    url: `${SITE_URL}${collectionPath.age(age)}`,
+    lastModified: now,
+    priority: 0.8,
+    changeFrequency: "weekly",
+  }));
+
   const featureRoutes: MetadataRoute.Sitemap = indexableFeatures().map((feature) => ({
     url: `${SITE_URL}${collectionPath.feature(feature)}`,
     lastModified: now,
@@ -69,6 +77,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticRoutes,
     ...cityRoutes,
     ...categoryRoutes,
+    ...ageRoutes,
     ...featureRoutes,
     ...spotRoutes,
   ];

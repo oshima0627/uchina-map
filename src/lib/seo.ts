@@ -229,3 +229,13 @@ export function siteJsonLd() {
     },
   };
 }
+
+/**
+ * 掲載情報の誤りを知らせてもらうためのメールリンク。
+ * 件名にページ名と URL を入れておき、受け取った側がどのページの話か分かるようにする。
+ */
+export function reportMailto(pageName: string, path: string) {
+  const subject = encodeURIComponent(`【うちなー子連れマップ】掲載情報の訂正: ${pageName}`);
+  const body = encodeURIComponent(`対象ページ: ${SITE_URL}${path}\n\n誤っている箇所:\n\n正しい情報（分かれば出典も）:\n`);
+  return `mailto:${PUBLISHER.email}?subject=${subject}&body=${body}`;
+}
