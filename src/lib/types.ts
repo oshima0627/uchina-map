@@ -16,6 +16,7 @@ export const CITIES = [
   "onna",
   "nago",
   "motobu",
+  "nakijin",
 ] as const;
 export type City = (typeof CITIES)[number];
 
@@ -35,6 +36,7 @@ export const CITY_LABELS: Record<City, string> = {
   onna: "恩納村",
   nago: "名護市",
   motobu: "本部町",
+  nakijin: "今帰仁村",
 };
 
 export const CATEGORIES = [
