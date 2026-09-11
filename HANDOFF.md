@@ -4,14 +4,17 @@
 
 ## いま何をしているか
 
-**手薄な中北部へのスポット追加を実行中**（ユーザー指示 2026-09-11）。docs §4-8。
-2つの `spot-data-curator` が並列で `src/data/spots.ts` に追加中（未完了・未コミット）:
-- 北部班（末尾に追加、`types.ts` に `nakijin`/今帰仁村 を追加）: 今帰仁城跡・古宇利オーシャンタワー・古宇利ビーチ・おんなの駅・琉球村・21世紀の森公園・備瀬のフクギ並木
+**手薄な中北部へのスポット追加**（ユーザー指示 2026-09-11）。docs §4-8。
+2班の `spot-data-curator` が計 **11件** を追加し、`types.ts` に今帰仁村を追加。86→**97件**、15→**16市町村**。
+ローカルコミット済み（`3b99045`、Stop フックの自動コミット）・**未 push**。`verifier` が独立検証中。
+- 北部班 **完了**（末尾に7件追加、`types.ts` の `CITIES` 末尾に `"nakijin"`、`CITY_LABELS` に `nakijin: "今帰仁村"`）:
+  `nakijin-castle`（今帰仁城跡）/ `nakijin-kouri-ocean-tower` / `nakijin-kouri-beach` / `onna-onnanoeki`（おんなの駅）/
+  `onna-ryukyu-mura`（琉球村）/ `nago-21seiki-forest`（21世紀の森公園）/ `motobu-bise-fukugi`（備瀬のフクギ並木）
 - 中部班 **完了**（`nago-ufuya` の直前に4件追加、`types.ts` は未変更、typecheck 成功、Zod 4件 OK、id 重複なし、総数 90）:
   `uruma-katsuren-castle`（勝連城跡・あまわりパーク）/ `uruma-ikei-beach`（伊計ビーチ）/ `okinawa-koza-sports-park`（コザ運動公園 アスレチック広場）/ `yomitan-zakimi-castle`（座喜味城跡・ユンタンザミュージアム）。
   **見送り**: 八重島公園（駐車場の公式記載なし）、北谷公園（遊具の公式記載なし）
 
-両班の完了後: `pnpm typecheck && pnpm build` → `out/` の件数確認 → `verifier` → コミット → push → 本番 curl → GSC 登録リクエスト。
+`verifier` 合格後: push → 本番 curl → GSC 登録リクエスト（新規11件 + 今帰仁村ページ）→ HANDOFF 更新。
 
 これより前の作業（docs §4 の「今週」「今月」項目）は**本番反映まで確認済み**（下記）。
 
@@ -20,8 +23,20 @@
 ### 進行中（未コミット）
 
 - `src/app/page.tsx` … トップの古い文言「沖縄本島南部・親子のお出かけ」「沖縄南部のスポットを地図で」を「沖縄本島」に変更（北部が増えるため）
-- `src/data/spots.ts` … 中部班4件（+172行）追加済み。北部班が編集中。`src/lib/types.ts` … 北部班が編集中
+- `src/data/spots.ts` … 中部班4件（+172行）+ 北部班7件（+354行）。`src/lib/types.ts` … +2行（nakijin）
+- 北部班の裏が取れず明示した判断: `motobu-bise-fukugi` の `parkingFree: false`（観光協会は駐車場「有」のみで料金不明。保守的に有料表示）、
+  `onna-ryukyu-mura` の `parkingFree: true`（BFマップ「駐車料支払機 無」から）、`nakijin-kouri-ocean-tower` の `isIndoor/rainOk: true`（建物内施設からの判断）、
+  `strollerFriendly: true` に根拠が無いもの: 古宇利オーシャンタワー・おんなの駅・21世紀の森・備瀬。
+  書かなかった: 古宇利ビーチと備瀬の `price`/`businessHours`/電話、21世紀の森の遊具（Park-PFI 募集段階）、琉球村の最終受付
 - 中部班の裏が取れず書かなかった項目: 勝連城跡の授乳室・オムツ替え（公式・市・BFマップに記載なし）、伊計ビーチの駐車料金の公式記載（おきなわ物語の「入場料込み」で `parkingFree: false`）、コザ運動公園のトイレ設備と平面駐車場の料金（`parkingFree: true` は立体駐車場の公園利用者無料が根拠）、座喜味城跡の授乳室・多目的トイレ。`strollerFriendly: false` は勝連・座喜味とも「石段・高台」からの推論でコメント明記
+
+### 中北部追加のビルド結果（自分で実行、2026-09-11）
+
+- `pnpm typecheck` 成功。`pnpm build` 成功、**184ページ**（従来167）
+- `grep -c 'id: "' src/data/spots.ts` = **97**。`out/sitemap.xml` の `<loc>` = **135**（123 + 11 + `/spots/city/nakijin/`）
+- `out/spots/` = 199 エントリ。`out/spots/city/nakijin/index.html` の title「今帰仁村の子連れOKスポット｜うちなー子連れマップ」
+- `out/spots/nakijin-castle/` に出典 `nakijinjoseki-osi.jp`、`out/spots/uruma-katsuren-castle/` に `katsuren-jo.jp`
+- トップの市町村統計が 16。備瀬は「駐車場あり（有料）」表示
 
 ### 完了・push 済み（2026-09-11、`main`: `c588196` `dce5c09` `9a73432` `144177c` `0daec90`）
 
@@ -102,9 +117,8 @@ title が本番と完全一致することを確認。差分に `any` / `@ts-ign
 
 ## 次にやること
 
-1. 2班の報告を受け、`pnpm typecheck && pnpm build`。`grep -c 'id: "' src/data/spots.ts` が 86 + 追加件数、`out/sitemap.xml` の `<loc>` が 123 + 追加件数 + 今帰仁村ページ1 になることを確認
-2. `verifier` に独立検証（新規エントリの出典URLが `out/` に出ているか、`parkingFree` 等の既定値に頼っていないか、既存86件の title 不変）
-3. コミット → `git push origin HEAD:main` → 本番 curl → GSC で新規ページの登録リクエスト → HANDOFF 更新
+1. `verifier` の結果を受け取る（不合格なら直してコミット）→ `git push origin HEAD:main` → 本番 curl（sitemap 135、`/spots/city/nakijin/` 200）→ GSC で新規11件 + 今帰仁村ページの登録リクエスト → HANDOFF 更新
+2. 見送った八重島公園・北谷公園は、駐車場・遊具の一次情報が取れたら追加する
 4. **2〜7日後**: GSC で年齢ページ4件が「登録済み」になったか、sitemap の検出ページ数を確認
 5. docs §4: 飲食店の「座敷」「個室」「夜営業」フラグ追加（`types.ts` の `FeaturesSchema` 変更が要る）。
    出典はおきなわ子育て応援パスポート（座敷で絞り込める）
