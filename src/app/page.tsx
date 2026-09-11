@@ -145,7 +145,7 @@ export default function HomePage() {
             <div className="max-w-2xl">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-dark text-white text-[11px] font-medium tracking-wide">
                 <Sparkles className="w-3.5 h-3.5" />
-                めんそーれ｜沖縄本島南部・親子のお出かけ
+                めんそーれ｜沖縄本島・親子のお出かけ
               </span>
               {/* h1 はページの主題を示す唯一の見出し。以前は「子連れOKが、一目でわかる。」
                   というキャッチコピーだけで、検索語（沖縄・子連れ・スポット）が入っていなかった。
@@ -291,7 +291,7 @@ export default function HomePage() {
               Map
             </span>
             <h3 className="text-[13px] md:text-sm font-black text-charcoal leading-tight">
-              沖縄南部のスポットを地図で
+              沖縄本島のスポットを地図で
             </h3>
           </div>
           <span className="text-[11px] tabular-nums font-bold text-charcoal/55">
