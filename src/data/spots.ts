@@ -3506,7 +3506,7 @@ export const SPOTS: Spot[] = [
       hasNursingRoom: false,
       hasDiaperTable: false,
       // 公式に記載なし。未確認のまま true を明示している（報告済み）
-      strollerFriendly: true,
+      strollerFriendly: false, // 未舗装の小道で根拠が無いため保守的に false
       isIndoor: false,
       isOutdoor: true,
       rainOk: false,
