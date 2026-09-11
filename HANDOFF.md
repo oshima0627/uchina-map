@@ -5,11 +5,10 @@
 ## いま何をしているか
 
 `docs/growth-audit-2026-09-11.md` §4 の優先順で**実装中**。ユーザーから「運用はお任せ」と委任済み。
-コード側の実装は終わり、型チェックとビルドが通った。**未コミット。**
-並行して (a) `spot-data-curator` が `src/data/spots.ts` に駐車場・授乳室の注記を追加中、
-(b) `verifier` がコード変更を独立検証中。両方の結果を待ってからコミット → `main` へ push → 本番確認。
+コード側の実装（`c588196`、Stop フックの自動コミット）とデータ側（`dce5c09`）は**ローカルにコミット済み・未 push**。
+`verifier` がコード変更を独立検証中。合格を確認してから `main` へ push → 本番確認。
 
-## 今回やったこと（2026-09-11、未コミット）
+## 今回やったこと（2026-09-11、ローカルコミット済み・未 push）
 
 | ファイル | 変更 |
 |---|---|
@@ -25,15 +24,17 @@
 | `src/app/page.tsx` | `/spots?age=` の5箇所を `collectionPath.age()` に変更 |
 | `src/app/spots/page.tsx` | 「年齢からさがす」の導線を追加 |
 | `src/app/spots/feature/[feature]/page.tsx` | `rainOk` ページだけに `TyphoonSection`（`typhoonOk` 17件を列挙） |
-| `.claude/launch.json` | 新規。`pnpm preview` を 4173 で起動するプレビュー設定（コミットしない） |
+| `.claude/launch.json` | 新規。`pnpm preview` を 4173 で起動するプレビュー設定（自動コミットに含まれた。害はないので残す） |
+| `src/data/spots.ts` | `spot-data-curator` が8スポットに `parkingNote` / `nursingNote` を追加（出典つき、+74行）。加えて出典と矛盾したものを修正: `urasoe-daikoen` の `hasNursingRoom` / `hasDiaperTable` を false（県バリアフリーマップ 2020-05 に「無」。従来の true に根拠なし）、`chatan-american-village` の `hasNursingRoom` を false（公式・観光協会・BFマップに記載なし）、`kitanakagusuku-sans-souci` の営業時間を公式の `11:00-16:00（L.O. 15:00）`・無休に。`urasoe-daikoen` の seoTitle / seoDescription から裏の取れない「無料」を外した |
 | `docs/growth-audit-2026-09-11.md` | 調査結果（コミット `bc96997` で push 済み） |
 
 ## 検証済みの事実
 
 ### 自分で実行して確認（2026-09-11）
 
-- `pnpm typecheck` … 成功、エラー出力なし
-- `pnpm build` … 成功。`Generating static pages (167/167)`
+- `pnpm typecheck` … 成功、エラー出力なし（データ変更後にも再実行して成功）
+- `pnpm build` … 成功。`Generating static pages (167/167)`（データ変更後にも再実行して成功）
+- データ変更後の `out/` で確認: `urasoe-daikoen` の title「浦添大公園の駐車場はどこ？滑り台に近いのはC-2」、本文に「C-2駐車場が近いです」、`kitanakagusuku-sans-souci` に「11:00-16:00（L.O. 15:00）」、`kitanakagusuku-aeon-rycom` に「赤ちゃんルームは2階…」と出典 `guide/equipment`
 - `out/spots/age/` に `0` `1-3` `4-6` `school` の4ディレクトリ
 - `out/sitemap.xml` の `<loc>` **123**（従来119 + 年齢4）
 - `out/index.html` に `spots?age=` **0件**、`href="/spots/age/` **7件**
@@ -52,7 +53,8 @@
 ## 未検証のもの（推測であって事実ではない）
 
 - **`verifier` の判定は未着**。フッターのモバイル表示（下部ナビと重ならないか）は CSS からの推論で、画面では未確認
-- **`spot-data-curator` の結果は未着**。spots.ts の注記追加は取り込んでいない
+- データの裏が取れず**そのままにしたもの**: `urasoe-daikoen` と `kitanakagusuku-sans-souci` の `parkingFree`（既定 true のまま。料金の記載を公式・市・県で見つけられず）、`kitanakagusuku-sans-souci` の `hasDiaperTable` と description の「オムツ替え台」（公式は「ベビーベッド完備」のみ）、`urasoe-daikoen` の `hasMultipurposeToilet`（BFマップは「無」だが同ページ本文に車椅子トイレの記載あり）
+- `naha-main-place` の授乳室の階・室数は公式に記載がなく書いていない（非公式の「1F/2F・4室」は採用せず）
 - 雨の日ページの台風セクションは HTML と `find` で存在確認したが、スクリーンショットは取得に失敗（ページが長くタイムアウト）
 - 共有ボタンを実際に押した動作は未確認（Web Share API はローカルの HTTP では動かない可能性）
 - 「注記を厚くすれば順位・CTR が上がる」は仮説。デプロイ後4週間で GSC の該当クエリで測る
@@ -60,9 +62,8 @@
 
 ## 次にやること
 
-1. `verifier` と `spot-data-curator` の結果を受け取る。不合格なら直す
-2. `pnpm typecheck && pnpm build` を再実行（spots.ts の変更を含めるため）
-3. コミット（`.claude/launch.json` は含めない）→ `git push origin HEAD:main`
+1. `verifier` の結果を受け取る。不合格なら直してコミット
+2. `git push origin HEAD:main`
 4. 数分後、本番を curl して確認:
    ```bash
    curl -sI https://uchina-map.nexeed-lab.com/spots/naha-airport-kids/ | grep -i cache-control
