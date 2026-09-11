@@ -6,7 +6,8 @@
 
 **手薄な中北部へのスポット追加**（ユーザー指示 2026-09-11）。docs §4-8。
 2班の `spot-data-curator` が計 **11件** を追加し、`types.ts` に今帰仁村を追加。86→**97件**、15→**16市町村**。
-ローカルコミット済み（`3b99045`、Stop フックの自動コミット）・**未 push**。`verifier` が独立検証中。
+`verifier` 12条件合格 → `main` に push（`d95f13f`）→ **本番反映を確認済み**（2026-09-11）。
+残りは GSC の登録リクエスト（`seo-analyst` 実行中。本日すでに12件送っているため上限で止まる可能性あり）。
 - 北部班 **完了**（末尾に7件追加、`types.ts` の `CITIES` 末尾に `"nakijin"`、`CITY_LABELS` に `nakijin: "今帰仁村"`）:
   `nakijin-castle`（今帰仁城跡）/ `nakijin-kouri-ocean-tower` / `nakijin-kouri-beach` / `onna-onnanoeki`（おんなの駅）/
   `onna-ryukyu-mura`（琉球村）/ `nago-21seiki-forest`（21世紀の森公園）/ `motobu-bise-fukugi`（備瀬のフクギ並木）
@@ -14,7 +15,8 @@
   `uruma-katsuren-castle`（勝連城跡・あまわりパーク）/ `uruma-ikei-beach`（伊計ビーチ）/ `okinawa-koza-sports-park`（コザ運動公園 アスレチック広場）/ `yomitan-zakimi-castle`（座喜味城跡・ユンタンザミュージアム）。
   **見送り**: 八重島公園（駐車場の公式記載なし）、北谷公園（遊具の公式記載なし）
 
-`verifier` 合格後: push → 本番 curl → GSC 登録リクエスト（新規11件 + 今帰仁村ページ）→ HANDOFF 更新。
+`verifier` の指摘で `motobu-bise-fukugi` の `strollerFriendly` を false にした（未舗装の小道で根拠なし）。
+他の指摘（description 内の数字は `websiteUrl` が暗黙の出典、`parkingNote` が2出典に触れるのに `source` は1つ）は今回は据え置き。
 
 これより前の作業（docs §4 の「今週」「今月」項目）は**本番反映まで確認済み**（下記）。
 
@@ -29,6 +31,19 @@
   `strollerFriendly: true` に根拠が無いもの: 古宇利オーシャンタワー・おんなの駅・21世紀の森・備瀬。
   書かなかった: 古宇利ビーチと備瀬の `price`/`businessHours`/電話、21世紀の森の遊具（Park-PFI 募集段階）、琉球村の最終受付
 - 中部班の裏が取れず書かなかった項目: 勝連城跡の授乳室・オムツ替え（公式・市・BFマップに記載なし）、伊計ビーチの駐車料金の公式記載（おきなわ物語の「入場料込み」で `parkingFree: false`）、コザ運動公園のトイレ設備と平面駐車場の料金（`parkingFree: true` は立体駐車場の公園利用者無料が根拠）、座喜味城跡の授乳室・多目的トイレ。`strollerFriendly: false` は勝連・座喜味とも「石段・高台」からの推論でコメント明記
+
+### 中北部追加の `verifier` 独立検証（総合判定 合格、12条件）
+
+既存86件に削除行 0、`types.ts` の差分2行のみ、新規11件すべてで `hasParking`/`parkingFree`/`strollerFriendly`/`isIndoor` を明示、
+`parkingNote`/`nursingNote` の出典URL 18本すべてが `out/` の HTML に出力、`/map/` は「97件表示中」で北部にクラスタと今帰仁城跡のマーカー。
+
+### 中北部追加のデプロイ後の本番 curl（2026-09-11、push から約1分で反映）
+
+- `sitemap.xml` の `<loc>` **135**
+- `/spots/city/nakijin/` `/spots/nakijin-castle/` `/spots/uruma-katsuren-castle/` `/spots/onna-ryukyu-mura/` `/spots/motobu-bise-fukugi/` … すべて HTTP 200、title はテンプレート生成
+- トップの市町村統計 16、「南部」の出現 0
+- 備瀬に「ベビーカーでの移動には向きません」
+- `naha-main-place` の title 不変
 
 ### 中北部追加のビルド結果（自分で実行、2026-09-11）
 
@@ -117,7 +132,7 @@ title が本番と完全一致することを確認。差分に `any` / `@ts-ign
 
 ## 次にやること
 
-1. `verifier` の結果を受け取る（不合格なら直してコミット）→ `git push origin HEAD:main` → 本番 curl（sitemap 135、`/spots/city/nakijin/` 200）→ GSC で新規11件 + 今帰仁村ページの登録リクエスト → HANDOFF 更新
+1. `seo-analyst` の登録リクエスト結果を記録する。上限で送れなかった分は**翌日以降に送る**（対象は新規11件 + `/spots/city/nakijin/`）
 2. 見送った八重島公園・北谷公園は、駐車場・遊具の一次情報が取れたら追加する
 3. **2〜7日後**: GSC で年齢ページ4件が「登録済み」になったか、sitemap の検出ページ数を確認
 4. docs §4: 飲食店の「座敷」「個室」「夜営業」フラグ追加（`types.ts` の `FeaturesSchema` 変更が要る）。
