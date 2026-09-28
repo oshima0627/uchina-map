@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Header, BottomNav } from "@/components/header";
 import { AdSenseScript } from "@/components/ads/adsense-script";
+import { SideAffiliateRails } from "@/components/ads/side-affiliate-rails";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -81,6 +82,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col">
         <Header />
+        <SideAffiliateRails />
         <main className="flex-1">{children}</main>
         <BottomNav />
         <footer className="border-t border-border pt-6 pb-28 md:pb-6 mt-12">
