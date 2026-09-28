@@ -55,17 +55,12 @@
 
 
 @layer utilities {
-  /* 本体コンテンツ幅。PCでは左右に160pxバナー枠を残しつつ余白を埋める */
+  /* 本体コンテンツ幅（左右バナーは ContentWithSideRails のカラムで確保） */
   .site-container {
     margin-inline: auto;
     width: 100%;
     padding-inline: 1rem;
     max-width: 90rem; /* 1440px */
-  }
-  @media (min-width: 1280px) {
-    .site-container {
-      max-width: min(90rem, calc(100vw - 23rem));
-    }
   }
 }
 
