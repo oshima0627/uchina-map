@@ -25,6 +25,8 @@ export const AFFILIATE_LINKS = {
     "https://hb.afl.rakuten.co.jp/hgc/57fcd013.8b771a3f.57fcd014.e3b84f5f/?pc=https%3A%2F%2Fexperiences.travel.rakuten.co.jp%2Fexperiences%2F26115&link_type=hybrid_url&ut=eyJwYWdlIjoidXJsIiwidHlwZSI6Imh5YnJpZF91cmwiLCJjb2wiOjF9",
   "okinawa-southeast-botanical":
     "https://hb.afl.rakuten.co.jp/hgc/57fcd013.8b771a3f.57fcd014.e3b84f5f/?pc=https%3A%2F%2Fexperiences.travel.rakuten.co.jp%2Fexperiences%2F59408&link_type=hybrid_url&ut=eyJwYWdlIjoidXJsIiwidHlwZSI6Imh5YnJpZF91cmwiLCJjb2wiOjF9",
+  "uruma-katsuren-castle":
+    "https://hb.afl.rakuten.co.jp/hgc/57fcd013.8b771a3f.57fcd014.e3b84f5f/?pc=https%3A%2F%2Fexperiences.travel.rakuten.co.jp%2Fexperiences%2F43829&link_type=hybrid_url&ut=eyJwYWdlIjoidXJsIiwidHlwZSI6Imh5YnJpZF91cmwiLCJjb2wiOjF9",
 } as const satisfies Record<string, string>;
 
 export type AffiliateSpotId = keyof typeof AFFILIATE_LINKS;
