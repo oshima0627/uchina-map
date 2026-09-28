@@ -1,12 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   MOSHIMO_SIDE_BANNERS,
   type MoshimoSideBanner,
 } from "@/data/moshimoSideBanners";
 
-function SideBanner({ banner, side }: { banner: MoshimoSideBanner; side: "left" | "right" }) {
+function SideBanner({
+  banner,
+  side,
+}: {
+  banner: MoshimoSideBanner;
+  side: "left" | "right";
+}) {
   // max-w-5xl = 64rem。コンテンツ外側に 160px バナー + 余白を置く。
   // 2xl (1536px) 以上でのみ表示（それ以下だと左右余白が足りない）。
   const positionClass =
@@ -58,16 +65,46 @@ function SideBanner({ banner, side }: { banner: MoshimoSideBanner; side: "left" 
 
 /**
  * PC の左右余白に縦長アフィリエイトバナーを固定表示する。
- * 地図フルスクリーン（/map）では出さない。
+ * - 地図フルスクリーン（/map）では出さない
+ * - トップのヒーロー表示中は出さず、下の白背景エリアに入ってから出す
  */
 export function SideAffiliateRails() {
   const pathname = usePathname();
   const onMap = pathname === "/map" || pathname === "/map/";
+  const isHome = pathname === "/" || pathname === "";
+  const [pastHero, setPastHero] = useState(!isHome);
 
-  if (onMap) return null;
+  useEffect(() => {
+    if (!isHome) {
+      setPastHero(true);
+      return;
+    }
+
+    const hero = document.getElementById("home-hero");
+    if (!hero) {
+      setPastHero(true);
+      return;
+    }
+
+    // ヒーローが画面内にあるあいだは非表示。下端がヘッダー下に消えたら表示。
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setPastHero(!entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        // sticky ヘッダー分だけ余裕を見て、波型境界がヘッダー下に入ったら切り替え
+        rootMargin: "-56px 0px 0px 0px",
+      },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  if (onMap || !pastHero) return null;
 
   return (
-    <div className="pointer-events-none" aria-hidden={false}>
+    <div className="pointer-events-none">
       <SideBanner banner={MOSHIMO_SIDE_BANNERS.left} side="left" />
       <SideBanner banner={MOSHIMO_SIDE_BANNERS.right} side="right" />
     </div>
