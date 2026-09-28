@@ -61,9 +61,12 @@ export default function AboutPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-charcoal">広告について</h2>
+          <h2 className="text-lg font-semibold text-charcoal">広告・アフィリエイトについて</h2>
           <p>
-            本サイトでは Google AdSense による広告を配信しています。詳しくは
+            本サイトでは Google AdSense による広告を配信しています。また、一部スポットの詳細ページでは楽天アフィリエイトのリンク（チケット・予約）を掲載しています。リンク経由で購入があった場合、当方に紹介料が支払われることがあります。
+          </p>
+          <p>
+            詳しくは
             <Link className="text-primary-700 hover:underline" href="/privacy">
               プライバシーポリシー
             </Link>
