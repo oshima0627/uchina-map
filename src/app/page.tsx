@@ -113,7 +113,7 @@ export default function HomePage() {
     <div>
       <JsonLd data={siteJsonLd()} />
       {/* Hero */}
-      <section className="relative overflow-hidden flex flex-col min-h-[calc(100svh-3.5rem)]">
+      <section id="home-hero" className="relative overflow-hidden flex flex-col min-h-[calc(100svh-3.5rem)]">
         {/* Background photo — Okinawa beach */}
         <img
           src="/spots/豊崎海浜公園 美らSUNビーチ.webp"
