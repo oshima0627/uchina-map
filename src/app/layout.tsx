@@ -86,7 +86,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <BottomNav />
         <footer className="border-t border-border pt-6 pb-28 md:pb-6 mt-12">
-          <div className="mx-auto max-w-5xl px-4 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 text-xs text-charcoal/75">
+          <div className="site-container px-4 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 text-xs text-charcoal/75">
             <span>
               © 2026 うちなー子連れマップ・Nexeed Lab — 沖縄の親子が、もっと自由にお出かけできるように。
             </span>

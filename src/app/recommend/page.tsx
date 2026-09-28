@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
 
 export default function RecommendPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6">
+    <div className="mx-auto max-w-4xl px-4 py-6">
       <header className="mb-6">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-50 text-primary-700 text-[11px] font-bold tracking-[0.18em] uppercase">
           <Sparkles className="w-3 h-3" strokeWidth={2.25} />

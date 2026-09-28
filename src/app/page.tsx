@@ -141,7 +141,7 @@ export default function HomePage() {
         />
 
         <div className="relative flex-1 grid place-items-center w-full">
-          <div className="mx-auto max-w-5xl px-4 py-8 md:py-10 w-full">
+          <div className="site-container px-4 py-8 md:py-10 w-full">
             <div className="max-w-2xl">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-dark text-white text-[11px] font-medium tracking-wide">
                 <Sparkles className="w-3.5 h-3.5" />
@@ -215,7 +215,7 @@ export default function HomePage() {
       </section>
 
       {/* Editorial needs — photo lead + 2 white text cards + thin map row */}
-      <section className="mx-auto max-w-5xl px-4 mt-2 md:mt-6">
+      <section className="site-container px-4 mt-2 md:mt-6">
         {/* このセクションには h3 のカードが4枚あるのに h2 が無く、
             h1 → h3 と階層が飛んでいた。見出しの階層は文書構造として読まれるため、
             親の h2 を置いて h1 → h2 → h3 に直す。 */}
@@ -303,7 +303,7 @@ export default function HomePage() {
 
       {/* Scene chips — お出かけ中のショートカット */}
       <section
-        className="mx-auto max-w-5xl mt-6 md:mt-8"
+        className="site-container mt-6 md:mt-8"
         aria-label="シーン別ショートカット"
       >
         <div className="overflow-x-auto px-4 pb-2 scroll-smooth-momentum">
@@ -329,7 +329,7 @@ export default function HomePage() {
       </section>
 
       {/* Age section — editorial white cards with thin colored accent */}
-      <section className="mx-auto max-w-5xl px-4 py-10">
+      <section className="site-container px-4 py-10">
         <SectionHeader eyebrow="By Age" title="年齢で選ぶ" />
         <ul className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
           {AGE_CARDS.map(({ tag, display, suffix, desc, accent }) => {
@@ -390,7 +390,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories — editorial list with line icons + per-category counts */}
-      <section className="mx-auto max-w-5xl px-4 pb-2">
+      <section className="site-container px-4 pb-2">
         <SectionHeader eyebrow="Browse" title="カテゴリで探す" />
         <ul className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-2">
           {CATEGORIES.map((cat) => {
@@ -428,7 +428,7 @@ export default function HomePage() {
       </section>
 
       {/* Areas — pills with per-city counts and a thin separator */}
-      <section className="mx-auto max-w-5xl px-4 py-10">
+      <section className="site-container px-4 py-10">
         <SectionHeader eyebrow="Areas" title="エリアで探す" />
         <ul className="mt-5 flex flex-wrap gap-2">
           {CITIES.map((city) => {
@@ -453,7 +453,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured spots */}
-      <section className="mx-auto max-w-5xl px-4 py-6">
+      <section className="site-container px-4 py-6">
         <div className="flex items-end justify-between gap-3">
           <SectionHeader eyebrow="Featured" title="おすすめスポット" />
           <Link
@@ -500,7 +500,7 @@ export default function HomePage() {
         accent="primary"
       />
 
-      <AdSlot slot={ADSENSE_SLOTS.content} className="mx-auto max-w-5xl px-4 py-8" />
+      <AdSlot slot={ADSENSE_SLOTS.content} className="site-container px-4 py-8" />
     </div>
   );
 }
@@ -548,7 +548,7 @@ function CollectionSection({
     primary: "bg-primary-50 text-primary-700",
   };
   return (
-    <section className="mx-auto max-w-5xl px-4 py-6">
+    <section className="site-container px-4 py-6">
       <div className="flex items-end justify-between gap-3 mb-5">
         <div className="min-w-0">
           <div className="flex items-center gap-1.5 mb-1">
