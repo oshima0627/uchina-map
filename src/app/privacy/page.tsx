@@ -67,30 +67,41 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-charcoal">4. 利用目的</h2>
+          <h2 className="text-lg font-semibold text-charcoal">4. アフィリエイト広告について</h2>
+          <p>
+            本サービスでは、楽天グループ株式会社が提供する楽天アフィリエイト（楽天アフィリエイト・プログラム）を利用し、一部スポットの詳細ページにチケット・予約へのリンクを掲載することがあります。利用者が当該リンク経由で商品・サービスを購入した場合、当方に紹介料が支払われることがあります。
+          </p>
+          <p>
+            各リンク付近および本ポリシーにてアフィリエイト広告である旨を明示します。掲載内容はあくまで参考情報であり、料金・在庫・受付状況はリンク先の公式情報をご確認ください。
+          </p>
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold text-charcoal">5. 利用目的</h2>
           <p>取得した情報は、以下の目的で利用します。</p>
           <ul className="list-inside list-disc space-y-1">
             <li>本サービスの提供・維持・改善</li>
             <li>利用状況の分析および UI/UX の改善</li>
             <li>広告の配信・最適化</li>
+            <li>アフィリエイトリンク経由の紹介・成果計測</li>
           </ul>
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-charcoal">5. 第三者提供</h2>
+          <h2 className="text-lg font-semibold text-charcoal">6. 第三者提供</h2>
           <p>
             法令に基づく場合を除き、利用者の同意なしに個人情報を第三者に提供することはありません。
           </p>
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-charcoal">6. 改定</h2>
+          <h2 className="text-lg font-semibold text-charcoal">7. 改定</h2>
           <p>
             本ポリシーは予告なく改定する場合があります。最新の内容は本ページに掲載します。
           </p>
         </section>
 
-        <p className="text-xs text-charcoal/50">最終更新日: 2026年7月21日</p>
+        <p className="text-xs text-charcoal/50">最終更新日: 2026年9月28日</p>
       </div>
     </article>
   );

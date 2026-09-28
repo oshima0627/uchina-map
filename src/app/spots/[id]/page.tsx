@@ -21,7 +21,9 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AdSlot } from "@/components/ads/ad-slot";
+import { AffiliateTicketCta } from "@/components/affiliate-ticket-cta";
 import { ADSENSE_SLOTS } from "@/lib/ads";
+import { getAffiliateLink } from "@/data/affiliateLinks";
 import { SpotCard } from "@/components/spot-card";
 import { JsonLd } from "@/components/json-ld";
 import { FavoriteButton } from "./favorite-button";
@@ -204,6 +206,7 @@ export default async function SpotDetailPage({
 
   const features = spot.features;
   const { sameCity, sameCategory } = relatedSpots(spot);
+  const affiliateUrl = getAffiliateLink(spot.id);
 
   const categoryColor = CATEGORY_COLORS[spot.category];
   const hasImage = !!spot.imageUrl;
@@ -539,6 +542,10 @@ export default async function SpotDetailPage({
             ))}
           </div>
         </section>
+
+        {affiliateUrl && (
+          <AffiliateTicketCta href={affiliateUrl} spotName={spot.name} />
+        )}
 
         {/* 本文（設備情報）を読み終えた位置に置く。関連スポットより前に出して誤タップを避ける */}
         <AdSlot slot={ADSENSE_SLOTS.content} className="mb-10" />
