@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   MOSHIMO_SIDE_LEFT,
@@ -10,7 +9,7 @@ import {
 
 function BannerCard({ banner }: { banner: MoshimoSideBanner }) {
   return (
-    <div className="w-[160px]">
+    <div className="w-full max-w-[160px]">
       <a
         href={banner.href}
         target="_blank"
@@ -43,20 +42,12 @@ function BannerCard({ banner }: { banner: MoshimoSideBanner }) {
   );
 }
 
-function SideStack({
-  banners,
-  side,
-}: {
-  banners: MoshimoSideBanner[];
-  side: "left" | "right";
-}) {
+function SideStack({ banners }: { banners: MoshimoSideBanner[] }) {
   if (banners.length === 0) return null;
-
-  const sideClass = side === "left" ? "left-2" : "right-2";
 
   return (
     <aside
-      className={`pointer-events-auto fixed top-24 z-20 hidden max-h-[calc(100vh-7rem)] w-[160px] overflow-y-auto xl:flex xl:flex-col xl:gap-3 ${sideClass}`}
+      className="hidden w-[160px] shrink-0 flex-col gap-3 pt-2 xl:flex"
       aria-label="アフィリエイト広告"
     >
       <p className="text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-charcoal/40">
@@ -71,48 +62,29 @@ function SideStack({
 }
 
 /**
- * PC 左右に縦長アフィリエイトを固定スタック表示する。
- * - /map では出さない
- * - トップはヒーロー表示中は隠し、白背景に入ってから固定表示
- * - 本体は site-container で左右バナー枠分を空けつつ幅を広げる
+ * 本文と一緒に縦スクロールする左右バナー付きレイアウト。
+ * fixed にせずドキュメントフローに置き、横スクロールなしで最初から見える。
+ * /map ではラッパーだけ通し、バナーは出さない。
  */
-export function SideAffiliateRails() {
+export function ContentWithSideRails({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const onMap = pathname === "/map" || pathname === "/map/";
   const isHome = pathname === "/" || pathname === "";
-  const [pastHero, setPastHero] = useState(!isHome);
 
-  useEffect(() => {
-    if (!isHome) {
-      setPastHero(true);
-      return;
-    }
-
-    const hero = document.getElementById("home-hero");
-    if (!hero) {
-      setPastHero(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setPastHero(!entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-        rootMargin: "-56px 0px 0px 0px",
-      },
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, [isHome]);
-
-  if (onMap || !pastHero) return null;
+  // トップはヒーローを全幅にするため、ヒーロー下だけ page.tsx 側でラップする
+  if (onMap || isHome) {
+    return <>{children}</>;
+  }
 
   return (
-    <div className="pointer-events-none">
-      <SideStack banners={MOSHIMO_SIDE_LEFT} side="left" />
-      <SideStack banners={MOSHIMO_SIDE_RIGHT} side="right" />
+    <div className="mx-auto grid w-full max-w-[90rem] grid-cols-1 gap-x-4 px-4 xl:grid-cols-[160px_minmax(0,1fr)_160px]">
+      <SideStack banners={MOSHIMO_SIDE_LEFT} />
+      <div className="min-w-0">{children}</div>
+      <SideStack banners={MOSHIMO_SIDE_RIGHT} />
     </div>
   );
 }
