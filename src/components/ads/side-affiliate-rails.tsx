@@ -3,32 +3,14 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
-  MOSHIMO_SIDE_BANNERS,
+  MOSHIMO_SIDE_LEFT,
+  MOSHIMO_SIDE_RIGHT,
   type MoshimoSideBanner,
 } from "@/data/moshimoSideBanners";
 
-function SideBanner({
-  banner,
-  side,
-}: {
-  banner: MoshimoSideBanner;
-  side: "left" | "right";
-}) {
-  // max-w-5xl = 64rem。コンテンツ外側に 160px バナー + 余白を置く。
-  // 2xl (1536px) 以上でのみ表示（それ以下だと左右余白が足りない）。
-  const positionClass =
-    side === "left"
-      ? "left-[max(0.25rem,calc(50%-32rem-11rem))]"
-      : "right-[max(0.25rem,calc(50%-32rem-11rem))]";
-
+function BannerCard({ banner }: { banner: MoshimoSideBanner }) {
   return (
-    <aside
-      className={`pointer-events-auto fixed top-24 z-20 hidden w-[160px] 2xl:block ${positionClass}`}
-      aria-label={`${banner.label}の広告`}
-    >
-      <p className="mb-1 text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-charcoal/40">
-        広告
-      </p>
+    <div className="w-[160px]">
       <a
         href={banner.href}
         target="_blank"
@@ -42,12 +24,11 @@ function SideBanner({
           width={banner.width}
           height={banner.height}
           alt={banner.label}
-          className="block h-auto w-[160px]"
+          className="mx-auto block h-auto max-w-full"
           loading="lazy"
           decoding="async"
         />
       </a>
-      {/* もしもインプレッション計測ピクセル */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={banner.impressionSrc}
@@ -58,15 +39,42 @@ function SideBanner({
         loading="lazy"
         decoding="async"
       />
-      <p className="mt-1 text-center text-[10px] text-charcoal/45">アフィリエイト広告</p>
+    </div>
+  );
+}
+
+function SideStack({
+  banners,
+  side,
+}: {
+  banners: MoshimoSideBanner[];
+  side: "left" | "right";
+}) {
+  if (banners.length === 0) return null;
+
+  const sideClass = side === "left" ? "left-2" : "right-2";
+
+  return (
+    <aside
+      className={`pointer-events-auto fixed top-24 z-20 hidden max-h-[calc(100vh-7rem)] w-[160px] overflow-y-auto xl:flex xl:flex-col xl:gap-3 ${sideClass}`}
+      aria-label="アフィリエイト広告"
+    >
+      <p className="text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-charcoal/40">
+        広告
+      </p>
+      {banners.map((banner) => (
+        <BannerCard key={banner.id} banner={banner} />
+      ))}
+      <p className="text-center text-[10px] text-charcoal/45">アフィリエイト広告</p>
     </aside>
   );
 }
 
 /**
- * PC の左右余白に縦長アフィリエイトバナーを固定表示する。
- * - 地図フルスクリーン（/map）では出さない
- * - トップのヒーロー表示中は出さず、下の白背景エリアに入ってから出す
+ * PC 左右に縦長アフィリエイトを固定スタック表示する。
+ * - /map では出さない
+ * - トップはヒーロー表示中は隠し、白背景に入ってから固定表示
+ * - 本体は site-container で左右バナー枠分を空けつつ幅を広げる
  */
 export function SideAffiliateRails() {
   const pathname = usePathname();
@@ -86,14 +94,12 @@ export function SideAffiliateRails() {
       return;
     }
 
-    // ヒーローが画面内にあるあいだは非表示。下端がヘッダー下に消えたら表示。
     const observer = new IntersectionObserver(
       ([entry]) => {
         setPastHero(!entry.isIntersecting);
       },
       {
         threshold: 0,
-        // sticky ヘッダー分だけ余裕を見て、波型境界がヘッダー下に入ったら切り替え
         rootMargin: "-56px 0px 0px 0px",
       },
     );
@@ -105,8 +111,8 @@ export function SideAffiliateRails() {
 
   return (
     <div className="pointer-events-none">
-      <SideBanner banner={MOSHIMO_SIDE_BANNERS.left} side="left" />
-      <SideBanner banner={MOSHIMO_SIDE_BANNERS.right} side="right" />
+      <SideStack banners={MOSHIMO_SIDE_LEFT} side="left" />
+      <SideStack banners={MOSHIMO_SIDE_RIGHT} side="right" />
     </div>
   );
 }

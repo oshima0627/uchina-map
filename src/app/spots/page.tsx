@@ -30,7 +30,7 @@ export const metadata = pageMetadata({
 
 export default function SpotsPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-6">
+    <div className="site-container px-4 py-6">
       <JsonLd data={spotListJsonLd(SPOTS)} />
       <header className="mb-5">
         {/* h1 に検索語（沖縄・子連れ）が入っていなかった。title 側と揃える。 */}
