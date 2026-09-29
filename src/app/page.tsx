@@ -215,7 +215,7 @@ export default function HomePage() {
         </svg>
       </section>
 
-      <ContentWithSideRails>
+      <ContentWithSideRails force>
       {/* Editorial needs — photo lead + 2 white text cards + thin map row */}
       <section className="w-full mt-2 md:mt-6">
         {/* このセクションには h3 のカードが4枚あるのに h2 が無く、
