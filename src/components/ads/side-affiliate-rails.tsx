@@ -64,19 +64,22 @@ function SideStack({ banners }: { banners: MoshimoSideBanner[] }) {
 /**
  * 本文と一緒に縦スクロールする左右バナー付きレイアウト。
  * fixed にせずドキュメントフローに置き、横スクロールなしで最初から見える。
- * /map ではラッパーだけ通し、バナーは出さない。
+ * /map ではバナーを出さない。トップは layout 側ではスキップし、
+ * page.tsx のヒーロー下ラップで force を付けて表示する。
  */
 export function ContentWithSideRails({
   children,
+  force = false,
 }: {
   children: React.ReactNode;
+  force?: boolean;
 }) {
   const pathname = usePathname();
   const onMap = pathname === "/map" || pathname === "/map/";
   const isHome = pathname === "/" || pathname === "";
 
-  // トップはヒーローを全幅にするため、ヒーロー下だけ page.tsx 側でラップする
-  if (onMap || isHome) {
+  // /map は常にスキップ。トップは force なしだとヒーロー全幅のためスキップ。
+  if (onMap || (isHome && !force)) {
     return <>{children}</>;
   }
 
