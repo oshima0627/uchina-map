@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { JsonLd } from "@/components/json-ld";
-import { SpotCard } from "@/components/spot-card";
+import { SpotGridWithOffers } from "@/components/ads/spot-grid-with-offers";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SITE_URL, reportMailto, spotUrl } from "@/lib/seo";
@@ -65,11 +65,11 @@ export function SpotCollection({
             式を並べると React がテキストノードの間に <!-- --> を挟んで
             見出しが分断されるため、1本の文字列にしてから渡す。 */}
         <h2 className="text-lg font-bold text-charcoal mb-1">{`掲載スポット一覧（${spots.length}件）`}</h2>
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {spots.map((spot) => (
-            <SpotCard key={spot.id} spot={spot} />
-          ))}
-        </div>
+        <SpotGridWithOffers
+          spots={spots}
+          className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          seed={path}
+        />
       </section>
 
       {children}

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Search, X, SlidersHorizontal } from "lucide-react";
-import { SpotCard } from "@/components/spot-card";
+import { SpotGridWithOffers } from "@/components/ads/spot-grid-with-offers";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SPOTS } from "@/data/spots";
@@ -185,11 +185,11 @@ export function SpotsBrowser() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((spot) => (
-            <SpotCard key={spot.id} spot={spot} />
-          ))}
-        </div>
+        <SpotGridWithOffers
+          spots={filtered}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          seed="spots"
+        />
       )}
     </div>
   );
