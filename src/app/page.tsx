@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SpotCard } from "@/components/spot-card";
+import { SpotGridWithOffers } from "@/components/ads/spot-grid-with-offers";
 import { HomeSearch } from "@/components/home-search";
 import { JsonLd } from "@/components/json-ld";
 import { pageMetadata, siteJsonLd } from "@/lib/seo";
@@ -466,11 +467,11 @@ export default function HomePage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featuredSpots.map((spot) => (
-            <SpotCard key={spot.id} spot={spot} />
-          ))}
-        </div>
+        <SpotGridWithOffers
+          spots={featuredSpots}
+          className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          seed="home"
+        />
       </section>
 
       {/* Curated collections */}
