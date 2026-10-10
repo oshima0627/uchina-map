@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { SpotsBrowser } from "./spots-browser";
-import { SpotCard } from "@/components/spot-card";
+import { SpotGridWithOffers } from "@/components/ads/spot-grid-with-offers";
 import { JsonLd } from "@/components/json-ld";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { SPOTS } from "@/data/spots";
@@ -127,11 +127,11 @@ function SpotsFallback() {
           クローラが読む文書構造もここで決まる。 */}
       <h2 className="text-lg font-bold text-charcoal mb-1">スポット一覧</h2>
       <p className="text-sm text-charcoal/75 mb-3">{SPOTS.length}件のスポット</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {SPOTS.map((spot) => (
-          <SpotCard key={spot.id} spot={spot} />
-        ))}
-      </div>
+      <SpotGridWithOffers
+        spots={SPOTS}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        seed="spots"
+      />
     </div>
   );
 }
