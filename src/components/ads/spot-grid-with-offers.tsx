@@ -9,7 +9,6 @@ const MAX = 3;
 
 /**
  * SpotCard グリッドに 4枚ごと1枚（最大3枚）の PR カードを差し込む。
- * PC右/左レールと同じバナー（inSideRail）は xl 以上で隠して重複表示を避ける。
  */
 export function SpotGridWithOffers({
   spots,
@@ -46,10 +45,7 @@ export function SpotGridWithOffers({
           <Fragment key={spot.id}>
             <SpotCard spot={spot} />
             {offer && (
-              <InFeedOfferCard
-                offer={offer}
-                className={offer.inSideRail ? "xl:hidden" : undefined}
-              />
+              <InFeedOfferCard offer={offer} />
             )}
           </Fragment>
         );

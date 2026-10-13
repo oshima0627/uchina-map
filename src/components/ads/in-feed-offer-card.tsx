@@ -43,7 +43,7 @@ export function InFeedOfferCard({
           </h3>
           <p className="text-xs text-charcoal/70 line-clamp-2">{offer.description}</p>
           <p className="text-[10.5px] text-charcoal/50 pt-1">
-            {offer.provider === "rakuten" ? "楽天トラベル" : "もしもアフィリエイト"}・広告
+            楽天トラベル・広告
           </p>
         </div>
       </a>
