@@ -13,12 +13,22 @@ SEO・収益導線まわりの変更を日付つきで記録し、あとで GSC 
 | 5 | 楽天CTAのない高流入14スポットに「あわせてチェック」(PR) を追加（楽天オファー最大2件、近い順、開示文12px、`rel="sponsored nofollow noopener noreferrer"`） | `src/lib/related-offers.ts`（新規）, `src/components/ads/related-offers-section.tsx`（新規）, `src/app/spots/[id]/page.tsx` | #12 | 既存の楽天オファーへの導線を、関連スポットの手前に明示的な広告として置く。AdSense広告ユニットは追加していない | 2026-11-11 / 2026-11-25 |
 | 6 | 授乳室ありの設備ページ・ビーチ・水族館・0歳ページに、データから生成した導入文（200〜350字）と「選び方・確認していること」を一覧の上に静的描画 | `src/lib/collection-editorial.ts`（新規）, `src/components/spot-collection.tsx`, 一覧ページ3ファイル | #12 | 一覧ページの独自性・読み応えの補強（数値はすべて spots.ts から集計） | 2026-11-11 / 2026-11-25 |
 | 7 | 本台帳を追加 | `docs/ops-ledger.md` | #13 | 変更と比較日の記録 | — |
+| 8 | 授乳室メモ（`nursingNote`）を17件追加。`hasNursingRoom: true` で未記入だった27件中、公式の一次情報で確認できた分のみ。残り10件は空（確認できず8件、公式と食い違い2件） | `src/data/spots.ts` | #14 | 詳細ページの Q&A（授乳室）に出典・確認月つきの回答を表示。数値・場所は出典に書かれたものだけを記載 | 2026-11-11 / 2026-11-25 |
+| 9 | 駐車場メモ（`parkingNote`）を30件追加。`hasParking && parkingFree` で未記入だった48件中、公式の一次情報で確認できた分のみ。残り18件は空（確認できず13件、公式と食い違い5件）。料金・台数が出典に無い場合は「確認できていません」と明記 | `src/data/spots.ts` | #15 | 同上（駐車場の Q&A） | 2026-11-11 / 2026-11-25 |
 
 ### 補足
 - スポット単位の更新日欄は無い。`DATA_UPDATED_AT`（2026-09-11）は spots.ts の内容を最後に変えた日。別作業で spots.ts（授乳・駐車メモ）が更新された場合は、マージ後に `DATA_UPDATED_AT` と該当スポットの `SPOT_UPDATED_AT` を更新すること。
 - `seoOverrides.ts` の title / description は spots.ts の現在の事実に基づく。spots.ts の該当項目が変わったら併せて見直すこと。
 - パラメータURLの canonical は静的HTMLでは `/spots/` のまま、hydrate 後に書き換わる（Google は JavaScript を描画する）。
 - `/spots/naha-main-place/`（CTR 7.9%）は title を変更していない。「あわせてチェック」(PR) のみ追加。
+
+### 2026-10-28 授乳室・駐車場メモの追加（#14・#15）で残した宿題
+- フラグと公式情報が食い違い、フラグ・メモとも**変更していない**スポット（スキーマに「要確認」の表示がないため）:
+  - 授乳室: `tomi-senagajima`（公式FAQは「授乳室はご準備しておりません」）、`ginowan-maririn`（県バリアフリーマップ 2018-06 は授乳室「無」）
+  - 駐車場無料: `tomi-toyosaki-beach`（有料・最初の10分無料）、`naha-shintoshin-park`（公園内は有料駐車場）、`naha-yogi-park`（駐車場なし）、`itoman-himeyuri`（専用駐車場なし）、`naha-wakasa-park`（有料・30分以内無料）
+- 一次情報が見つからずメモを空にしたスポットは授乳室8件・駐車場13件。授乳室は `ginowan-tropical-beach`, `tomi-michinoeki-toyosaki`, `nanjo-sugar-hall`, `tomi-senagajima-spa`, `nago-neopark`, `nago-pineapple-park`, `uruma-shimin-shokudo`, `tomi-toyosaki-beach`。
+- `DATA_UPDATED_AT` と該当スポットの `SPOT_UPDATED_AT`（`src/data/dataUpdatedAt.ts`）は別作業の担当ファイルのため、この変更では触っていない。マージ後に更新すること。
+- `seoOverrides.ts` は食い違いスポット（与儀公園・新都心公園ほか）の文言も含めて見直すこと。
 
 ## タイトル変更（旧 → 新）
 

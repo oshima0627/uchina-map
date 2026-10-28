@@ -166,6 +166,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/那覇市立森の家みんみん.webp",
     imageEmoji: "🌲",
+    parkingNote: {
+      text: "施設前の駐車場は2〜3台分と少なく、空いていない場合は公園（末吉公園）の駐車場を利用します。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "那覇市立森の家みんみん アクセス", url: "https://minmin-naha.com/%e3%82%a2%e3%82%af%e3%82%bb%e3%82%b9/" },
+      checkedOn: "2026年10月",
+    },
     seoTitle: "森の家みんみん（那覇）の自然体験と駐車場｜利用無料",
     seoDescription:
       "那覇市立森の家みんみんは末吉公園内にある那覇市立の自然体験施設。自然観察やネイチャーゲーム、工作教室ができ、キャンプ場・宿泊施設も併設しています。利用も駐車場も無料。オムツ替え台・多目的トイレ・キッズスペースがあり、雨の日でも過ごせます。",
@@ -326,6 +331,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/tomariiyumachi-2.webp",
     imageEmoji: "🐟",
+    parkingNote: {
+      text: "無料駐車場が用意されています。台数は公式サイトに記載がなく、確認できていません。",
+      source: { name: "泊いゆまち 施設概要", url: "https://www.tomariiyumachi.com/about.html" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 浦添市 =====
@@ -450,6 +460,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/浦添市美術館.webp",
     imageEmoji: "🎨",
+    parkingNote: {
+      text: "美術館周辺に無料の駐車場があります。西口駐車場・国道口駐車場・つどいの広場・立体駐車場が便利です。台数は記載がありません。イベント開催時などは周辺駐車場を使えないことがあり、その場合は浦添市役所近辺の駐車場（徒歩約10分）の利用が案内されています。",
+      source: { name: "よくある質問（浦添市）", url: "https://www.city.urasoe.lg.jp/kokyoshisetsu/art/609e848a3d59ae2434bffc9c/" },
+      checkedOn: "2026年10月",
+    },
     nursingNote: {
       text: "授乳室の設置は記載がなく、授乳の際は受付への申し出が必要です。おむつ交換台は館内の障がい者用個室トイレにあります。ベビーカーは受付で無料で借りられます。",
       source: { name: "浦添市美術館施設案内（浦添市）", url: "https://www.city.urasoe.lg.jp/kokyoshisetsu/art/60cee4e164667334e2f677cc/" },
@@ -514,6 +529,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/沖縄コンベンションセンター 海浜公園.webp",
     imageEmoji: "🌅",
+    parkingNote: {
+      text: "沖縄コンベンションセンター施設内の駐車場は450台（無料）です。駐車場はイベントごとに割り振られるため、主催者への確認が必要です。",
+      source: { name: "沖縄コンベンションセンター よくある質問", url: "https://www.oki-conven.jp/faq/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "ginowan-museum",
@@ -546,6 +566,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/宜野湾市立博物館.webp",
     imageEmoji: "📜",
+    parkingNote: {
+      text: "駐車場は普通乗用車30台（うち優先駐車場1台）とマイクロバス2台分で、マイクロバスで来る団体は事前連絡が必要です。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "宜野湾市立博物館 ご利用案内", url: "https://www.city.ginowan.lg.jp/soshiki/kyoiku/1/2/2822.html" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 豊見城市 =====
@@ -585,6 +610,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/DMMかりゆし水族館.webp",
     imageEmoji: "🐠",
     floor: "iias沖縄豊崎 1F-2F（入口2F）",
+    parkingNote: {
+      text: "ショッピングセンター「イーアス沖縄豊崎」の駐車場を利用します。約3,000台が無料で、車椅子専用の駐車場もあります。",
+      source: { name: "DMMかりゆし水族館 アクセス", url: "https://kariyushi-aquarium.com/access/" },
+      checkedOn: "2026年10月",
+    },
     nursingNote: {
       text: "授乳室は水族館1階にあり、おむつ替えのスペースも授乳室内にあります。ベビーカーは館内に持ち込めますが、水族館でのベビーカー貸出はなく、隣接するショッピングセンターのカートを借りて入館することはできます。",
       source: { name: "DMMかりゆし水族館 よくある質問（施設）", url: "https://kariyushi-aquarium.com/faq/facility/" },
@@ -624,6 +654,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/瀬長島ウミカジテラス.webp",
     imageEmoji: "✈️",
+    parkingNote: {
+      text: "ウミカジテラスを利用する方は駐車料金が無料です。島内の無料駐車場は数に限りがあり、台数は記載がありません。最寄りの駐車場が満車のときは、瀬長島内の別の駐車場を利用するよう案内されています。",
+      source: { name: "瀬長島ウミカジテラス アクセスガイド・FAQ", url: "https://www.umikajiterrace.com/accessguide/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "tomi-toyosaki-beach",
@@ -682,6 +717,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/豊見城総合公園.webp",
     imageEmoji: "⚾",
+    parkingNote: {
+      text: "園内の庭球場の登録情報では、駐車場は300台分で陸上競技場と共用です。駐車料金の支払機はありません。",
+      source: { name: "沖縄県バリアフリーマップ（豊見城総合公園庭球場）", url: "http://www.okinawa-bf-map.jp/facility-info/detail?facility_id=1870" },
+      checkedOn: "2020年5月（同ページの最終更新日）",
+    },
   },
   {
     id: "tomi-michinoeki-toyosaki",
@@ -994,6 +1034,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/シュガーホール（南城市文化センター）.webp",
     imageEmoji: "🎵",
+    parkingNote: {
+      text: "駐車場は約200台です。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "南城市文化センター・シュガーホール 公式サイト（アクセス）", url: "https://www.city.nanjo.okinawa.jp/sugarhall/access/" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 八重瀬町 =====
@@ -1022,6 +1067,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/八重瀬公園.webp",
     imageEmoji: "🌸",
+    parkingNote: {
+      text: "駐車場は20台分で、駐車料金の支払機はありません。",
+      source: { name: "沖縄県バリアフリーマップ（八重瀬公園）", url: "http://okinawa-bf-map.jp/facility-info/detail?facility_id=1738" },
+      checkedOn: "2019年10月（同ページの最終更新日）",
+    },
   },
   {
     id: "yaese-tomori-shisa",
@@ -1048,6 +1098,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/富盛の石彫大獅子.webp",
     imageEmoji: "🦁",
+    parkingNote: {
+      text: "八重瀬町の観光案内では、入場無料・見学自由で駐車場ありと案内されています。台数と駐車料金は記載がなく、確認できていません。",
+      source: { name: "八重瀬八景（八重瀬町）", url: "https://www.town.yaese.lg.jp/yaese_sight/hakkei/chapter1/" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 糸満市 =====
@@ -1186,6 +1241,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/道の駅 いとまん.webp",
     imageEmoji: "🛒",
+    parkingNote: {
+      text: "駐車場は無料です（糸満市「いとまん観光なび」）。糸満市観光協会の施設情報では、普通車392台・大型10台・身体障害者用15台の計402台と案内されています。",
+      source: { name: "糸満市観光協会 道の駅いとまん", url: "https://www.itoman-okinawa.jp/facility01-detail.php?cms_item_group_id=27121" },
+      checkedOn: "2026年10月",
+    },
     nursingNote: {
       text: "道の駅いとまん内の情報館に、授乳室・おむつ交換台・障がい者トイレ・オストメイト・車いすが完備されています。",
       source: { name: "糸満市観光協会 道の駅いとまん 情報館", url: "https://www.itoman-okinawa.jp/facility01-detail.php?cms_item_group_id=27124" },
@@ -1274,6 +1334,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/西崎運動公園.webp",
     imageEmoji: "🏃",
+    parkingNote: {
+      text: "駐車場は無料です（糸満市の観光案内）。台数は記載がなく、確認できていません。",
+      source: { name: "西崎運動公園（いとまん観光なび）", url: "https://www.city.itoman.lg.jp/site/kankou-navi/1817.html" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 追加（南部の人気スポット） =====
@@ -1336,6 +1401,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/瀬長島ホテル 龍神の湯.webp",
     imageEmoji: "♨️",
     floor: "瀬長島ホテル 1F",
+    parkingNote: {
+      text: "駐車場は最大100台で無料と案内されています。",
+      source: { name: "琉球温泉 瀬長島ホテル アクセス", url: "https://www.resorts.co.jp/senaga/access" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "naha-wakasa-park",
@@ -1420,6 +1490,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/宜野湾マリン支援センター（まりりんぎのわん）.webp",
     imageEmoji: "🏊",
+    parkingNote: {
+      text: "無料の駐車場があります。公式サイトの施設案内では一般車30台またはバス5台と案内されています。20台以上で利用する場合は事前の連絡が必要です。",
+      source: { name: "まりりんぎのわん 施設・設備案内", url: "https://maririne.jp/facility" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 追加（屋内遊び場・南部スポット 2026） =====
@@ -1538,6 +1613,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/あそびパーク サンエー経塚シティ店.webp",
     imageEmoji: "🧸",
     floor: "サンエー経塚シティ 2F",
+    parkingNote: {
+      text: "駐車場は1,300台分で、身体障がい者専用が6台あります。駐車料金の支払機はありません。",
+      source: { name: "沖縄県バリアフリーマップ（サンエー経塚シティ）", url: "http://www.okinawa-bf-map.jp/facility-info/detail?facility_id=2364" },
+      checkedOn: "2023年7月（同ページの最終更新日）",
+    },
     nursingNote: {
       text: "入居するサンエー経塚シティの授乳室は2階にあります。ベビーベッドは子供トイレにあり、ベビーカーは無料で借りられます。",
       source: { name: "沖縄県バリアフリーマップ（サンエー経塚シティ）", url: "http://www.okinawa-bf-map.jp/facility-info/detail?facility_id=2364" },
@@ -1789,6 +1869,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/Cafeやぶさち.webp",
     imageEmoji: "🌅",
+    parkingNote: {
+      text: "駐車場は50台分で、大型バスも10台まで停められます。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "Cafeやぶさち 店舗情報", url: "https://cafe-yabusachi.com/shop" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "yaese-yell-cafe",
@@ -1988,6 +2073,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/安良波公園・アラハビーチ.webp",
     imageEmoji: "🚢",
+    parkingNote: {
+      text: "無料駐車場が118台分あります。第1・第2駐車場が満車の場合は、第3駐車場を利用するよう町が案内しています。",
+      source: { name: "北谷町観光協会 安良波公園・アラハビーチ", url: "https://chatantourism.com/spot/araha-beach/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "yomitan-murasakimura",
@@ -2048,6 +2138,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/残波岬公園.webp",
     imageEmoji: "🐐",
+    parkingNote: {
+      text: "駐車場は270台分です。料金は村の公式ページに記載がなく、確認できていません。",
+      source: { name: "残波岬公園（読谷村）", url: "https://www.vill.yomitan.okinawa.jp/soshiki/toshi_keikaku/gyomu/shisetsu/1331.html" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "uruma-bios-hill",
@@ -2279,6 +2374,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/県営中城公園.webp",
     imageEmoji: "🤸",
+    parkingNote: {
+      text: "駐車場は北駐車場が190台・バス10台、西駐車場が100台・バス2台です。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "県営中城公園 アクセス・お問い合わせ", url: "https://www.nakagusukupark-osi.jp/contact.php" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "motobu-churaumi-aquarium",
@@ -2527,6 +2627,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/DINO恐竜PARK やんばる亜熱帯の森.webp",
     imageEmoji: "🦕",
+    parkingNote: {
+      text: "駐車場は車100台・バス15台分です。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "御菓子御殿 名護店", url: "https://www.okashigoten.co.jp/nago-shop/" },
+      checkedOn: "2026年10月",
+    },
     nursingNote: {
       text: "運営元の御菓子御殿 名護店の子育てサービス情報として、授乳室とオムツ替えスペースがあり、ミルク用のお湯も用意されています。場所は公式サイトに記載がなく確認できていません。",
       source: { name: "御菓子御殿 名護店", url: "https://www.okashigoten.co.jp/nago-shop/" },
@@ -2623,6 +2728,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/守礼そば.webp",
     imageEmoji: "🍜",
+    parkingNote: {
+      text: "駐車場は専用20台分です。料金は記載がなく、確認できていません。",
+      source: { name: "守礼そばと沖縄料理（店舗情報）", url: "https://syureisoba-okinawaryouri.gorp.jp/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "tomi-kijimuna-iias",
@@ -2657,6 +2767,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/タコライスcafe きじむなぁ イーアス豊崎.webp",
     imageEmoji: "🌮",
     floor: "イーアス沖縄豊崎 1F",
+    parkingNote: {
+      text: "無料の駐車場があります（イーアス沖縄豊崎の駐車場）。店舗の公式サイトでは約3,100台と案内されています（イーアス沖縄豊崎の公式サイトでは約3,000台）。",
+      source: { name: "タコライスcafe きじむなぁ 店舗一覧", url: "https://www.omutaco.com/shop/" },
+      checkedOn: "2026年10月",
+    },
     nursingNote: {
       text: "イーアス沖縄豊崎には授乳室が1階（ストリートフード横・2部屋）と3階（キッズスペース奥・3部屋）にあり、授乳用給湯器・流し台・おむつ交換台があります。ベビーカーは1〜3階で貸出（100円リターン式）しています。",
       source: { name: "イーアス沖縄豊崎 お子様連れのお客様に嬉しいサービス", url: "https://toyosaki.iias.jp/service/nursing_room/" },
@@ -2720,6 +2835,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/南部そば.webp",
     imageEmoji: "🍜",
+    parkingNote: {
+      text: "駐車場は店舗前に7台分あり、第二駐車場（25台分）は無料と案内されています。店舗前の駐車場の料金は記載がなく、確認できていません。",
+      source: { name: "南部そば 店舗情報", url: "https://www.nanbusoba.com/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "yaese-yagiya",
@@ -2785,6 +2905,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/THE CALIF KITCHEN.webp",
     imageEmoji: "🥞",
     floor: "デポアイランドシーサイドビル 3F",
+    parkingNote: {
+      text: "入居するデポアイランドシーサイドビルのシーサイド駐車場など、周辺の複数の駐車場が無料です。北谷町営駐車場は8:00〜翌6:00、デポアイランド駐車場は10〜24時で、年末年始とハロウィン時期は利用できる時間が短くなります。",
+      source: { name: "デポアイランド よくある質問", url: "https://www.depot-island.co.jp/faq/" },
+      checkedOn: "2026年10月",
+    },
     nursingNote: {
       text: "デポアイランド公式FAQで、店内におむつ替えシートと授乳室があり、お湯は店から提供されると案内されています。",
       source: { name: "デポアイランド よくある質問", url: "https://www.depot-island.co.jp/faq/" },
@@ -2893,6 +3018,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/Birdland Cafe.webp",
     imageEmoji: "🍳",
+    parkingNote: {
+      text: "駐車場は6〜8台分です。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "Birdland Cafe 店舗情報", url: "https://r.goope.jp/birdlandcafe/about" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "uruma-shimin-shokudo",
@@ -2925,6 +3055,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/うるま市民食堂（うるマルシェ）.webp",
     imageEmoji: "🍚",
+    parkingNote: {
+      text: "駐車場は第1駐車場90台（ほか身障者車両5台・大型バス4台）と第2駐車場78台です。料金は公式サイトに記載がなく、確認できていません。",
+      source: { name: "うるマルシェ アクセス", url: "https://urumarche.com/access/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "uruma-katsuren-castle",
@@ -3195,6 +3330,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/きしもと食堂 八重岳店.webp",
     imageEmoji: "🍜",
+    parkingNote: {
+      text: "専用駐車場は25台分です。料金は記載がなく、確認できていません。",
+      source: { name: "きしもと食堂 八重岳店（店舗情報）", url: "https://kishimotoshokudo-yaedake.gorp.jp/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "motobu-kajinhou",
@@ -3224,6 +3364,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/ピザ喫茶 花人逢.webp",
     imageEmoji: "🍕",
+    parkingNote: {
+      text: "店舗入口の手前に駐車場が用意されています。台数と料金は記載がなく、確認できていません。",
+      source: { name: "花人逢 アクセス", url: "https://kajinhou.com/access.html" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "motobu-yakiniku-bokujo",
@@ -3255,6 +3400,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/焼肉もとぶ牧場 もとぶ店.webp",
     imageEmoji: "🥩",
     floor: "本部町産業支援センター 1F",
+    parkingNote: {
+      text: "駐車場は共有40台分で、大型バスも乗り入れできます。料金は記載がなく、確認できていません。",
+      source: { name: "焼肉 もとぶ牧場 もとぶ店（店舗情報）", url: "https://f556000.gorp.jp/" },
+      checkedOn: "2026年10月",
+    },
   },
   // ===== 今帰仁村 =====
   {
