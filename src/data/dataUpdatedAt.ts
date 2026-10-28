@@ -73,6 +73,10 @@ export const SPOT_UPDATED_AT: Record<string, string> = {
   "yomitan-zanpa-park": "2026-10-28",
   // 2026-10-28: 公式情報と食い違うフラグの断定表記を description から外した（seoOverrides.ts の SEO_FLAG_DISPUTES）
   //   tomi-senagajima / tomi-toyosaki-beach / naha-wakasa-park / itoman-himeyuri / ginowan-maririn（naha-shintoshin-park・naha-yogi-park は上で記載済み）
+  // 2026-10-28: 新規スポット3件を追加（spots.ts）。追加日 = 更新日
+  "tomi-iias-okinawa-toyosaki": "2026-10-28",
+  "okinawa-kenso-sogo-undo-park": "2026-10-28",
+  "yomitan-library-yunlabo-miraikan": "2026-10-28",
   // 2026-10-28: 「あわせてチェック」PR セクションを追加（title は変更なし）
   "naha-main-place": "2026-10-28",
 };
