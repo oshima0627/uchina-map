@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { spotUpdatedAt } from "@/data/dataUpdatedAt";
+import { SEO_OVERRIDES } from "@/data/seoOverrides";
 import { CITY_LABELS, type Category, type Spot } from "@/lib/types";
 
 export const SITE_URL = "https://uchina-map.nexeed-lab.com";
@@ -20,6 +22,65 @@ export function spotOgImage(spot: Spot) {
 
 export function spotDescription(spot: Spot) {
   return spot.shortDescription ?? spot.description.slice(0, 120);
+}
+
+/** 施設名に括弧（全角・半角）が含まれるか。市町村の括弧と重ねないための判定。 */
+function nameHasParen(name: string) {
+  return /[（(]/.test(name);
+}
+
+/**
+ * スポット詳細の既定 title（サイト名なし）。
+ * 施設名に括弧がある場合（例: 与儀公園（汽車のある公園））に
+ * 「与儀公園（汽車のある公園）（那覇市）」と括弧が重ならないよう、市町村は括弧にせず「｜那覇市の子連れ情報」とする。
+ */
+export function spotDefaultTitle(spot: Spot) {
+  const city = CITY_LABELS[spot.city];
+  return nameHasParen(spot.name)
+    ? `${spot.name}｜${city}の子連れ情報`
+    : `${spot.name}（${city}）の子連れ情報`;
+}
+
+/** description の書き出し（括弧の重なりを避ける） */
+export function spotDefaultLead(spot: Spot) {
+  const city = CITY_LABELS[spot.city];
+  return nameHasParen(spot.name)
+    ? `${city}の${spot.name}の子連れ情報。`
+    : `${spot.name}（${city}）の子連れ情報。`;
+}
+
+/**
+ * スポット詳細の title / description を1か所で決める。
+ * 優先順位: seoOverrides.ts > spots.ts の seoTitle / seoDescription > テンプレート生成。
+ * title は absolute（サイト名を付けない）かどうかも返す。
+ */
+export function resolveSpotSeo(spot: Spot): {
+  title: string;
+  titleAbsolute: boolean;
+  description: string;
+} {
+  const override = SEO_OVERRIDES[spot.id];
+  if (override) {
+    return { title: override.title, titleAbsolute: true, description: override.description };
+  }
+  const facilities = spotFacilitySummary(spot).slice(0, 4);
+  const lead = spotDefaultLead(spot);
+  if (spot.seoTitle || spot.seoDescription) {
+    return {
+      title: spot.seoTitle ?? spotDefaultTitle(spot),
+      titleAbsolute: !!spot.seoTitle,
+      description: spot.seoDescription ?? `${lead}${facilities.join("・")}。`,
+    };
+  }
+  return {
+    title: spotDefaultTitle(spot),
+    titleAbsolute: false,
+    description: [
+      lead,
+      facilities.length > 0 ? `${facilities.join("・")}。` : "",
+      spotDescription(spot),
+    ].join(""),
+  };
 }
 
 /**
@@ -153,6 +214,8 @@ export function spotJsonLd(spot: Spot) {
       latitude: spot.lat,
       longitude: spot.lng,
     },
+    // 更新日の出所は src/data/dataUpdatedAt.ts（ビルド時刻は使わない）
+    dateModified: spotUpdatedAt(spot.id),
     ...(spot.phone ? { telephone: spot.phone } : {}),
     ...(spot.websiteUrl ? { sameAs: [spot.websiteUrl] } : {}),
     ...(spot.price?.free || spot.price?.adult === 0 ? { isAccessibleForFree: true } : {}),
