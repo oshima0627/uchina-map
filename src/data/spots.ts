@@ -53,6 +53,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/首里城.webp",
     imageEmoji: "🏯",
+    nursingNote: {
+      text: "ベビーケアルーム（授乳室）は、無料区域の首里杜館（地下1階）と系図座・用物座、有料区域の世誇殿にあります。ベビーカーは首里杜館地下1階の総合案内所と奉神門案内所で無料で借りられます（台数に限りがあり、事前予約は不可）。",
+      source: { name: "首里城公園 園内サービス", url: "https://oki-park.jp/shurijo/info/4847/" },
+      checkedOn: "2026年10月",
+    },
     seoTitle: "首里城公園はベビーカーで回れる？授乳室・駐車場情報",
     seoDescription:
       "首里城公園は園内に起伏があり、ベビーカーでの移動には向きません。授乳室・オムツ替え台・多目的トイレはあり、駐車場は有料で広め。無料エリアにも見どころが多く、子連れの散策に人気です。8:30-18:00（季節変動あり）。",
@@ -207,6 +212,11 @@ export const SPOTS: Spot[] = [
         url: "https://www.naha-airport.co.jp/access/parking/",
       },
       checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "授乳室は1階到着ロビー・2階出発ロビー・3階チェックインロビー・国際線4階フードコートエリアのお手洗いに併設されています。室内にはオムツ交換台・洗面台・給湯設備があります。男女兼用ですが、授乳専用個室には男性は立ち入れません。",
+      source: { name: "那覇空港旅客ターミナルビル 授乳室", url: "https://www.naha-airport.co.jp/service/family/nursing/" },
+      checkedOn: "2026年10月",
     },
     seoTitle: "那覇空港 キッズスペースはどこ？国内線2F・授乳室あり",
     seoDescription:
@@ -440,6 +450,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/浦添市美術館.webp",
     imageEmoji: "🎨",
+    nursingNote: {
+      text: "授乳室の設置は記載がなく、授乳の際は受付への申し出が必要です。おむつ交換台は館内の障がい者用個室トイレにあります。ベビーカーは受付で無料で借りられます。",
+      source: { name: "浦添市美術館施設案内（浦添市）", url: "https://www.city.urasoe.lg.jp/kokyoshisetsu/art/60cee4e164667334e2f677cc/" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 宜野湾市 =====
@@ -570,6 +585,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/DMMかりゆし水族館.webp",
     imageEmoji: "🐠",
     floor: "iias沖縄豊崎 1F-2F（入口2F）",
+    nursingNote: {
+      text: "授乳室は水族館1階にあり、おむつ替えのスペースも授乳室内にあります。ベビーカーは館内に持ち込めますが、水族館でのベビーカー貸出はなく、隣接するショッピングセンターのカートを借りて入館することはできます。",
+      source: { name: "DMMかりゆし水族館 よくある質問（施設）", url: "https://kariyushi-aquarium.com/faq/facility/" },
+      checkedOn: "2026年10月",
+    },
     seoTitle: "DMMかりゆし水族館は子連れOK｜授乳室・ベビーカー貸出",
     seoDescription:
       "DMMかりゆし水族館はiias沖縄豊崎の1F-2F（入口2F）にある完全屋内型の水族館。授乳室・オムツ替え台・多目的トイレがあり、ベビーカーの貸出も利用できます。10:00-21:00、大人2,400円・子ども1,500円、4歳未満は無料。駐車場は無料で広め。",
@@ -739,6 +759,11 @@ export const SPOTS: Spot[] = [
         url: "https://www.okinawastory.jp/spot/600001191",
       },
       checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "授乳室は1階の3か所（エントランス付近・ショップNo.415付近・インフォメーションセンター付近）にあり、いずれも間仕切り式でおむつ替え台があります。エントランス付近とインフォメーションセンター付近には調乳専用の浄水給湯器があり、インフォメーションセンター付近は救護室を兼ねています。ベビーカーはインフォメーションセンターで無料で借りられます（予約不可・数に限りあり）。",
+      source: { name: "沖縄アウトレットモールあしびなー 施設のご案内", url: "https://www.ashibinaa.com/page/services.html" },
+      checkedOn: "2026年10月",
     },
   },
 
@@ -1125,6 +1150,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/美々ビーチいとまん.webp",
     imageEmoji: "🏖️",
+    nursingNote: {
+      text: "授乳室とミルク用のお湯の提供があります。授乳室を使うときは事前に問い合わせるよう案内されています（098-840-3451）。多目的トイレにはベビーベッド・ベビーチェア・着替え台があります。",
+      source: { name: "沖縄県バリアフリーマップ（沖縄県）", url: "http://okinawa-bf-map.jp/facility-info/detail?facility_id=1677" },
+      checkedOn: "2022年1月（同ページの最終更新日）",
+    },
   },
   {
     id: "itoman-michinoeki",
@@ -1156,6 +1186,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/道の駅 いとまん.webp",
     imageEmoji: "🛒",
+    nursingNote: {
+      text: "道の駅いとまん内の情報館に、授乳室・おむつ交換台・障がい者トイレ・オストメイト・車いすが完備されています。",
+      source: { name: "糸満市観光協会 道の駅いとまん 情報館", url: "https://www.itoman-okinawa.jp/facility01-detail.php?cms_item_group_id=27124" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "itoman-uminchu-wharf",
@@ -1423,6 +1458,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/波の上わくわくキッズランド.webp",
     imageEmoji: "🎈",
     floor: "エスパーナ 2F",
+    nursingNote: {
+      text: "館内に授乳室・調乳室・オムツ替え台があり、使用済みおむつ用のゴミ箱も設置されています。ベビーカーは、混雑する土日祝などは安全確保のため基本的に受付で預かりとなります。",
+      source: { name: "波の上わくわくキッズランド よくあるご質問", url: "https://www.nami-kids.com/faq/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "naha-the-kids-palette",
@@ -1458,6 +1498,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/ザキッズ 沖縄パレットくもじ店.webp",
     imageEmoji: "🎡",
     floor: "デパートリウボウ 7F",
+    nursingNote: {
+      text: "ベビー休憩室は8階にあり、無印良品売場内を通って行きます。利用時間は10〜19時30分で、デパートリウボウ1〜2階の閉店時間（20時30分）とは異なります。",
+      source: { name: "久茂地都市開発（パレットくもじ）お知らせ「8階にベビー休憩室リニューアルオープン」", url: "https://www.palette-kumoji.co.jp/news/articles-59" },
+      checkedOn: "2024年8月（同ページの公開日）",
+    },
   },
   {
     id: "urasoe-asobi-park-kyozuka",
@@ -1493,6 +1538,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/あそびパーク サンエー経塚シティ店.webp",
     imageEmoji: "🧸",
     floor: "サンエー経塚シティ 2F",
+    nursingNote: {
+      text: "入居するサンエー経塚シティの授乳室は2階にあります。ベビーベッドは子供トイレにあり、ベビーカーは無料で借りられます。",
+      source: { name: "沖縄県バリアフリーマップ（サンエー経塚シティ）", url: "http://www.okinawa-bf-map.jp/facility-info/detail?facility_id=2364" },
+      checkedOn: "2023年7月（同ページの最終更新日）",
+    },
   },
   {
     id: "tomi-kaigungou",
@@ -1813,6 +1863,11 @@ export const SPOTS: Spot[] = [
         url: "https://www.okinawastory.jp/spot/600009200",
       },
       checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "授乳室があります。場所は公式サイトに記載がなく確認できていません。ベビーカーの貸出は500円です。",
+      source: { name: "沖縄こどもの国 アクセス・ご利用案内", url: "https://www.okzm.jp/access/" },
+      checkedOn: "2026年10月",
     },
   },
   {
@@ -2153,6 +2208,11 @@ export const SPOTS: Spot[] = [
       },
       checkedOn: "2026年7月",
     },
+    nursingNote: {
+      text: "授乳室とベビーシートがあります。場所は公式サイトに記載がなく確認できていません。ベビーカーは受付入園口で借りられます（台数に限りがあり、予約は不可）。",
+      source: { name: "東南植物楽園 ご利用案内", url: "https://www.southeast-botanical.jp/information/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "uruma-ayahashi",
@@ -2262,6 +2322,11 @@ export const SPOTS: Spot[] = [
       },
       checkedOn: "2026年7月",
     },
+    nursingNote: {
+      text: "授乳室は水族館の2階（美ら海シアター入口近く）と3階入口（コーラルロビー）にあります。ベビーカーは水族館に近いP7立体駐車場1Fの貸出所で無料で借りられます（先着順、台数に限りがあります）。",
+      source: { name: "海洋博公園 バリアフリー（授乳室・ベビーカー貸出）", url: "https://oki-park.jp/kaiyohaku/info/34" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "motobu-kaiyohaku-park",
@@ -2301,6 +2366,11 @@ export const SPOTS: Spot[] = [
         url: "https://www.okinawastory.jp/spot/1349",
       },
       checkedOn: "2026年7月",
+    },
+    nursingNote: {
+      text: "授乳室は、沖縄美ら海水族館の2階と3階入口、総合案内所（ハイサイプラザ）、総合休憩所（美ら海プラザ）水族館出口側にあります。ベビーベッド付きトイレは園内各所にあります。ベビーカーは無料で借りられます（予約不可・先着順、閉園30分前までに返却）。",
+      source: { name: "海洋博公園 バリアフリー", url: "https://oki-park.jp/kaiyohaku/info/34" },
+      checkedOn: "2026年10月",
     },
   },
   {
@@ -2457,6 +2527,11 @@ export const SPOTS: Spot[] = [
     }),
     imageUrl: "/spots/DINO恐竜PARK やんばる亜熱帯の森.webp",
     imageEmoji: "🦕",
+    nursingNote: {
+      text: "運営元の御菓子御殿 名護店の子育てサービス情報として、授乳室とオムツ替えスペースがあり、ミルク用のお湯も用意されています。場所は公式サイトに記載がなく確認できていません。",
+      source: { name: "御菓子御殿 名護店", url: "https://www.okashigoten.co.jp/nago-shop/" },
+      checkedOn: "2026年10月",
+    },
   },
 
   // ===== 恩納村（旅行客の宿泊拠点。2026-08 時点でサイト初のスポット） =====
@@ -2582,6 +2657,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/タコライスcafe きじむなぁ イーアス豊崎.webp",
     imageEmoji: "🌮",
     floor: "イーアス沖縄豊崎 1F",
+    nursingNote: {
+      text: "イーアス沖縄豊崎には授乳室が1階（ストリートフード横・2部屋）と3階（キッズスペース奥・3部屋）にあり、授乳用給湯器・流し台・おむつ交換台があります。ベビーカーは1〜3階で貸出（100円リターン式）しています。",
+      source: { name: "イーアス沖縄豊崎 お子様連れのお客様に嬉しいサービス", url: "https://toyosaki.iias.jp/service/nursing_room/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "nanjo-tamaya-soba",
@@ -2705,6 +2785,11 @@ export const SPOTS: Spot[] = [
     imageUrl: "/spots/THE CALIF KITCHEN.webp",
     imageEmoji: "🥞",
     floor: "デポアイランドシーサイドビル 3F",
+    nursingNote: {
+      text: "デポアイランド公式FAQで、店内におむつ替えシートと授乳室があり、お湯は店から提供されると案内されています。",
+      source: { name: "デポアイランド よくある質問", url: "https://www.depot-island.co.jp/faq/" },
+      checkedOn: "2026年10月",
+    },
   },
   {
     id: "yomitan-banjyutei",
