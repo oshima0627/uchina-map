@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { SpotCollection } from "@/components/spot-collection";
+import { collectionEditorial } from "@/lib/collection-editorial";
 import { pageMetadata } from "@/lib/seo";
 import {
   FEATURE_HEADINGS,
@@ -67,6 +68,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         { name: label, path: collectionPath.category(category) },
       ]}
       relatedLinks={related}
+      editorial={collectionEditorial({ type: "category", category }, spots)}
     />
   );
 }

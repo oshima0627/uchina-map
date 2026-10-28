@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SpotCollection } from "@/components/spot-collection";
+import { collectionEditorial } from "@/lib/collection-editorial";
 import { pageMetadata } from "@/lib/seo";
 import {
   FEATURE_HEADINGS,
@@ -66,6 +67,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ featur
         { name: FEATURE_HEADINGS[feature], path: collectionPath.feature(feature) },
       ]}
       relatedLinks={related}
+      editorial={collectionEditorial({ type: "feature", feature }, spots)}
     >
       {feature === "rainOk" && <TyphoonSection spots={spots} />}
     </SpotCollection>

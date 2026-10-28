@@ -31,6 +31,8 @@ export const SPOT_UPDATED_AT: Record<string, string> = {
   "kitanakagusuku-sans-souci": "2026-10-28",
   "naha-waku-kids-land": "2026-10-28",
   "naha-shintoshin-park": "2026-10-28",
+  // 2026-10-28: 「あわせてチェック」PR セクションを追加（title は変更なし）
+  "naha-main-place": "2026-10-28",
 };
 
 /**
@@ -44,7 +46,13 @@ export const STATIC_PAGE_UPDATED_AT = {
 } as const;
 
 /** 一覧ページの本文（導入文など）を個別に更新した日。キーはサイト内パス。 */
-export const COLLECTION_PAGE_UPDATED_AT: Record<string, string> = {};
+export const COLLECTION_PAGE_UPDATED_AT: Record<string, string> = {
+  // 2026-10-28: 導入文と「選び方・確認していること」を追加
+  "/spots/feature/nursing/": "2026-10-28",
+  "/spots/category/beach/": "2026-10-28",
+  "/spots/category/aquarium/": "2026-10-28",
+  "/spots/age/0/": "2026-10-28",
+};
 
 export function spotUpdatedAt(spotId: string): string {
   return SPOT_UPDATED_AT[spotId] ?? DATA_UPDATED_AT;
