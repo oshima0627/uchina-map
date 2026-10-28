@@ -113,4 +113,8 @@ export const SEO_FLAG_DISPUTES: Record<string, { nursing?: "omit"; parking?: "pa
   "naha-wakasa-park": { parking: "paid" },
   // ginowan-maririn: 授乳室は県バリアフリーマップ（2018-06）で「無」
   "ginowan-maririn": { nursing: "omit" },
+  // 以下は食い違いではなく「料金が公式ページに未記載（不明）」のスポット。flag は保守的に parkingFree: false だが、
+  // 「有料」とは断定できないので駐車場の表記を出さない（2026-10-28 追加）
+  "tomi-iias-okinawa-toyosaki": { parking: "omit" },
+  "okinawa-kenso-sogo-undo-park": { parking: "omit" },
 };
