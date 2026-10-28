@@ -5,6 +5,7 @@ import { SpotGridWithOffers } from "@/components/ads/spot-grid-with-offers";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { ADSENSE_SLOTS } from "@/lib/ads";
 import { SITE_URL, reportMailto, spotUrl } from "@/lib/seo";
+import type { CollectionEditorial } from "@/lib/collection-editorial";
 import type { Spot } from "@/lib/types";
 
 /**
@@ -20,6 +21,7 @@ export function SpotCollection({
   spots,
   breadcrumb,
   relatedLinks,
+  editorial,
   children,
 }: {
   /** h1。検索語をそのまま入れる（例: 「那覇市の子連れOKスポット」） */
@@ -30,6 +32,8 @@ export function SpotCollection({
   breadcrumb: Array<{ name: string; path: string }>;
   /** 同じ軸の他のページへのリンク。孤立ページを作らないために必ず渡す */
   relatedLinks: Array<{ label: string; href: string; count: number }>;
+  /** 一覧の上に置く編集コメント（データから生成した導入文と、選び方・確認していること） */
+  editorial?: CollectionEditorial;
   /** 一覧の下に置く補足（Q&A など） */
   children?: React.ReactNode;
 }) {
@@ -59,6 +63,18 @@ export function SpotCollection({
         </h1>
         <p className="text-sm text-charcoal/75 mt-2 leading-relaxed">{lead}</p>
       </header>
+
+      {editorial && (
+        <section className="mb-8 rounded-2xl bg-card border border-border p-4" data-section="editorial">
+          <p className="text-sm text-charcoal/85 leading-relaxed">{editorial.intro}</p>
+          <h2 className="text-base font-bold text-charcoal mt-4 mb-2">{editorial.checksHeading}</h2>
+          <ul className="list-disc pl-5 space-y-1.5 text-sm text-charcoal/85 leading-relaxed">
+            {editorial.checks.map((check) => (
+              <li key={check}>{check}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section>
         {/* h1 と同じ文言を繰り返さない。h1 が主題、ここは一覧という役割の見出し。

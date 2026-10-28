@@ -22,6 +22,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { AdSlot } from "@/components/ads/ad-slot";
 import { AffiliateTicketCta } from "@/components/affiliate-ticket-cta";
+import { RelatedOffersSection } from "@/components/ads/related-offers-section";
+import { PR_SECTION_SPOT_IDS } from "@/lib/related-offers";
 import { ADSENSE_SLOTS } from "@/lib/ads";
 import { getAffiliateLink } from "@/data/affiliateLinks";
 import { SpotCard } from "@/components/spot-card";
@@ -529,6 +531,11 @@ export default async function SpotDetailPage({
 
         {affiliateUrl && (
           <AffiliateTicketCta href={affiliateUrl} spotName={spot.name} />
+        )}
+
+        {/* 楽天CTAが無い流入の多い施設ページだけ。近くの既存オファーを最大2件、PR表記つきで */}
+        {!affiliateUrl && PR_SECTION_SPOT_IDS.includes(spot.id) && (
+          <RelatedOffersSection spot={spot} />
         )}
 
         {/* 本文（設備情報）を読み終えた位置に置く。関連スポットより前に出して誤タップを避ける */}

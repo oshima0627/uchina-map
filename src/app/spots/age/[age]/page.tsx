@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SpotCollection } from "@/components/spot-collection";
+import { collectionEditorial } from "@/lib/collection-editorial";
 import { pageMetadata } from "@/lib/seo";
 import {
   AGE_HEADINGS,
@@ -87,6 +88,7 @@ export default async function AgePage({ params }: { params: Promise<{ age: strin
         { name: AGE_LABELS[age], path: collectionPath.age(age) },
       ]}
       relatedLinks={related}
+      editorial={collectionEditorial({ type: "age", age }, spots)}
     >
       <section className="mt-10">
         <h2 className="text-lg font-bold text-charcoal mb-3">
