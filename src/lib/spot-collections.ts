@@ -160,3 +160,38 @@ export const collectionLabel = {
   age: (age: AgeTag) => AGE_HEADINGS[age],
   feature: (feature: FilterFeature) => FEATURE_HEADINGS[feature],
 };
+
+/**
+ * クエリパラメータ版の絞り込み（`/spots/?category=indoor` など）の canonical パス。
+ *
+ * 静的エクスポートなので、サーバー側で出力する HTML の canonical は常に `/spots/`。
+ * ただし GSC には `/spots/?category=indoor` のようなパラメータ付きURLが別ページとして現れるため、
+ * 絞り込みが1軸だけなら対応する実ページ（/spots/category/indoor/ など）へ、
+ * それ以外（複数軸・キーワード検索・所要時間）は `/spots/` に向ける。
+ * robots.txt でのブロックや noindex は使わない（canonical で統合する）。
+ * 呼び出し側（SpotsBrowser）が hydrate 後に `<link rel="canonical">` を書き換える。
+ */
+export function canonicalPathForFilters(params: {
+  city?: string | null;
+  category?: string | null;
+  age?: string | null;
+  feature?: string | null;
+  q?: string | null;
+  minDuration?: string | null;
+}): string {
+  if (params.q || params.minDuration) return "/spots/";
+  const axes = [params.city, params.category, params.age, params.feature].filter(
+    (v): v is string => !!v,
+  );
+  if (axes.length !== 1) return "/spots/";
+
+  if (params.city && isCity(params.city)) return collectionPath.city(params.city);
+  if (params.category && isCategory(params.category)) {
+    return collectionPath.category(params.category);
+  }
+  if (params.age && isAgeTag(params.age)) return collectionPath.age(params.age);
+  if (params.feature && (FILTER_FEATURES as readonly string[]).includes(params.feature)) {
+    return collectionPath.feature(params.feature as FilterFeature);
+  }
+  return "/spots/";
+}

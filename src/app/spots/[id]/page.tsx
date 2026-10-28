@@ -34,8 +34,7 @@ import {
   pageMetadata,
   reportMailto,
   spotBreadcrumbJsonLd,
-  spotDescription,
-  spotFacilitySummary,
+  resolveSpotSeo,
   spotJsonLd,
   spotOgImage,
 } from "@/lib/seo";
@@ -169,26 +168,11 @@ export async function generateMetadata({
   const { id } = await params;
   const spot = SPOTS.find((s) => s.id === id);
   if (!spot) return {};
-  const facilities = spotFacilitySummary(spot).slice(0, 4);
-  if (spot.seoTitle || spot.seoDescription) {
-    return pageMetadata({
-      title: spot.seoTitle ?? `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報`,
-      titleAbsolute: !!spot.seoTitle,
-      description:
-        spot.seoDescription ??
-        `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報。${facilities.join("・")}。`,
-      path: `/spots/${spot.id}/`,
-      image: spotOgImage(spot),
-      imageAlt: `${spot.name}の写真`,
-    });
-  }
+  const seo = resolveSpotSeo(spot);
   return pageMetadata({
-    title: `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報`,
-    description: [
-      `${spot.name}（${CITY_LABELS[spot.city]}）の子連れ情報。`,
-      facilities.length > 0 ? `${facilities.join("・")}。` : "",
-      spotDescription(spot),
-    ].join(""),
+    title: seo.title,
+    titleAbsolute: seo.titleAbsolute,
+    description: seo.description,
     path: `/spots/${spot.id}/`,
     image: spotOgImage(spot),
     imageAlt: `${spot.name}の写真`,

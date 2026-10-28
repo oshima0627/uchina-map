@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Search, X, SlidersHorizontal } from "lucide-react";
 import { SpotGridWithOffers } from "@/components/ads/spot-grid-with-offers";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SPOTS } from "@/data/spots";
+import { SITE_URL } from "@/lib/seo";
+import { canonicalPathForFilters } from "@/lib/spot-collections";
 import {
   AGE_LABELS,
   AGE_TAGS,
@@ -36,6 +38,26 @@ export function SpotsBrowser() {
   const minDurationRaw = params.get("minDuration");
   const minDuration = minDurationRaw ? Number(minDurationRaw) : null;
   const q = params.get("q") ?? "";
+
+  // ?category=indoor のようなパラメータ付きURLの canonical を、対応する実ページに向ける。
+  // 静的HTMLの canonical は /spots/ 固定のため、hydrate 後に書き換える（詳細は spot-collections.ts）。
+  const canonicalPath = canonicalPathForFilters({
+    city: params.get("city"),
+    category: params.get("category"),
+    age: params.get("age"),
+    feature: params.get("feature"),
+    q: params.get("q"),
+    minDuration: params.get("minDuration"),
+  });
+  useEffect(() => {
+    const link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!link) return;
+    const original = link.getAttribute("href");
+    link.setAttribute("href", `${SITE_URL}${canonicalPath}`);
+    return () => {
+      if (original) link.setAttribute("href", original);
+    };
+  }, [canonicalPath]);
 
   const setParam = (key: string, value: string | null) => {
     const sp = new URLSearchParams(params.toString());
