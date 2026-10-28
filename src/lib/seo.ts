@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { spotUpdatedAt } from "@/data/dataUpdatedAt";
-import { SEO_OVERRIDES } from "@/data/seoOverrides";
+import { SEO_FLAG_DISPUTES, SEO_OVERRIDES } from "@/data/seoOverrides";
 import { CITY_LABELS, type Category, type Spot } from "@/lib/types";
 
 export const SITE_URL = "https://uchina-map.nexeed-lab.com";
@@ -91,16 +91,18 @@ export function resolveSpotSeo(spot: Spot): {
 export function spotFacilitySummary(spot: Spot): string[] {
   const f = spot.features;
   const out: string[] = [];
+  // 公式情報とフラグが食い違うスポットは、断定を避けた表記にする（seoOverrides.ts 参照）
+  const dispute = SEO_FLAG_DISPUTES[spot.id];
 
-  if (f.hasNursingRoom) out.push("授乳室あり");
+  if (f.hasNursingRoom && dispute?.nursing !== "omit") out.push("授乳室あり");
   if (f.hasDiaperTable) out.push("オムツ替え台あり");
-  if (f.hasParking) {
+  if (f.hasParking && dispute?.parking !== "omit") {
     out.push(
-      f.parkingFree
-        ? f.parkingSpacious
+      dispute?.parking === "paid" || !f.parkingFree
+        ? "駐車場あり（有料）"
+        : f.parkingSpacious
           ? "駐車場無料（広め）"
-          : "駐車場無料"
-        : "駐車場あり（有料）",
+          : "駐車場無料",
     );
   }
   if (f.rainOk) out.push("雨の日OK");

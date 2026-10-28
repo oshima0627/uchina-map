@@ -67,3 +67,46 @@ SEO・収益導線まわりの変更を日付つきで記録し、あとで GSC 
 | /spots/naha-yogi-park/ ほか5ページ（the-kids-palette, waku-kids-land, shintoshin-park, sans-souci, chatan-american-village） | 未取得 | 未取得 | 未取得 | 未取得 | 変更前に3か月値を取っていない。2026-11-11 までに旧期間（〜2026-10-26）の値を GSC から取得して追記する |
 
 「—」はこの台帳作成時に手元の集計に値がなかったもの。
+
+## 2026-10-28（追記）seoOverrides の正確性見直しと更新日の修正（fix: seoOverrides accuracy + updatedAt）
+
+| # | 変更 | 主なファイル | 目的 |
+|---|------|--------------|------|
+| 10 | #14（授乳室メモ17件）・#15（駐車場メモ30件）で `nursingNote` / `parkingNote` を追加した40スポット（重複を除く）を `SPOT_UPDATED_AT` に 2026-10-28 で追加。sitemap の `lastmod` と JSON-LD の `dateModified` が実際の更新日になる。`DATA_UPDATED_AT`（全スポットの既定値）は 2026-09-11 のまま据え置き（変更していない57スポットの lastmod を「今日」にしないため） | `src/data/dataUpdatedAt.ts` | 更新日の誠実さ |
+| 11 | `seoOverrides.ts` 全13件を spots.ts の事実・公式情報と照合。根拠が弱い2件の description を修正（下表）。title は変更なし | `src/data/seoOverrides.ts` | 根拠のない断定を避ける |
+| 12 | 公式情報とフラグが食い違うスポットは、フラグは変更せず、テンプレート生成の description（`spotFacilitySummary`）から断定表記を外す。`SEO_FLAG_DISPUTES` を新設（詳細は下表）。該当スポットの `SPOT_UPDATED_AT` も 2026-10-28 に | `src/data/seoOverrides.ts`, `src/lib/seo.ts`, `src/data/dataUpdatedAt.ts` | 「駐車場無料」「授乳室あり」が検索結果に出る誤りを防ぐ |
+
+### seoOverrides の文言変更（旧 → 新）
+- `naha-shuri-castle-park` description
+  - 旧: 首里城公園は園内に起伏があり、ベビーカーでの移動には向きません。授乳室・オムツ替え台・多目的トイレはあり、駐車場は有料で広め。無料エリアにも見どころが多く、子連れの散策に人気の公園です。8:30-18:00（季節変動あり）。
+  - 新: 首里城公園は園内に起伏があり、ベビーカーでは移動しづらい場所もあります。ベビーカーは無料で借りられ（台数限り・予約不可）、授乳室・オムツ替え台・多目的トイレもあり。駐車場は有料。8:30-18:00（季節変動あり）。
+  - 理由: 「向きません」の断定は根拠が薄く、同じ公園が無料でベビーカーを貸し出している（nursingNote の出典）ため。「広め」は出典なしのため削除。
+- `naha-the-kids-palette` description
+  - 旧: ザキッズ 沖縄パレットくもじ店はデパートリウボウ7Fの全天候型の屋内遊園地。ボールプールやトランポリンで遊べ、授乳室・オムツ替え台あり。大人500円・子供1,000円で1歳未満は無料。平日10:00-19:00、土日祝〜20:00。
+  - 新: ザキッズ 沖縄パレットくもじ店はデパートリウボウ7Fの屋内遊園地。ボールプールで遊べます。ベビー休憩室は8階（10:00-19:30）。大人500円・子供1,000円、1歳未満無料。平日10:00-19:00、土日祝〜20:00。
+  - 理由: nursingNote の出典（パレットくもじ公式お知らせ）にあるのは8階の「ベビー休憩室」（利用10〜19時30分）で、店内の授乳室・オムツ替え台とは書かれていないため。
+- 他11件（naha-airport-kids, naha-okimu, naha-yogi-park, naha-waku-kids-land, naha-shintoshin-park, urasoe-daikoen, urasoe-asobi-park-kyozuka, urasoe-parco-city, kitanakagusuku-aeon-rycom, kitanakagusuku-sans-souci, chatan-american-village）は変更なし。`naha-yogi-park` と `naha-shintoshin-park` は駐車場に触れておらず、食い違いの影響なし。
+
+### 食い違いスポットのテンプレート生成 description（`SEO_FLAG_DISPUTES`）
+| スポットID | 食い違い | 旧（生成される表記） | 新 |
+|-----------|----------|----------------------|----|
+| tomi-senagajima | 公式FAQは授乳室なし（オムツ替え台つき多目的トイレはあり） | 授乳室あり・… | 「授乳室あり」を出さない |
+| ginowan-maririn | 県バリアフリーマップ（2018-06）で授乳室「無」 | 授乳室あり・… | 「授乳室あり」を出さない |
+| tomi-toyosaki-beach | 駐車場は有料（最初の10分無料、1時間200円(5〜10月)/100円(11〜4月)、1日最大500円） | 駐車場無料（広め） | 駐車場あり（有料） |
+| naha-wakasa-park | 有料（30分無料、以後1時間200円、以降1時間100円、24時間最大800円） | 駐車場無料 | 駐車場あり（有料） |
+| naha-shintoshin-park | 那覇市ページで園内は有料駐車場（日本パーキング） | （overrides で駐車場に言及なし） | 万一 override が外れても「駐車場あり（有料）」 |
+| naha-yogi-park | 公式: 駐車場なし | （overrides で駐車場に言及なし） | 万一 override が外れても駐車場表記なし |
+| itoman-himeyuri | 専用駐車場なし | 駐車場無料 | 駐車場の表記を出さない |
+
+※ 詳細ページ本体の Q&A・設備バッジ・一覧のバッジ・JSON-LD の `amenityFeature` はフラグから生成されるため、フラグが変わるまで「駐車場無料」「授乳室あり」と表示されたままになる。メタ情報（title / description）だけ先に控えている。
+
+### オーナー判断待ち: フラグと公式情報の食い違い（spots.ts は未変更）
+| スポットID | 現在のフラグ | 公式・自治体の情報 | 判断してほしいこと |
+|-----------|--------------|---------------------|---------------------|
+| tomi-senagajima | `hasNursingRoom: true` | 公式FAQ「授乳室はご準備しておりません」。オムツ替え台つき多目的トイレはあり | `hasNursingRoom` を false に |
+| ginowan-maririn | `hasNursingRoom: true` | 県バリアフリーマップ（2018-06）で授乳室「無」 | 同上（情報が古いため要再確認） |
+| tomi-toyosaki-beach | `parkingFree: true` | 有料。最初の10分無料、1時間200円（5〜10月）/100円（11〜4月）、1日最大500円 | `parkingFree` を false に |
+| naha-shintoshin-park | `parkingFree: true`（hasParking: true） | 那覇市ページで園内駐車場は有料（日本パーキング） | `parkingFree` を false に |
+| naha-yogi-park | `hasParking: true`, `parkingFree: true` | 公式: 駐車場なし | `hasParking` を false に |
+| itoman-himeyuri | `parkingFree: true` | 専用駐車場なし | `hasParking` を false に（周辺有料駐車場の扱いも） |
+| naha-wakasa-park | `parkingFree: true` | 有料。30分無料、以後1時間200円、以降1時間100円、24時間最大800円 | `parkingFree` を false に |

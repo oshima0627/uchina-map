@@ -12,6 +12,7 @@
  * - title はサイト名を付けずそのまま <title> になる（titleAbsolute）。全角30〜36文字前後。
  * - description は110〜120文字前後。ページ間で重複させない。
  * - spots.ts は別作業で編集されるため、ここでは編集しない。
+ * - 公式情報と spots.ts のフラグが食い違うスポットは SEO_FLAG_DISPUTES に載せ、テンプレート生成の description から該当の設備表記を外す（フラグ自体は変更しない。台帳の「オーナー判断待ち」参照）。
  * - 変更の記録・比較日は docs/ops-ledger.md。
  */
 export type SeoOverride = { title: string; description: string };
@@ -31,7 +32,7 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   "naha-shuri-castle-park": {
     title: "首里城公園のベビーカー事情｜起伏あり・授乳室・駐車場情報",
     description:
-      "首里城公園は園内に起伏があり、ベビーカーでの移動には向きません。授乳室・オムツ替え台・多目的トイレはあり、駐車場は有料で広め。無料エリアにも見どころが多く、子連れの散策に人気の公園です。8:30-18:00（季節変動あり）。",
+      "首里城公園は園内に起伏があり、ベビーカーでは移動しづらい場所もあります。ベビーカーは無料で借りられ（台数限り・予約不可）、授乳室・オムツ替え台・多目的トイレもあり。駐車場は有料。8:30-18:00（季節変動あり）。",
   },
   "naha-yogi-park": {
     title: "与儀公園（汽車のある公園）｜那覇の遊具・オムツ替え台・入園無料",
@@ -41,7 +42,7 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   "naha-the-kids-palette": {
     title: "ザキッズ 沖縄パレットくもじ店｜7Fの屋内遊園地・0歳無料",
     description:
-      "ザキッズ 沖縄パレットくもじ店はデパートリウボウ7Fの全天候型の屋内遊園地。ボールプールやトランポリンで遊べ、授乳室・オムツ替え台あり。大人500円・子供1,000円で1歳未満は無料。平日10:00-19:00、土日祝〜20:00。",
+      "ザキッズ 沖縄パレットくもじ店はデパートリウボウ7Fの屋内遊園地。ボールプールで遊べます。ベビー休憩室は8階（10:00-19:30）。大人500円・子供1,000円、1歳未満無料。平日10:00-19:00、土日祝〜20:00。",
   },
   "naha-waku-kids-land": {
     title: "波の上わくわくキッズランド｜辻エスパーナ2Fの屋内遊び場",
@@ -87,4 +88,29 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
     description:
       "美浜アメリカンビレッジの授乳室は公式サイトに記載がなく未確認です。北谷町観光情報センターにおむつ交換台つきの多目的トイレとベビーカー貸出があります。駐車場は無料で約1,500台。観覧車は11:00-22:00。",
   },
+};
+
+/**
+ * 公式情報と spots.ts のフラグが食い違っているスポット（2026-10-28 確認）。
+ * フラグはオーナー判断が出るまで変更しない。そのあいだ、テンプレート生成の
+ * title / description（spotFacilitySummary）が食い違った設備を断定しないよう、ここで表記を抑える。
+ *
+ * - nursing: "omit" … 「授乳室あり」を出さない
+ * - parking: "paid" … 「駐車場あり（有料）」にする / "omit" … 駐車場の表記を出さない
+ */
+export const SEO_FLAG_DISPUTES: Record<string, { nursing?: "omit"; parking?: "paid" | "omit" }> = {
+  // 公式FAQ「授乳室はご準備しておりません」（オムツ替え台つき多目的トイレはあり）
+  "tomi-senagajima": { nursing: "omit" },
+  // 有料（最初の10分無料、1時間200円（5〜10月）／100円（11〜4月）、1日最大500円）
+  "tomi-toyosaki-beach": { parking: "paid" },
+  // 那覇市のページで園内は有料駐車場（日本パーキング）
+  "naha-shintoshin-park": { parking: "paid" },
+  // 公式: 駐車場なし
+  "naha-yogi-park": { parking: "omit" },
+  // 専用駐車場なし
+  "itoman-himeyuri": { parking: "omit" },
+  // 有料（30分無料、以後1時間200円・以降1時間100円、24時間最大800円）
+  "naha-wakasa-park": { parking: "paid" },
+  // ginowan-maririn: 授乳室は県バリアフリーマップ（2018-06）で「無」
+  "ginowan-maririn": { nursing: "omit" },
 };
